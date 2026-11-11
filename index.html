@@ -2,229 +2,155 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>PlayCore 🎁</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>MicrobeGame 🦠</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, sans-serif;-webkit-tap-highlight-color:transparent}
-body{
-  min-height:100vh;color:#fff;
-  background:linear-gradient(180deg,#C6FF00 0%,#8EE800 25%,#3FBF6B 55%,#0E7A52 80%,#063E2A 100%);
-  background-attachment:fixed; padding-bottom:90px; overflow-x:hidden;
-}
-.topbar{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:rgba(0,0,0,.25);backdrop-filter:blur(10px)}
-.logo{font-weight:900;font-size:22px;letter-spacing:1px;text-shadow:0 2px 0 #000}
-.logo span{color:#C6FF00}
-.bal{display:flex;gap:8px}
-.pill{background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.25);padding:7px 10px;border-radius:20px;font-weight:800;font-size:13px}
-.pill b{color:#FFD700}
-.hero{text-align:center;padding:18px 14px 6px}
-.mascot{width:150px;height:150px;margin:0 auto;border-radius:50%;border:4px solid #fff;box-shadow:0 10px 30px rgba(0,0,0,.4);object-fit:cover;background:#7ED321}
-.hero h1{font-size:32px;margin-top:10px;text-shadow:0 3px 0 #000}
-.hero p{opacity:.95;font-weight:700;margin-top:4px}
-.btn{border:0;border-radius:16px;padding:14px;font-weight:900;cursor:pointer;width:100%;font-size:16px}
-.btn-green{background:#FFD700;color:#000;box-shadow:0 6px 0 #B8860B}
-.btn-green:active{transform:translateY(4px);box-shadow:none}
-.btn-dark{background:#000;color:#fff}
-.btn-purple{background:#7C3AED;color:#fff}
-.card{background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:16px;margin:12px 14px;backdrop-filter:blur(8px)}
-.card h2{font-size:20px;margin-bottom:8px}
-.small{font-size:13px;opacity:.9;line-height:1.4}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 14px}
-.tile{border-radius:20px;padding:16px 12px;min-height:105px;cursor:pointer;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.3);box-shadow:0 8px 20px rgba(0,0,0,.25)}
-.tile b{display:block;font-size:16px;line-height:1.1}
-.tile span{font-size:12px;opacity:.9}
-.tile i{font-size:34px;display:block;margin-bottom:6px}
-.t1{background:linear-gradient(135deg,#7C3AED,#4C1D95)} .t2{background:linear-gradient(135deg,#2563EB,#1E3A8A)}
-.t3{background:linear-gradient(135deg,#059669,#064E3B)} .t4{background:linear-gradient(135deg,#DB2777,#831843)}
-.t5{background:linear-gradient(135deg,#F59E0B,#92400E)} .t6{background:linear-gradient(135deg,#0EA5E9,#0C4A6E)}
-.t7{background:linear-gradient(135deg,#111827,#000)} .t8{background:linear-gradient(135deg,#16A34A,#14532D)}
-.page{display:none} .page.active{display:block}
-.wheelWrap{text-align:center;padding:10px}
-#wheel{width:260px;height:260px;border-radius:50%;border:8px solid #FFD700;margin:10px auto;position:relative;overflow:hidden;transition:transform 4s cubic-bezier(.1,.7,.1,1);background:conic-gradient(#EF4444 0 45deg,#111 45deg 90deg,#F59E0B 90deg 135deg,#111 135deg 180deg,#22C55E 180deg 225deg,#111 225deg 270deg,#7C3AED 270deg 315deg,#111 315deg 360deg)}
-#wheel:after{content:"🎁";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:70px}
-.pointer{font-size:36px;margin-top:-8px}
-.caseRow{display:flex;gap:10px;overflow-x:auto;padding:6px 2px}
-.caseItem{min-width:150px;text-align:center;background:rgba(255,255,255,.15);border-radius:16px;padding:14px}
-.caseItem i{font-size:48px}
-.prizeStrip{display:flex;gap:8px;overflow:hidden;height:90px;align-items:center;background:#000;border-radius:14px;padding:8px;margin:10px 0}
-.prizeStrip div{min-width:70px;height:70px;background:#222;border:2px solid #FFD700;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:36px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Black,system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+:root{--lime:#C6FF00;--bright:#8EE800;--mid:#22B573;--dark:#073E2A;--gold:#FFD700}
+body{min-height:100vh;color:#fff;overflow-x:hidden;padding-bottom:100px;background:linear-gradient(180deg,#D4FF00 0%,#9BFF00 18%,#3EDD6A 42%,#0E8A52 68%,#064E32 88%,#032B1D 100%);background-attachment:fixed}
+body:before{content:"🦠 🧬 ✨ 🦠";position:fixed;inset:0;font-size:90px;opacity:.07;pointer-events:none;z-index:0;line-height:1.6}
+*{position:relative;z-index:1}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(4deg)}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(198,255,0,.7),0 10px 25px rgba(0,0,0,.4)}50%{box-shadow:0 0 0 14px rgba(198,255,0,0),0 10px 25px rgba(0,0,0,.4)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+@keyframes spinSlow{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes popIn{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+@keyframes fall{0%{transform:translateY(-40px) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+@keyframes shine{0%{background-position:-200% center}100%{background-position:200% center}}
+.top{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px;background:rgba(3,43,29,.82);backdrop-filter:blur(12px);border-bottom:3px solid var(--lime)}
+.logo{font-size:22px;font-weight:1000;letter-spacing:1px;text-shadow:0 2px 0 #000}
+.logo em{color:var(--lime);font-style:normal}
+.pills{display:flex;gap:6px}
+.pill{background:#000;border:2px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 9px;font-size:12px;font-weight:900;cursor:pointer}
+.pill b{color:var(--gold)}
+.hero{text-align:center;padding:16px 14px 4px}
+.mascot{width:168px;height:168px;border-radius:50%;border:5px solid #fff;object-fit:cover;background:radial-gradient(circle,#D4FF00,#0E8A52);animation:floaty 3s ease-in-out infinite;box-shadow:0 15px 35px rgba(0,0,0,.5)}
+.hero h1{font-size:38px;font-weight:1000;letter-spacing:1px;text-shadow:0 4px 0 #000,0 0 30px #C6FF00;margin-top:8px}
+.hero h1 span{background:linear-gradient(90deg,#fff,#C6FF00,#fff);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 3s linear infinite}
+.xpbar{height:14px;background:#000;border-radius:99px;overflow:hidden;border:2px solid #fff;margin:10px 30px}
+.xpfill{height:100%;width:65%;background:linear-gradient(90deg,#C6FF00,#FFD700);transition:width .6s}
+.card{background:rgba(0,0,0,.48);border:2px solid rgba(255,255,255,.28);border-radius:24px;padding:16px;margin:12px 13px;backdrop-filter:blur(8px);box-shadow:0 10px 25px rgba(0,0,0,.3)}
+.card h2{font-size:21px;margin-bottom:6px}
+.small{font-size:13px;line-height:1.45;opacity:.92}
+.btn{width:100%;border:0;border-radius:18px;padding:15px;font-size:16px;font-weight:1000;cursor:pointer;transition:.15s;letter-spacing:.3px}
+.btn:active{transform:scale(.96)}
+.btn-gold{background:linear-gradient(180deg,#FFE600,#FFB800);color:#000;box-shadow:0 7px 0 #8a5a00,0 10px 20px rgba(0,0,0,.35);animation:pulseGlow 2s infinite}
+.btn-green{background:linear-gradient(180deg,#C6FF00,#22C55E);color:#000;box-shadow:0 6px 0 #14532D}
+.btn-dark{background:#000;color:#fff;border:2px solid #fff}
+.btn-purple{background:linear-gradient(180deg,#A855F7,#6D28D9);color:#fff;box-shadow:0 6px 0 #3B0764}
+.btn-red{background:linear-gradient(180deg,#FF4D4D,#B91C1C);color:#fff;box-shadow:0 6px 0 #450A0A}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:2px 13px}
+.tile{border-radius:22px;padding:15px 11px;min-height:112px;cursor:pointer;border:2px solid rgba(255,255,255,.35);overflow:hidden;transition:.15s}
+.tile:active{transform:scale(.95) rotate(-1deg)}
+.tile i{font-size:36px;display:block;filter:drop-shadow(0 3px 0 rgba(0,0,0,.4))}
+.tile b{display:block;font-size:15px;line-height:1.05;margin-top:4px}
+.tile span{font-size:11px;opacity:.9}
+.g1{background:linear-gradient(135deg,#7C3AED,#2E1065)}.g2{background:linear-gradient(135deg,#2563EB,#172554)}.g3{background:linear-gradient(135deg,#059669,#022C22)}.g4{background:linear-gradient(135deg,#EC4899,#500724)}.g5{background:linear-gradient(135deg,#F59E0B,#451A03)}.g6{background:linear-gradient(135deg,#06B6D4,#082F49)}.g7{background:linear-gradient(135deg,#111827,#000)}.g8{background:linear-gradient(135deg,#16A34A,#052E16)}.g9{background:linear-gradient(135deg,#EF4444,#450A0A)}.g10{background:linear-gradient(135deg,#EAB308,#422006)}.g11{background:linear-gradient(135deg,#8B5CF6,#1E1B4B)}.g12{background:linear-gradient(135deg,#14B8A6,#134E4A)}
+.page{display:none}.page.active{display:block;animation:popIn .35s}
+.wheelBox{text-align:center}
+#wheel{width:270px;height:270px;border-radius:50%;border:9px solid var(--gold);margin:12px auto;box-shadow:0 0 40px #FFD700,0 15px 30px rgba(0,0,0,.5);background:conic-gradient(#EF4444 0 45deg,#111827 45deg 90deg,#F59E0B 90deg 135deg,#111827 135deg 180deg,#22C55E 180deg 225deg,#111827 225deg 270deg,#A855F7 270deg 315deg,#111827 315deg 360deg);transition:transform 4.2s cubic-bezier(.08,.75,.08,1);position:relative}
+#wheel:after{content:"🦠";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:72px;filter:drop-shadow(0 4px 0 #000)}
+.strip{display:flex;gap:8px;overflow:hidden;height:92px;align-items:center;background:#000;border-radius:16px;padding:8px;border:2px solid var(--gold)}
+.strip div{min-width:72px;height:72px;background:#222;border:2px solid #fff;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:38px;flex-shrink:0}
 .mines{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
-.mineCell{aspect-ratio:1;background:rgba(255,255,255,.2);border-radius:12px;font-size:24px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.invItem{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.15);border-radius:16px;padding:12px;margin-bottom:10px}
-.invItem img,.invEmoji{width:64px;height:64px;border-radius:14px;background:#7ED321;display:flex;align-items:center;justify-content:center;font-size:38px}
-.task{display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.35);padding:12px;border-radius:14px;margin-bottom:10px}
-.hist{font-size:13px;padding:10px 0;border-bottom:1px dashed rgba(255,255,255,.3)}
-input,select{width:100%;padding:13px;border-radius:12px;border:0;margin:6px 0;font-weight:700}
-.nav{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;background:#000;border-top:2px solid #C6FF00;padding:8px 4px calc(8px + env(safe-area-inset-bottom))}
-.nav button{flex:1;background:none;border:0;color:#fff;font-size:11px;font-weight:800;cursor:pointer}
-.nav button i{display:block;font-size:22px}
-.nav button.on{color:#C6FF00}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:99;padding:20px}
+.cell{aspect-ratio:1;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.3);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:25px;cursor:pointer}
+.cell:active{transform:scale(.9)}
+input,select{width:100%;padding:14px;border-radius:14px;border:0;margin:7px 0;font-weight:800;font-size:15px}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.task,.leader,.histRow,.ach{display:flex;justify-content:space-between;align-items:center;gap:10px;background:rgba(255,255,255,.12);padding:12px;border-radius:15px;margin-bottom:9px}
+.inv{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.14);padding:12px;border-radius:16px;margin-bottom:10px}
+.invEmoji{width:62px;height:62px;border-radius:15px;background:linear-gradient(135deg,#C6FF00,#0E8A52);display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0}
+.bigNum{font-size:52px;font-weight:1000;color:var(--lime);text-shadow:0 4px 0 #000}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:70;display:flex;background:#02150D;border-top:3px solid var(--lime);padding:7px 3px calc(9px + env(safe-area-inset-bottom))}
+.nav button{flex:1;background:none;border:0;color:#fff;font-size:10px;font-weight:900}
+.nav button i{display:block;font-size:24px}
+.nav button.on{color:var(--lime);transform:translateY(-3px)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;align-items:center;justify-content:center;z-index:99;padding:22px}
 .modal.show{display:flex}
-.modalBox{background:#fff;color:#000;border-radius:22px;padding:22px;text-align:center;width:100%;max-width:360px}
-.modalBox h3{font-size:24px} .modalBox p{margin:10px 0}
-.big{font-size:54px}
-.crashBox{text-align:center;background:#000;border-radius:18px;padding:20px}
-#crashNum{font-size:48px;font-weight:900;color:#C6FF00}
-.leaderRow{display:flex;justify-content:space-between;padding:11px 4px;border-bottom:1px solid rgba(255,255,255,.2);font-weight:700}
-.timer{font-size:26px;font-weight:900;color:#FFD700;text-align:center}
-.confetti{position:fixed;inset:0;pointer-events:none;font-size:28px;display:none;z-index:100}
+.mbox{background:linear-gradient(180deg,#fff,#D9F99D);color:#000;border-radius:26px;padding:24px;text-align:center;width:100%;max-width:360px;animation:popIn .4s;border:4px solid var(--lime)}
+.mbox h3{font-size:26px}
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#000;color:#fff;padding:11px 16px;border-radius:99px;font-weight:900;z-index:100;display:none;border:2px solid var(--lime);white-space:nowrap}
+.particle{position:fixed;top:-30px;z-index:98;pointer-events:none;animation:fall linear forwards}
+.shake{animation:shake .45s}
+.badge{display:inline-block;background:var(--gold);color:#000;font-size:11px;font-weight:1000;padding:4px 8px;border-radius:99px}
+.dice{font-size:64px;text-align:center}
+.towerBtn{width:100%;padding:13px;margin:5px 0;border-radius:14px;border:0;font-weight:1000;background:#111827;color:#fff;border:2px solid #fff;cursor:pointer}
 </style>
 </head>
 <body>
+<div class="top"><div class="logo">MICROBE<span style="color:#C6FF00">GAME</span> 🦠</div><div class="pills"><div class="pill" onclick="sClick();showPage('profile')">🪙 <b id="tok">20000</b></div><div class="pill" onclick="sClick();showPage('profile')">⭐ <b id="st">125</b></div><div class="pill" onclick="toggleSound()">🔊 <span id="sndIc">ON</span></div></div></div>
 
-<div class="topbar">
-  <div class="logo">PLAY<span>CORE</span> 🎁</div>
-  <div class="bal">
-    <div class="pill">🪙 <b id="tokens">20000</b></div>
-    <div class="pill">⭐ <b id="stars">125</b></div>
-  </div>
+<div id="toast" class="toast"></div>
+
+<!-- HOME -->
+<section id="p-home" class="page active">
+<div class="hero">
+<img class="mascot" src="virus.png" onerror="this.style.display='none';document.getElementById('emojiMascot').style.display='flex'">
+<div id="emojiMascot" style="display:none;width:168px;height:168px;margin:0 auto;border-radius:50%;border:5px solid #fff;background:radial-gradient(circle,#D4FF00,#0E8A52);align-items:center;justify-content:center;font-size:90px;animation:floaty 3s infinite">🦠</div>
+<h1>MICROBE <span>GAME</span></h1>
+<p id="hello" style="font-weight:900">Привет, боец! Вирус ждёт тебя 🦠</p>
+<div class="xpbar"><div class="xpfill" id="xpFill"></div></div>
+<p class="small">Уровень <b id="lvl">12</b> • Опыт <b id="xpTxt">650 / 1000</b> • Побед в ПВП: <b id="pvpStat">0</b></p>
 </div>
 
-<!-- ГЛАВНАЯ -->
-<div id="page-home" class="page active">
-  <div class="hero">
-    <img class="mascot" id="mascotImg" src="virus.png" onerror="this.outerHTML='<div class=\'mascot\' style=\'display:flex;align-items:center;justify-content:center;font-size:80px\'>🦠</div>'" alt="PlayCore">
-    <h1>PLAYCORE</h1>
-    <p id="userName">Привет, игрок! Забирай призы, крути и выигрывай ⭐</p>
-    <p class="small">Твой вирус уже ждёт тебя. Нажми на игру и выиграй свой первый подарок!</p>
-  </div>
-
-  <div class="card">
-    <h2>🎁 Твой приз сегодня</h2>
-    <p class="small">CANDY CANE • Легендарный • Можно продать или улучшить</p>
-    <div style="font-size:64px;text-align:center;margin:8px">🍭</div>
-    <button class="btn btn-green" onclick="sellPrize()">ПРОДАТЬ ЗА 427 ⭐</button>
-    <div style="height:8px"></div>
-    <button class="btn btn-dark" onclick="showPage('inventory')">ОТКРЫТЬ ИНВЕНТАРЬ</button>
-  </div>
-
-  <div class="grid">
-    <div class="tile t1" onclick="showPage('inventory')"><i>🎒</i><b>ИНВЕНТАРЬ</b><span>Твои подарки и NFT</span></div>
-    <div class="tile t2" onclick="showPage('contests')"><i>🏆</i><b>КОНКУРСЫ</b><span>1000 NFT • 40 Gifts</span></div>
-    <div class="tile t3" onclick="showPage('leader')"><i>📊</i><b>ТАБЛИЦА ЛИДЕРОВ</b><span>ТОП-10 игроков</span></div>
-    <div class="tile t4" onclick="showPage('simulator')"><i>🎮</i><b>СИМУЛЯТОР</b><span>Тренируйся бесплатно</span></div>
-    <div class="tile t5" onclick="showPage('crash')"><i>🚀</i><b>CRASH</b><span>x1.00 — x100.00</span></div>
-    <div class="tile t6" onclick="showPage('cases')"><i>📦</i><b>CASES</b><span>Кейсы от 15 ⭐</span></div>
-    <div class="tile t7" onclick="showPage('roulette')"><i>🎡</i><b>РУЛЕТКА</b><span>Крути за 20 ⭐</span></div>
-    <div class="tile t8" onclick="showPage('pvp')"><i>⚔️</i><b>ПВП ДУЭЛЬ</b><span>Забери ставку врага</span></div>
-    <div class="tile t1" onclick="showPage('slots')"><i>🎰</i><b>СЛОТ</b><span>3 в ряд = джекпот</span></div>
-    <div class="tile t2" onclick="showPage('mines')"><i>💣</i><b>ШАХТА</b><span>Не попади на мину</span></div>
-    <div class="tile t3" onclick="showPage('plinko')"><i>🔴</i><b>ПЛИНКО</b><span>Шарик падает вниз</span></div>
-    <div class="tile t4" onclick="showPage('upgrade')"><i>⬆️</i><b>УЛУЧШЕНИЕ</b><span>Из 10 ⭐ в 427 ⭐</span></div>
-  </div>
-
-  <div class="card"><h2>🔥 Сейчас выигрывают</h2><div id="liveFeed" class="small"></div></div>
+<div class="card" style="border-color:#FFD700">
+<h2>🎁 Твой главный приз <span class="badge">ЛЕГЕНДА</span></h2>
+<div style="text-align:center;font-size:68px;animation:floaty 2.5s infinite">🍭</div>
+<p style="text-align:center;font-weight:1000">CANDY CANE • 427 ⭐</p><p class="small" style="text-align:center">Продай, улучши или забери себе. Он уже твой.</p><br>
+<button class="btn btn-gold" onclick="sWin();sellCandy()">💰 ПРОДАТЬ ЗА 427 ⭐</button><div style="height:8px"></div>
+<button class="btn btn-dark" onclick="sClick();showPage('inventory')">🎒 ОТКРЫТЬ ИНВЕНТАРЬ</button>
 </div>
 
-<!-- КЕЙСЫ -->
-<div id="page-cases" class="page">
-  <div class="card"><h2>📦 Кейсы PlayCore</h2><p class="small">Выбери кейс, смотри анимацию и забирай приз в инвентарь. Всё по-настоящему сохраняется.</p>
-  <div class="prizeStrip" id="strip"><div>🎁</div><div>🚀</div><div>💎</div><div>👑</div><div>🍭</div><div>🐻</div><div>🌹</div><div>🎁</div></div>
-  <div id="caseResult" style="text-align:center;font-weight:900;font-size:18px;min-height:28px"></div></div>
-  <div class="card"><div class="caseRow">
-    <div class="caseItem"><i>🎁</i><b>СТАРТ</b><p>15 ⭐</p><br><button class="btn btn-green" onclick="openCase(15,'СТАРТ')">ОТКРЫТЬ</button></div>
-    <div class="caseItem"><i>🚀</i><b>ТУРБО</b><p>50 ⭐</p><br><button class="btn btn-green" onclick="openCase(50,'ТУРБО')">ОТКРЫТЬ</button></div>
-    <div class="caseItem"><i>💎</i><b>ДИАМАНТ</b><p>150 ⭐</p><br><button class="btn btn-green" onclick="openCase(150,'ДИАМАНТ')">ОТКРЫТЬ</button></div>
-    <div class="caseItem"><i>👑</i><b>ЛЕГЕНДА</b><p>500 ⭐</p><br><button class="btn btn-green" onclick="openCase(500,'ЛЕГЕНДА')">ОТКРЫТЬ</button></div>
-  </div></div>
-  <div class="card"><h2>🎒 Что может выпасть</h2><p class="small">🌹 Роза 10 ⭐ • 🐻 Мишка 15 ⭐ • 🚀 Ракета 50 ⭐ • 💎 Алмаз 100 ⭐ • 👑 Корона 250 ⭐ • 🍭 Candy Cane 427 ⭐</p></div>
+<div class="card"><h2>🎁 Ежедневный бонус</h2><p class="small">Заходи каждый день и забирай. Сегодня уже можно!</p><br><button class="btn btn-green" onclick="dailyBonus()">🎁 ЗАБРАТЬ +50 ⭐ +5000 🪙</button><p id="dailyTxt" class="small" style="text-align:center;margin-top:8px"></p></div>
+
+<div class="grid">
+<div class="tile g1" onclick="go('cases')"><i>📦</i><b>КЕЙСЫ</b><span>от 15 ⭐ • анимация</span></div>
+<div class="tile g2" onclick="go('roulette')"><i>🎡</i><b>РУЛЕТКА</b><span>крути за 20 ⭐</span></div>
+<div class="tile g3" onclick="go('crash')"><i>🚀</i><b>CRASH</b><span>до x100 • забери вовремя</span></div>
+<div class="tile g4" onclick="go('pvp')"><i>⚔️</i><b>ПВП ДУЭЛЬ</b><span>забери ставку врага</span></div>
+<div class="tile g5" onclick="go('mines')"><i>💣</i><b>ШАХТА</b><span>25 клеток • мины</span></div>
+<div class="tile g6" onclick="go('slots')"><i>🎰</i><b>СЛОТ</b><span>джекпот 100 ⭐</span></div>
+<div class="tile g7" onclick="go('dice')"><i>🎲</i><b>КОСТИ</b><span>больше / меньше</span></div>
+<div class="tile g8" onclick="go('plinko')"><i>🔴</i><b>ПЛИНКО</b><span>шарик • до x10</span></div>
+<div class="tile g9" onclick="go('tower')"><i>🗼</i><b>БАШНЯ</b><span>поднимайся вверх</span></div>
+<div class="tile g10" onclick="go('upgrade')"><i>⬆️</i><b>УЛУЧШЕНИЕ</b><span>10 ⭐ → 600 ⭐</span></div>
+<div class="tile g11" onclick="go('contests')"><i>🏆</i><b>КОНКУРСЫ</b><span>1000 NFT • 40 Gifts</span></div>
+<div class="tile g12" onclick="go('simulator')"><i>🎮</i><b>СИМУЛЯТОР</b><span>бесплатно • тренировка</span></div>
+<div class="tile g3" onclick="go('inventory')"><i>🎒</i><b>ИНВЕНТАРЬ</b><span>твои подарки</span></div>
+<div class="tile g1" onclick="go('leader')"><i>📊</i><b>ЛИДЕРЫ</b><span>ТОП-10</span></div>
+<div class="tile g4" onclick="go('tasks')"><i>✅</i><b>ЗАДАНИЯ</b><span>+20000 токенов</span></div>
+<div class="tile g5" onclick="go('ach')"><i>🏅</i><b>ДОСТИЖЕНИЯ</b><span>награды за игру</span></div>
 </div>
 
-<!-- РУЛЕТКА -->
-<div id="page-roulette" class="page">
-  <div class="card wheelWrap"><h2>🎡 Русская рулетка</h2><p class="small">Крути за 20 ⭐. Выпадет приз или проигрыш.</p>
-  <div class="pointer">⬇️</div><div id="wheel"></div>
-  <div id="rouletteResult" style="font-weight:900;min-height:26px;margin:8px"></div>
-  <button class="btn btn-green" onclick="spinWheel()">КРУТИТЬ ЗА 20 ⭐</button>
-  <div style="height:8px"></div><button class="btn btn-dark" onclick="addStars(100)">ПОПОЛНИТЬ +100 ⭐ ДЕМО</button></div>
-  <div class="card"><h2>📜 История рулетки</h2><div id="rouletteHist"></div></div>
-</div>
+<div class="card"><h2>🔥 LIVE — сейчас выигрывают</h2><p class="small" id="live">🦠 @virus_king выиграл 👑 250 ⭐<br>🍭 @candy_girl выиграла CANDY CANE 427 ⭐<br>⚔️ @dima выиграл в ПВП 200 ⭐<br>🚀 @sara забрала Crash x4.20</p></div>
+<div class="card"><h2>🛒 Магазин звёзд</h2><p class="small">Реальная оплата Telegram Stars в боте @MicrobeGame_Bot</p><br><div class="row"><button class="btn btn-gold" onclick="buyStars(100)">100 ⭐</button><button class="btn btn-gold" onclick="buyStars(500)">500 ⭐</button></div></div>
+</section>
 
-<!-- КРАШ -->
-<div id="page-crash" class="page">
-  <div class="card"><h2>🚀 Crash</h2><div class="crashBox"><div id="crashNum">x1.00</div><p class="small">Ракета летит, успей забрать до взрыва!</p></div><br>
-  <input id="crashBet" type="number" value="20" placeholder="Ставка ⭐">
-  <button class="btn btn-green" onclick="startCrash()">ЗАПУСТИТЬ ЗА <span id="crashBetLabel">20</span> ⭐</button>
-  <div style="height:8px"></div><button class="btn btn-purple" onclick="cashoutCrash()">💰 ЗАБРАТЬ</button>
-  <p id="crashMsg" style="text-align:center;font-weight:900;margin-top:10px"></p></div>
-</div>
+<!-- CASES -->
+<section id="p-cases" class="page"><div class="card"><h2>📦 Кейсы MicrobeGame</h2><div class="strip" id="strip"><div>🎁</div><div>🚀</div><div>💎</div><div>👑</div><div>🍭</div><div>🐻</div><div>🌹</div><div>🎁</div><div>💎</div></div><p id="caseRes" style="text-align:center;font-weight:1000;min-height:26px;margin-top:8px"></p></div>
+<div class="card"><div class="row"><button class="btn btn-green" onclick="openCase(15,'СТАРТ')">🎁 СТАРТ<br>15 ⭐</button><button class="btn btn-green" onclick="openCase(50,'ТУРБО')">🚀 ТУРБО<br>50 ⭐</button></div><div style="height:8px"></div><div class="row"><button class="btn btn-purple" onclick="openCase(150,'ДИАМАНТ')">💎 ДИАМАНТ<br>150 ⭐</button><button class="btn btn-gold" onclick="openCase(500,'ЛЕГЕНДА')">👑 ЛЕГЕНДА<br>500 ⭐</button></div><p class="small" style="margin-top:10px">Может выпасть: 🌹 10 ⭐ • 🐻 15 ⭐ • 🚀 50 ⭐ • 💎 100 ⭐ • 👑 250 ⭐ • 🍭 427 ⭐ • 🧬 1000 ⭐</p></div></section>
 
-<!-- ПВП -->
-<div id="page-pvp" class="page">
-  <div class="card" style="text-align:center"><h2>⚔️ ПВП Дуэль</h2><p class="small">Ты и соперник крутите. У кого больше очков, тот забирает ОБЕ ставки.</p>
-  <div style="font-size:60px">🦠 <span style="font-size:30px">VS</span> 😈</div>
-  <div id="pvpScore" style="font-size:22px;font-weight:900;margin:10px">ТЫ 0 : 0 СОПЕРНИК</div>
-  <select id="pvpBet"><option value="25">Ставка 25 ⭐</option><option value="50">Ставка 50 ⭐</option><option value="100">Ставка 100 ⭐</option></select>
-  <button class="btn btn-green" onclick="startPvp()">НАЙТИ СОПЕРНИКА И ИГРАТЬ</button>
-  <p id="pvpMsg" style="font-weight:900;margin-top:10px"></p>
-  <p class="small">Побед: <span id="pvpWins">0</span> • Поражений: <span id="pvpLoss">0</span></p></div>
-</div>
+<!-- ROULETTE -->
+<section id="p-roulette" class="page"><div class="card wheelBox"><h2>🎡 Рулетка вируса</h2><p class="small">Крути за 20 ⭐. Слушай звук, смотри как крутится!</p><div style="font-size:34px">⬇️</div><div id="wheel"></div><p id="rouRes" style="font-weight:1000;min-height:26px"></p><button class="btn btn-gold" onclick="spinWheel()">🎡 КРУТИТЬ ЗА 20 ⭐</button><div style="height:8px"></div><button class="btn btn-dark" onclick="spinWheelFree()">🆓 1 БЕСПЛАТНАЯ ПРОКРУТКА</button></div><div class="card"><h2>📜 История</h2><div id="histR"></div></div></section>
 
-<!-- СЛОТ / ШАХТА / ПЛИНКО / АПГРЕЙД / СИМУЛЯТОР -->
-<div id="page-slots" class="page"><div class="card" style="text-align:center"><h2>🎰 Слот</h2><div id="slotBox" style="font-size:52px">🎁 🎁 🎁</div><br><button class="btn btn-green" onclick="playSlot()">КРУТИТЬ ЗА 10 ⭐</button><p id="slotMsg" style="font-weight:900;margin-top:10px"></p></div></div>
-<div id="page-mines" class="page"><div class="card"><h2>💣 Шахта</h2><p class="small">Нажимай на клетки. Нашёл 💎 — выиграл. Нашёл 💣 — проиграл ставку 20 ⭐.</p><div class="mines" id="minesBoard"></div><br><button class="btn btn-green" onclick="initMines()">НОВАЯ ИГРА 20 ⭐</button><p id="minesMsg" style="font-weight:900;text-align:center"></p></div></div>
-<div id="page-plinko" class="page"><div class="card" style="text-align:center"><h2>🔴 Плинко</h2><p class="small">Шарик падает, множитель решает всё.</p><div style="font-size:48px">🔴<br>⬇️ ⬇️ ⬇️<br>💰 x0.5 &nbsp; x1 &nbsp; x2 &nbsp; x5 &nbsp; x10</div><br><button class="btn btn-green" onclick="playPlinko()">БРОСИТЬ ЗА 15 ⭐</button><p id="plinkoMsg" style="font-weight:900;margin-top:10px"></p></div></div>
-<div id="page-upgrade" class="page"><div class="card" style="text-align:center"><h2>⬆️ Улучшение</h2><p class="small">Твой приз: 🍭 Candy Cane — 427 ⭐</p><div style="font-size:64px">🍭 ➡️ 👑</div><button class="btn btn-green" onclick="upgradeItem()">УЛУЧШИТЬ ЗА 30 ⭐ (шанс 45%)</button><p id="upMsg" style="font-weight:900;margin-top:10px"></p></div></div>
-<div id="page-simulator" class="page"><div class="card"><h2>🎮 Симулятор — бесплатно</h2><p class="small">Тренируйся без звёзд. 10 бесплатных прокруток кейса.</p><button class="btn btn-green" onclick="simSpin()">БЕСПЛАТНО ОТКРЫТЬ КЕЙС</button><p id="simMsg" style="text-align:center;font-weight:900;margin-top:10px;font-size:40px"></p></div></div>
+<!-- CRASH -->
+<section id="p-crash" class="page"><div class="card" style="text-align:center"><h2>🚀 Crash</h2><div style="background:#000;border-radius:18px;padding:22px;border:3px solid #C6FF00"><div class="bigNum" id="crashNum">x1.00</div><div style="font-size:44px" id="rocket">🚀</div></div><br><input id="crashBet" type="number" value="20"><button class="btn btn-gold" onclick="startCrash()">ЗАПУСТИТЬ</button><div style="height:8px"></div><button class="btn btn-red" onclick="cashout()">💰 ЗАБРАТЬ ДО ВЗРЫВА</button><p id="crashMsg" style="font-weight:1000;margin-top:10px"></p></div></section>
 
-<!-- ИНВЕНТАРЬ -->
-<div id="page-inventory" class="page">
-  <div class="card"><h2>🎒 Инвентарь</h2><div id="inventoryList"></div>
-  <button class="btn btn-green" onclick="sellPrize()">ПРОДАТЬ CANDY CANE ЗА 427 ⭐</button><div style="height:8px"></div>
-  <button class="btn btn-dark" onclick="showPage('upgrade')">УЛУЧШИТЬ ПРЕДМЕТ</button></div>
-  <div class="card"><h2>📜 История</h2><div id="historyList"></div></div>
-</div>
+<!-- MINES / SLOTS / DICE / PLINKO / TOWER -->
+<section id="p-mines" class="page"><div class="card"><h2>💣 Шахта</h2><p class="small">💎 = +8 ⭐, 💣 = проигрыш. Ставка 20 ⭐</p><br><div class="mines" id="board"></div><br><button class="btn btn-gold" onclick="initMines()">НОВАЯ ИГРА 20 ⭐</button><p id="mineMsg" style="text-align:center;font-weight:1000"></p></div></section>
+<section id="p-slots" class="page"><div class="card" style="text-align:center"><h2>🎰 Слот</h2><div id="slotBox" style="font-size:56px">🦠 🦠 🦠</div><br><button class="btn btn-gold" onclick="playSlot()">КРУТИТЬ ЗА 10 ⭐</button><p id="slotMsg" style="font-weight:1000;margin-top:10px"></p></div></section>
+<section id="p-dice" class="page"><div class="card" style="text-align:center"><h2>🎲 Кости</h2><div class="dice" id="diceBox">🎲 🎲</div><p class="small">Угадай: сумма будет больше 7 или меньше 7?</p><br><div class="row"><button class="btn btn-green" onclick="playDice('more')">БОЛЬШЕ 7</button><button class="btn btn-red" onclick="playDice('less')">МЕНЬШЕ 7</button></div><p id="diceMsg" style="font-weight:1000;margin-top:10px"></p></div></section>
+<section id="p-plinko" class="page"><div class="card" style="text-align:center"><h2>🔴 Плинко</h2><div style="font-size:50px">🔴<br>⬇️⬇️⬇️<br><span style="font-size:14px;font-weight:900">x0.5 • x1 • x2 • x5 • x10</span></div><br><button class="btn btn-gold" onclick="playPlinko()">БРОСИТЬ ЗА 15 ⭐</button><p id="plMsg" style="font-weight:1000;margin-top:10px"></p></div></section>
+<section id="p-tower" class="page"><div class="card"><h2>🗼 Башня</h2><p class="small">Выбирай левую или правую. Дойди до вершины и забери x5!</p><div id="towerLvl" style="text-align:center;font-weight:1000">Этаж: 0 / 5 • Множитель: x1</div><br><div class="row"><button class="towerBtn" onclick="towerStep('L')">⬅️ СЛЕВА</button><button class="towerBtn" onclick="towerStep('R')">СПРАВА ➡️</button></div><button class="btn btn-gold" onclick="startTower()">НАЧАТЬ БАШНЮ 20 ⭐</button><p id="towerMsg" style="text-align:center;font-weight:1000"></p></div></section>
 
-<!-- КОНКУРСЫ / ЛИДЕРЫ / ЗАДАНИЯ -->
-<div id="page-contests" class="page">
-  <div class="card" style="text-align:center"><h2>🏆 Розыгрыш 1000 NFT</h2><div class="timer" id="contestTimer">02:14:33</div><p class="small">40 GIFTS • Призовой фонд огромный</p><div style="font-size:56px">🎁🎁🎁</div><button class="btn btn-green" onclick="joinContest()">УЧАСТВОВАТЬ БЕСПЛАТНО</button><p id="contestMsg" style="font-weight:900;margin-top:8px"></p></div>
-  <div class="card"><h2>🎁 Второй конкурс — 40 Gifts</h2><p class="small">Каждый день в 20:00 новый победитель. Билет стоит 10 ⭐ или 1 задание.</p><button class="btn btn-dark" onclick="joinContest()">КУПИТЬ БИЛЕТ 10 ⭐</button></div>
-</div>
-<div id="page-leader" class="page"><div class="card"><h2>📊 Таблица лидеров</h2><div id="leaderList"></div></div></div>
-<div id="page-tasks" class="page">
-  <div class="card"><h2>✅ Задания</h2><p class="small">Выполняй и получай токены и звёзды, как на видео.</p><div id="taskList"></div></div>
-  <div class="card"><h2>👥 Зарази друга</h2><p class="small">Пригласи друга — получи +20.000 токенов и 10% от его выигрышей навсегда.</p><button class="btn btn-green" onclick="inviteFriend()">СКОПИРОВАТЬ МОЮ ССЫЛКУ</button><p id="inviteMsg" style="font-weight:900;text-align:center;margin-top:8px"></p></div>
-</div>
+<!-- PVP / UPGRADE / SIM -->
+<section id="p-pvp" class="page"><div class="card" style="text-align:center"><h2>⚔️ ПВП Дуэль</h2><div style="font-size:58px">🦠 <span style="font-size:26px">VS</span> 😈</div><div id="pvpScore" style="font-size:24px;font-weight:1000">ТЫ 0 : 0 ВРАГ</div><br><select id="pvpBet"><option value="25">25 ⭐</option><option value="50">50 ⭐</option><option value="100">100 ⭐</option><option value="200">200 ⭐</option></select><button class="btn btn-gold" onclick="startPvp()">⚔️ НАЙТИ ВРАГА И БИТЬСЯ</button><p id="pvpMsg" style="font-weight:1000;margin-top:10px"></p><p class="small">Побед: <b id="pw">0</b> • Поражений: <b id="pl">0</b></p></div><div class="card"><h2>📜 Последние битвы</h2><p class="small">Ты 87 : 42 Враг_666 — ПОБЕДА +100 ⭐<br>Ты 31 : 90 VirusPro — поражение<br>Ты 99 : 12 Noob — ПОБЕДА +50 ⭐</p></div></section>
+<section id="p-upgrade" class="page"><div class="card" style="text-align:center"><h2>⬆️ Улучшение</h2><div style="font-size:64px">🍭 ➡️ 👑</div><p class="small">Шанс 45%. Если повезёт, приз станет 600 ⭐</p><br><button class="btn btn-gold" onclick="upgradeItem()">УЛУЧШИТЬ ЗА 30 ⭐</button><p id="upMsg" style="font-weight:1000;margin-top:10px"></p></div></section>
+<section id="p-simulator" class="page"><div class="card"><h2>🎮 Симулятор — бесплатно</h2><p class="small">Тренируйся без звёзд, сколько хочешь.</p><br><button class="btn btn-green" onclick="simSpin()">БЕСПЛАТНО ОТКРЫТЬ КЕЙС</button><p id="simMsg" style="text-align:center;font-size:48px;font-weight:1000;margin-top:12px"></p></div></section>
 
-<!-- ПРОФИЛЬ / ПОПОЛНЕНИЕ -->
-<div id="page-profile" class="page">
-  <div class="card" style="text-align:center"><div style="font-size:64px">🦠</div><h2 id="profileName">Игрок PlayCore</h2><p class="small">ID: <span id="profileId">123456789</span> • Уровень 12 • VIP</p><p style="font-size:20px;font-weight:900">Баланс: ⭐ <span id="stars2">125</span> • 🪙 <span id="tokens2">20000</span></p></div>
-  <div class="card"><h2>💳 Пополнить баланс</h2><p class="small">Реальная оплата Telegram Stars. После оплаты баланс увеличится в боте автоматически.</p>
-  <button class="btn btn-green" onclick="buyStars(50)">50 ⭐ — КУПИТЬ</button><div style="height:8px"></div>
-  <button class="btn btn-green" onclick="buyStars(100)">100 ⭐ — КУПИТЬ</button><div style="height:8px"></div>
-  <button class="btn btn-green" onclick="buyStars(500)">500 ⭐ — КУПИТЬ</button><div style="height:8px"></div>
-  <button class="btn btn-green" onclick="buyStars(1000)">1000 ⭐ — КУПИТЬ</button>
-  <p class="small" style="margin-top:10px">Если оплата не открылась в демо, нажми: <a href="#" onclick="addStars(500);return false" style="color:#FFD700">получить 500 ⭐ демо</a></p></div>
-</div>
-
-<div class="modal" id="winModal"><div class="modalBox"><div class="big" id="winEmoji">🎉</div><h3 id="winTitle">ТЫ ВЫИГРАЛ!</h3><p id="winText"></p><button class="btn btn-green" onclick="closeModal()">ЗАБРАТЬ 🎁</button></div></div>
-<div class="confetti" id="confetti">🎉 ⭐ 🎁 🍭 💎 👑 🎉 ⭐</div>
-
-<nav class="nav">
-  <button class="on" onclick="showPage('home',this)">🏠<i>🏠</i>Главная</button>
-  <button onclick="showPage('cases',this)">📦<i>📦</i>Кейсы</button>
-  <button onclick="showPage('roulette',this)">🎡<i>🎡</i>Рулетка</button>
-  <button onclick="showPage('tasks',this)">✅<i>✅</i>Задания</button>
-  <button onclick="showPage('profile',this)">👤<i>👤</i>Профиль</button>
-</nav>
-
-<script>
-let tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
-if(tg){ tg.ready(); tg.expand(); }
-let state = JSON.parse(localStorage.getItem('playcore_v2')||'{}');
-let stars = state.stars ?? 125, tokens = state.tokens ?? 20000, wins=0, losses=0;
-let inventory = state.inventory || [{emoji:'🍭',name:'CANDY CANE',price:427}];
-let history = state.history || ['Приз кейса 5 Stars','Russian roulette spin -5 ⭐','Пополнение +100 ⭐'];
-let tasksDone = state.tasksDone || {};
-function save(){ localStorage.setItem('playcore_v2', JSON.stringify({stars,tokens,inventory,history,tasksDone})); }
-function update(){ document.getElementById('stars').textContent=stars; document.getElementById('stars2').textContent=stars; document.getElementById('tokens').textContent=tokens.toLocaleString(); document.getElementById('tokens2').textContent=tokens.toLocaleString(); renderInv(); renderHist(); save(); }
-function addStars(n){ stars+=n; history.unshift('Пополнение +'+n+' ⭐'); update(); showWin('⭐','Баланс пополнен','+'+n+' ⭐ добавлено на твой баланс!'); }
-function addHist(t){ history.unshift(t); }
-function showPage(id,btn){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('page-'+id).classList.add('active'); if(btn){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('on')); btn.classList.add('on');} window.scrollTo(0,0); }
-function showWin(e,t,txt){ document.getElementById('winEmoji').textContent=e; document.getElementById('winTitle').textContent=t; document.getElementById('winText').textContent=txt; document.getElementById('winModal').classList.add('show'); let c=document.getElementById('confetti'); c.style.display='block'; setTimeout(()=>c.style.display='none',1800); if(tg) tg.HapticFeedback.notificationOccurred('success'); }
-function closeModal(){ document.getElementById('winModal').classList.remove('show'); }
-const PRIZES=[{e:'🌹',n:'Роза',p:10},{e:'🐻',n:'Мишка',p:15},{e:'🚀',n:'Ракета',p:50},{e:'💎',n:'Алмаз',p:100},{e:'👑',n:'Корона',p:250},{e:'🍭',n:'CANDY CANE',p:427}];
-function openCase(price,name){ if(stars<price){ alert('Не хватает ⭐! Пополни баланс.'); showPage('profile'); return; } stars-=price; let strip=document.getElementById('strip'); strip.style.transition='none'; strip.scrollLeft=0; setTimeout(()=>{ strip.style.transition='all 1.2s'; strip.scrollLeft=300; },50);
-  setTimeout(()=>{ let pr=PRIZES[Math.floor(Math.random()*PRIZES.length)]; inventory.push(pr); addHist('Кейс '+name+': выпал '+pr.n+' '+pr.p+' ⭐'); document.getElementById('caseResult').textContent='ВЫПАЛО: '+pr.e+' '+pr.n+' — '+pr.p+' ⭐'; update(); showWin(pr.e,'ПРИЗ ИЗ КЕЙСА!',pr.n+' стоимостью '+pr.p+' ⭐ уже в твоём инвентаре!')
+<!-- INVENTORY / CONTESTS / LEADER / TASKS / ACH / PROFILE -->
+<section id="p-inventory" class="page"><div class="card"><h2>🎒 Инвентарь</h2><div id="invList"></div><button class="btn btn-gold" onclick="sellCandy()">ПРОДАТЬ CANDY CANE 427 ⭐</button><div style="height:8px"></div><button class="btn btn-dark" onclick="go('upgrade')">УЛУЧШИТЬ</button></div><div class="card"><h2>📜 История</h2><div id="histAll"></div></div></section>
+<section id="p-contests" class="page"><div class="card" style="text-align:center"><h2>🏆 Розыгрыш 1000 NFT</h2><div class="bigNum" id="timer">02:14:33</div><div style="font-size:56px">🎁🎁🎁</div><button class="btn btn-gold" onclick="joinContest()">УЧАСТВОВАТЬ БЕСПЛАТНО</button><p id="contMsg" style="font-weight:1000;margin-top:8px"></p></div><div class="card"><h2>🎁 40 Gifts каждый день</h2><p class="small">Победитель в 20:00. Билет 10 ⭐.</p><br><button class="btn btn-dark" onclick="joinContest2()">КУПИТЬ БИЛЕТ 10 ⭐</button></div></section>
+<section id="p-leader" class="page"><div class="card"><h2>📊 Таблица лидеров</h2><div id="leadList"></div></div></section>
+<section id="p-tasks" class="page"><div class="card"><h2>✅ Задания</h2><div id="taskList"></div></div><div class="card"><h2>👥 Пригласи друга</h2><p class="small">+20000 токенов за друга + 10% от его выигрышей навсегда</p><br><
