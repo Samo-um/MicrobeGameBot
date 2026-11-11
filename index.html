@@ -33,6 +33,19 @@ header,.online,.page,.bottom{position:relative;z-index:1}
 .sound{margin:0 13px 12px;width:calc(100% - 26px);padding:9px;background:#ffffff08;border:1px solid var(--line);color:var(--mint);border-radius:10px;font-size:10px;font-weight:800}
 .page{display:none;padding:0 13px;animation:pageIn .28s ease both}.page.active{display:block}
 @keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.game-hero{position:relative;overflow:hidden;margin:8px 0 14px;padding:17px 15px 15px;border-radius:20px;border:1px solid #27e6a255;background:radial-gradient(circle at 50% 30%,#176d4b 0%,#0b3829 55%,#08251d 100%);box-shadow:0 12px 34px #00150f99;text-align:center;min-height:245px}
+.game-hero:before,.game-hero:after{content:"";position:absolute;border:1px solid #8dffd322;border-radius:50%;width:210px;height:210px;left:50%;top:42%;transform:translate(-50%,-50%);animation:orbit 12s linear infinite;pointer-events:none}
+.game-hero:after{width:160px;height:160px;animation-direction:reverse;animation-duration:8s}
+.game-kicker{font-size:9px;letter-spacing:2px;color:#a5ffe0;font-weight:950}
+.game-virus{position:relative;z-index:1;font-size:82px;line-height:1.35;margin:8px auto;display:block;filter:drop-shadow(0 0 18px #00ff9d88);animation:virusFloat 2s ease-in-out infinite alternate,glowPulse 2.2s ease-in-out infinite}
+.game-title{font-size:19px;font-weight:1000;letter-spacing:1px}
+.game-desc{font-size:10px;color:#b5dccc;margin:5px 0 10px}
+.game-start{position:relative;z-index:2;width:min(100%,260px);padding:13px 16px;border-radius:13px;background:linear-gradient(90deg,#b7ff63,#00e69a);color:#05291e;font-size:11px;font-weight:1000;box-shadow:0 0 25px #00e69a40;animation:glowPulse 2.4s infinite}
+.tile{appearance:none;text-align:left;color:var(--white);width:100%;font-family:inherit;cursor:pointer}
+.tile-icon{animation:floatY 3s ease-in-out infinite}
+.tile:nth-child(2n) .tile-icon{animation-delay:.45s}
+.nav{cursor:pointer;touch-action:manipulation;padding:2px 5px}
+.nav b{font-size:20px}
 .heading{font-size:17px;font-weight:950;letter-spacing:.5px;margin:14px 1px 4px}.subheading{font-size:10px;color:var(--muted);margin:0 1px 14px}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .tile{min-height:126px;border-radius:17px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;border:1px solid #ffffff16;box-shadow:var(--shadow);transition:transform .18s,filter .18s}
@@ -183,19 +196,16 @@ header,.online,.page,.bottom{position:relative;z-index:1}
 <button class="sound" id="soundBtn">🔇 ЗВУК ВЫКЛЮЧЕН · НАЖМИ, ЧТОБЫ ВКЛЮЧИТЬ</button>
 
 <section class="page active" id="home">
+ <div class="game-hero">
+  <div class="game-kicker">LIVE GAME EXPERIENCE</div>
+  <span class="game-virus">🦠</span>
+  <div class="game-title">MICROBE SPIN</div>
+  <div class="game-desc">Запусти вирусную анимацию и открой игровой экран</div>
+  <button class="game-start" type="button" data-action="open-spin">▶ ИГРАТЬ</button>
+ </div>
  <h1 class="heading">ГЛАВНАЯ</h1><p class="subheading">Добро пожаловать в MICROBE 🦠</p>
  <div class="grid">
-  <div class="tile t-green" onclick="openPage('inventory')"><div class="tile-icon">🎒</div><div><div class="tile-title">ИНВЕНТАРЬ</div><div class="tile-note">Предметы и награды</div></div></div>
-  <div class="tile t-olive" onclick="openPage('contests')"><div class="tile-icon">🎉</div><div><div class="tile-title">КОНКУРСЫ</div><div class="tile-note">События и призы</div></div></div>
-  <div class="tile t-purple" onclick="openPage('games')"><div class="tile-icon">🎮</div><div><div class="tile-title">ИГРЫ</div><div class="tile-note">Мини-игры</div></div></div>
-  <div class="tile t-mint" onclick="openPage('spin')"><div class="tile-icon">🦠</div><div><div class="tile-title">ВИРУС SPIN</div><div class="tile-note">Анимация открытия</div></div></div>
-  <div class="tile t-dark" onclick="openPage('quests')"><div class="tile-icon">📋</div><div><div class="tile-title">ЗАДАНИЯ</div><div class="tile-note">Прогресс и цели</div></div></div>
-  <div class="tile t-gold" onclick="openPage('giveaways')"><div class="tile-icon">🎁</div><div><div class="tile-title">РОЗЫГРЫШИ</div><div class="tile-note">Подтверждённые события</div></div></div>
- </div>
- <div class="section-title">СТАТУС ПЛАТФОРМЫ</div>
- <div class="panel"><div class="row"><div class="panel-title">🟢 ULTRA SERVER</div><span class="pill" id="serverPill">ПРОВЕРКА</span></div><div class="muted" id="serverText">Подключение к серверу и проверка Telegram-пользователя.</div></div>
-</section>
-
-<section class="page" id="inventory">
- <h1 class="heading">ИНВЕНТАРЬ</h1><p class="subheading">Только подтверждённые предметы твоего аккаунта</p>
- <div class="panel" style="border-color:#00e69a66;background:linear-gradient(135deg,#12583d,#09281f)"><div class="row"><div class="panel-title">🦠 MICROBE CLAIM</div><span class="pill">3 ВАЛЮТЫ</span></div><div class="muted">Выбери валюту, в которой хочешь получить подтверждённый приз. Количество определяется самим призом и приходит с сервера — без выдуманных сумм.</div><div class="currency-grid"><button class="currency-option active" data-currency="stars" onclick="selectClaimCurrency('stars',this)">⭐<br>TELEGRAM<br>STARS<small id="starsBalance">Баланс: —</small></button><button class="currency-option" data-currency="gram" onclick="selectClaimCurrency('gram',this)">💎<br>GRAM<small id="gramBalance">Баланс: —</small></button><button class="currency-option" data-currency="microbe" onclick="selectClaimCurrency('microbe',this)">🦠<br>MICROBE<br>POINTS<small id="microbeBalance">Баланс: —</small></button></div><div class="muted" id="claimCurrencyText">Выбрано: ⭐ Telegram Stars</div><button class="primary" id="claimPreview" disabled style="opacity:.55">🎁 ЗАБРАТЬ
+  <button class="tile t-green" type="button" data-page="inventory"><div class="tile-icon">🎒</div><div><div class="tile-title">ИНВЕНТАРЬ</div><div class="tile-note">Предметы и награды</div></div></button>
+  <button class="tile t-olive" type="button" data-page="contests"><div class="tile-icon">🎉</div><div><div class="tile-title">КОНКУРСЫ</div><div class="tile-note">События и призы</div></div></button>
+  <button class="tile t-purple" type="button" data-page="games"><div class="tile-icon">🎮</div><div><div class="tile-title">ИГРЫ</div><div class="tile-note">Мини-игры</div></div></button>
+  <button class="tile t-mint" type="button" data-page="spin"><div class="tile-icon">🦠</div><div><div class="tile-title">ВИРУС SPIN</div
