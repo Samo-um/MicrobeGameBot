@@ -2,210 +2,154 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#06251d">
-<title>MICROBE 🦠 — Telegram Mini App</title>
+<title>MICROBE 🦠</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
 <style>
-:root{
- --bg:#061b16;--bg2:#09271e;--panel:#0d3327;--panel2:#104332;
- --green:#00e69a;--green2:#24c987;--mint:#a5ffe0;--lime:#b7ff63;
- --white:#f2fff9;--muted:#91b6a7;--line:rgba(165,255,224,.13);
- --purple:#6f43a3;--gold:#ffc85a;--red:#ff637c;--shadow:0 12px 34px #00150f99;
-}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:var(--bg);color:var(--white);font-family:Inter,system-ui,Arial,sans-serif;min-height:100vh;overflow-x:hidden}
-button{font:inherit;border:0;cursor:pointer}
-.app{width:100%;max-width:480px;min-height:100vh;margin:auto;padding-bottom:94px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% -10%,#15533c 0%,#0a2c21 36%,#061b16 78%)}
-.ambient{position:fixed;width:240px;height:240px;border-radius:50%;filter:blur(90px);opacity:.13;pointer-events:none;z-index:0;background:#00e69a;top:20%;left:-140px}
-.ambient.b{background:#a5ff70;left:auto;right:-150px;top:60%}
-header,.online,.page,.bottom{position:relative;z-index:1}
-.header{padding:15px 15px 9px;display:flex;align-items:center;justify-content:space-between}
-.user{display:flex;align-items:center;gap:10px}
-.avatar{width:39px;height:39px;border-radius:13px;background:linear-gradient(145deg,#27e6a2,#087b58);display:grid;place-items:center;font-size:21px;box-shadow:0 0 22px #00e69a44}
-.user-name{font-size:13px;font-weight:850}.user-sub{font-size:9px;color:var(--muted);margin-top:3px;letter-spacing:.7px}
-.balance{border:1px solid #00e69a55;background:#00e69a16;color:var(--mint);border-radius:12px;padding:9px 11px;font-size:11px;font-weight:900}
-.online{margin:8px 13px 12px;padding:12px 14px;border:1px solid #00e69a45;border-radius:15px;background:linear-gradient(100deg,#0c4935,#0b3025);display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)}
-.online-left{display:flex;align-items:center;gap:10px}.dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 7px var(--green),0 0 18px var(--green);animation:pulseScale 1.5s infinite}
-.online-label{font-size:11px;font-weight:900}.online-hint{font-size:9px;color:var(--muted);margin-top:3px}
-.online-right{text-align:right}.online-count{font-size:24px;color:var(--green);font-weight:950;font-variant-numeric:tabular-nums}.online-status{font-size:8px;color:var(--muted)}
-.sound{margin:0 13px 12px;width:calc(100% - 26px);padding:9px;background:#ffffff08;border:1px solid var(--line);color:var(--mint);border-radius:10px;font-size:10px;font-weight:800}
-.page{display:none;padding:0 13px;animation:pageIn .28s ease both}.page.active{display:block}
-@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.game-hero{position:relative;overflow:hidden;margin:8px 0 14px;padding:17px 15px 15px;border-radius:20px;border:1px solid #27e6a255;background:radial-gradient(circle at 50% 30%,#176d4b 0%,#0b3829 55%,#08251d 100%);box-shadow:0 12px 34px #00150f99;text-align:center;min-height:245px}
-.game-hero:before,.game-hero:after{content:"";position:absolute;border:1px solid #8dffd322;border-radius:50%;width:210px;height:210px;left:50%;top:42%;transform:translate(-50%,-50%);animation:orbit 12s linear infinite;pointer-events:none}
-.game-hero:after{width:160px;height:160px;animation-direction:reverse;animation-duration:8s}
-.game-kicker{font-size:9px;letter-spacing:2px;color:#a5ffe0;font-weight:950}
-.game-virus{position:relative;z-index:1;font-size:82px;line-height:1.35;margin:8px auto;display:block;filter:drop-shadow(0 0 18px #00ff9d88);animation:virusFloat 2s ease-in-out infinite alternate,glowPulse 2.2s ease-in-out infinite}
-.game-title{font-size:19px;font-weight:1000;letter-spacing:1px}
-.game-desc{font-size:10px;color:#b5dccc;margin:5px 0 10px}
-.game-start{position:relative;z-index:2;width:min(100%,260px);padding:13px 16px;border-radius:13px;background:linear-gradient(90deg,#b7ff63,#00e69a);color:#05291e;font-size:11px;font-weight:1000;box-shadow:0 0 25px #00e69a40;animation:glowPulse 2.4s infinite}
-.tile{appearance:none;text-align:left;color:var(--white);width:100%;font-family:inherit;cursor:pointer}
-.tile-icon{animation:floatY 3s ease-in-out infinite}
-.tile:nth-child(2n) .tile-icon{animation-delay:.45s}
-.nav{cursor:pointer;touch-action:manipulation;padding:2px 5px}
-.nav b{font-size:20px}
-.heading{font-size:17px;font-weight:950;letter-spacing:.5px;margin:14px 1px 4px}.subheading{font-size:10px;color:var(--muted);margin:0 1px 14px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.tile{min-height:126px;border-radius:17px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;border:1px solid #ffffff16;box-shadow:var(--shadow);transition:transform .18s,filter .18s}
-.tile:active{transform:scale(.97);filter:brightness(1.13)}
-.tile:before{content:"";position:absolute;width:100px;height:100px;border-radius:50%;right:-35px;top:-42px;background:#ffffff12;filter:blur(3px)}
-.tile-icon{font-size:35px;text-align:center;margin:4px 0 10px;filter:drop-shadow(0 6px 8px #00150f88)}
-.tile-title{font-size:11px;font-weight:950;position:relative}.tile-note{font-size:9px;color:#d4f4e7bb;margin-top:4px}
-.t-green{background:linear-gradient(145deg,#16895e,#07513e)}.t-mint{background:linear-gradient(145deg,#24b98a,#116449)}.t-olive{background:linear-gradient(145deg,#779c37,#345b26)}.t-dark{background:linear-gradient(145deg,#174d3b,#102b24)}.t-purple{background:linear-gradient(145deg,#64418b,#35274c)}.t-gold{background:linear-gradient(145deg,#b28a36,#69501f)}
-.section-title{font-size:11px;font-weight:950;letter-spacing:1px;margin:21px 1px 10px;color:var(--mint)}
-.panel{padding:14px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#104332,#0a2c22);margin-bottom:10px;box-shadow:var(--shadow)}
-.panel-title{font-size:12px;font-weight:900}.muted{font-size:10px;color:var(--muted);line-height:1.5;margin-top:5px}
-.row{display:flex;align-items:center;justify-content:space-between;gap:9px}
-.primary{width:100%;padding:12px;border-radius:11px;background:linear-gradient(90deg,#00e69a,#21bd83);color:#05291e;font-size:10px;font-weight:950;box-shadow:0 6px 18px #00e69a25;margin-top:11px}
-.secondary{padding:8px 11px;border-radius:9px;background:#ffffff0c;color:var(--mint);border:1px solid var(--line);font-size:9px;font-weight:850}
-.item{display:flex;align-items:center;gap:11px;padding:11px;border-radius:13px;background:#0b3025;border:1px solid var(--line);margin-bottom:8px}
-.item-art{width:49px;height:49px;border-radius:12px;background:#15543d;display:grid;place-items:center;font-size:27px}
-.item-main{flex:1}.item-name{font-size:11px;font-weight:900}.item-desc{font-size:9px;color:var(--muted);margin-top:4px}
-.pill{font-size:8px;color:var(--mint);background:#00e69a18;border:1px solid #00e69a30;border-radius:30px;padding:5px 8px}
-.filters{display:flex;gap:6px;margin:12px 0}.filter{flex:1;padding:9px 5px;border-radius:9px;background:#ffffff09;color:var(--muted);font-size:9px;font-weight:850;border:1px solid var(--line)}.filter.active{background:#00e69a;color:#05291e}
-.quest{padding:12px;border-radius:13px;background:#0c3327;border:1px solid var(--line);margin-bottom:8px}.progress{height:6px;background:#041b14;border-radius:20px;overflow:hidden;margin-top:10px}.progress>i{display:block;height:100%;width:35%;background:linear-gradient(90deg,var(--green),var(--lime));border-radius:20px}
-.giveaway{padding:14px;border-radius:15px;background:linear-gradient(140deg,#14543c,#0a2c22);border:1px solid #b7ff6330;margin-bottom:10px}.giveaway-art{font-size:29px;margin-bottom:8px}.giveaway-title{font-size:12px;font-weight:950}.history{padding:12px;border-radius:12px;background:#0c3025;border:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px;font-size:10px}.positive{color:var(--green);font-weight:900}
-.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;display:flex;justify-content:space-around;background:#041710f2;backdrop-filter:blur(18px);border-top:1px solid var(--line);padding:10px 3px calc(10px + env(safe-area-inset-bottom));z-index:20}
-.nav{background:none;color:#83a99a;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:8px;min-width:49px}.nav b{font-size:18px}.nav.active{color:var(--green)}
-.toast{position:fixed;z-index:90;top:12px;left:50%;transform:translate(-50%,-90px);padding:11px 15px;border-radius:12px;background:#123d2e;border:1px solid #00e69a55;font-size:10px;transition:.3s;box-shadow:var(--shadow);max-width:90%;text-align:center}.toast.show{transform:translate(-50%,0)}
-/* Spin window */
-.modal{position:fixed;inset:0;z-index:60;background:#00120ddd;display:none;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex;animation:fadeIn .25s ease}
-.modal-card{width:100%;max-width:400px;border:1px solid #00e69a66;border-radius:22px;padding:18px;background:radial-gradient(circle at 50% 0%,#1b6949,#08251c 65%);box-shadow:0 0 55px #00e69a24;text-align:center;position:relative;overflow:hidden}
-.modal-close{position:absolute;right:12px;top:12px;background:#ffffff14;color:white;border-radius:50%;width:29px;height:29px}
-.virus-stage{height:205px;display:grid;place-items:center;position:relative;margin:7px 0}
-.virus-aura{position:absolute;width:150px;height:150px;border-radius:50%;background:#00e69a18;box-shadow:0 0 35px #00e69a44;animation:aura 2s ease-in-out infinite}
-.virus{position:relative;font-size:95px;filter:drop-shadow(0 0 18px #00ff9d77);transform-origin:center;z-index:2}
-.virus.spinning{animation:virusGlitch .23s infinite,virusFloat .6s ease-in-out infinite alternate}
-.virus-eye{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
-.reel{display:flex;gap:8px;justify-content:center;margin:8px 0 13px}
-.reel-slot{width:64px;height:58px;border-radius:12px;background:#052017;border:1px solid #00e69a44;display:grid;place-items:center;font-size:27px;overflow:hidden}
-.reel-slot.rolling{animation:reelFlash .18s linear infinite}
-.spin-status{font-size:11px;color:var(--mint);font-weight:900;min-height:18px}
-.disclaimer{font-size:9px;color:#a7c9ba;line-height:1.45;margin-top:9px}
-.currency-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}
-.currency-option{padding:11px 5px;border:1px solid #ffffff20;border-radius:11px;background:#071f18;color:#dfffee;font-size:10px;font-weight:900;cursor:pointer}
-.currency-option.active{border-color:#00e69a;background:linear-gradient(145deg,#176044,#0b3023);box-shadow:0 0 0 1px #00e69a55,0 0 18px #00e69a20}
-.currency-option small{display:block;font-size:8px;color:#a7c9ba;margin-top:5px;font-weight:700}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes aura{50%{transform:scale(1.25);opacity:.55}}
-@keyframes virusGlitch{0%{transform:translate(0) skew(0)}25%{transform:translate(3px,-2px) skew(3deg)}50%{transform:translate(-3px,2px) skew(-4deg)}75%{transform:translate(2px,1px) skew(2deg)}100%{transform:translate(0) skew(0)}}
-@keyframes virusFloat{to{translate:0 -13px;rotate:5deg}}
-@keyframes reelFlash{50%{filter:brightness(2.2);transform:scale(.94)}}
-@keyframes floatY{50%{transform:translateY(-8px)}}
-@keyframes pulseScale{50%{transform:scale(1.09)}}
-@keyframes glowPulse{50%{filter:drop-shadow(0 0 15px #00e69a)}}
-@keyframes spin360{to{transform:rotate(360deg)}}
-@keyframes bobY{50%{transform:translateY(6px)}}
-@keyframes swayX{50%{transform:translateX(7px)}}
-@keyframes tiltZ{50%{transform:rotate(5deg)}}
-@keyframes blinkOpacity{50%{opacity:.35}}
-@keyframes shimmerX{0%{background-position:-200% 0}100%{background-position:200% 0}}
-@keyframes breathe{50%{transform:scale(1.04);opacity:.8}}
-@keyframes bounceY{50%{transform:translateY(-12px)}}
-@keyframes orbit{to{transform:rotate(360deg)}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
-
-.anim-1{animation:floatY 2.8s ease-in-out infinite; animation-delay:0.00s;}
-.anim-2{animation:pulseScale 1.8s ease-in-out infinite; animation-delay:0.11s;}
-.anim-3{animation:glowPulse 2.2s ease-in-out infinite; animation-delay:0.22s;}
-.anim-4{animation:spin360 5s linear infinite; animation-delay:0.33s;}
-.anim-5{animation:bobY 1.4s ease-in-out infinite; animation-delay:0.44s;}
-.anim-6{animation:swayX 2.6s ease-in-out infinite; animation-delay:0.55s;}
-.anim-7{animation:tiltZ 2s ease-in-out infinite; animation-delay:0.66s;}
-.anim-8{animation:blinkOpacity 1.4s ease-in-out infinite; animation-delay:0.00s;}
-.anim-9{animation:shimmerX 2.4s linear infinite; animation-delay:0.11s;}
-.anim-10{animation:breathe 3s ease-in-out infinite; animation-delay:0.22s;}
-.anim-11{animation:bounceY 1.2s cubic-bezier(.3,.7,.4,1) infinite; animation-delay:0.33s;}
-.anim-12{animation:orbit 4s linear infinite; animation-delay:0.44s;}
-.anim-13{animation:floatY 2.8s ease-in-out infinite; animation-delay:0.55s;}
-.anim-14{animation:pulseScale 1.8s ease-in-out infinite; animation-delay:0.66s;}
-.anim-15{animation:glowPulse 2.2s ease-in-out infinite; animation-delay:0.00s;}
-.anim-16{animation:spin360 5s linear infinite; animation-delay:0.11s;}
-.anim-17{animation:bobY 1.4s ease-in-out infinite; animation-delay:0.22s;}
-.anim-18{animation:swayX 2.6s ease-in-out infinite; animation-delay:0.33s;}
-.anim-19{animation:tiltZ 2s ease-in-out infinite; animation-delay:0.44s;}
-.anim-20{animation:blinkOpacity 1.4s ease-in-out infinite; animation-delay:0.55s;}
-.anim-21{animation:shimmerX 2.4s linear infinite; animation-delay:0.66s;}
-.anim-22{animation:breathe 3s ease-in-out infinite; animation-delay:0.00s;}
-.anim-23{animation:bounceY 1.2s cubic-bezier(.3,.7,.4,1) infinite; animation-delay:0.11s;}
-.anim-24{animation:orbit 4s linear infinite; animation-delay:0.22s;}
-.anim-25{animation:floatY 2.8s ease-in-out infinite; animation-delay:0.33s;}
-.anim-26{animation:pulseScale 1.8s ease-in-out infinite; animation-delay:0.44s;}
-.anim-27{animation:glowPulse 2.2s ease-in-out infinite; animation-delay:0.55s;}
-.anim-28{animation:spin360 5s linear infinite; animation-delay:0.66s;}
-.anim-29{animation:bobY 1.4s ease-in-out infinite; animation-delay:0.00s;}
-.anim-30{animation:swayX 2.6s ease-in-out infinite; animation-delay:0.11s;}
-.anim-31{animation:tiltZ 2s ease-in-out infinite; animation-delay:0.22s;}
-.anim-32{animation:blinkOpacity 1.4s ease-in-out infinite; animation-delay:0.33s;}
-.anim-33{animation:shimmerX 2.4s linear infinite; animation-delay:0.44s;}
-.anim-34{animation:breathe 3s ease-in-out infinite; animation-delay:0.55s;}
-.anim-35{animation:bounceY 1.2s cubic-bezier(.3,.7,.4,1) infinite; animation-delay:0.66s;}
-.anim-36{animation:orbit 4s linear infinite; animation-delay:0.00s;}
-.anim-37{animation:floatY 2.8s ease-in-out infinite; animation-delay:0.11s;}
-.anim-38{animation:pulseScale 1.8s ease-in-out infinite; animation-delay:0.22s;}
-.anim-39{animation:glowPulse 2.2s ease-in-out infinite; animation-delay:0.33s;}
-.anim-40{animation:spin360 5s linear infinite; animation-delay:0.44s;}
-.anim-41{animation:bobY 1.4s ease-in-out infinite; animation-delay:0.55s;}
-.anim-42{animation:swayX 2.6s ease-in-out infinite; animation-delay:0.66s;}
-.anim-43{animation:tiltZ 2s ease-in-out infinite; animation-delay:0.00s;}
-.anim-44{animation:blinkOpacity 1.4s ease-in-out infinite; animation-delay:0.11s;}
-.anim-45{animation:shimmerX 2.4s linear infinite; animation-delay:0.22s;}
-.anim-46{animation:breathe 3s ease-in-out infinite; animation-delay:0.33s;}
-.anim-47{animation:bounceY 1.2s cubic-bezier(.3,.7,.4,1) infinite; animation-delay:0.44s;}
-.anim-48{animation:orbit 4s linear infinite; animation-delay:0.55s;}
-.anim-49{animation:floatY 2.8s ease-in-out infinite; animation-delay:0.66s;}
-.anim-50{animation:pulseScale 1.8s ease-in-out infinite; animation-delay:0.00s;}
-.anim-51{animation:glowPulse 2.2s ease-in-out infinite; animation-delay:0.11s;}
-.anim-52{animation:spin360 5s linear infinite; animation-delay:0.22s;}
-.anim-53{animation:bobY 1.4s ease-in-out infinite; animation-delay:0.33s;}
-.anim-54{animation:swayX 2.6s ease-in-out infinite; animation-delay:0.44s;}
-.anim-55{animation:tiltZ 2s ease-in-out infinite; animation-delay:0.55s;}
-.anim-56{animation:blinkOpacity 1.4s ease-in-out infinite; animation-delay:0.66s;}
-.anim-57{animation:shimmerX 2.4s linear infinite; animation-delay:0.00s;}
-.anim-58{animation:breathe 3s ease-in-out infinite; animation-delay:0.11s;}
-.anim-59{animation:bounceY 1.2s cubic-bezier(.3,.7,.4,1) infinite; animation-delay:0.22s;}
-.anim-60{animation:orbit 4s linear infinite; animation-delay:0.33s;}
-.anim-61{animation:floatY 2.8s ease-in-out infinite; animation-delay:0.44s;}
-.anim-62{animation:pulseScale 1.8s ease-in-out infinite; animation-delay:0.55s;}
-.anim-63{animation:glowPulse 2.2s ease-in-out infinite; animation-delay:0.66s;}
-.anim-64{animation:spin360 5s linear infinite; animation-delay:0.00s;}
-.anim-65{animation:bobY 1.4s ease-in-out infinite; animation-delay:0.11s;}
-.anim-66{animation:swayX 2.6s ease-in-out infinite; animation-delay:0.22s;}
-.anim-67{animation:tiltZ 2s ease-in-out infinite; animation-delay:0.33s;}
-.anim-68{animation:blinkOpacity 1.4s ease-in-out infinite; animation-delay:0.44s;}
-.anim-69{animation:shimmerX 2.4s linear infinite; animation-delay:0.55s;}
-.anim-70{animation:breathe 3s ease-in-out infinite; animation-delay:0.66s;}
-.anim-71{animation:bounceY 1.2s cubic-bezier(.3,.7,.4,1) infinite; animation-delay:0.00s;}
-.anim-72{animation:orbit 4s linear infinite; animation-delay:0.11s;}
+:root{--g:#00e69a;--lime:#b7ff63;--gold:#ffc85a;--pink:#ff4d8d;--purp:#a855f7;--red:#ff637c;--bg:#061b16}
+body{background:var(--bg);color:#f2fff9;font-family:Inter,system-ui,Arial,sans-serif;min-height:100vh;overflow-x:hidden}
+button{font:inherit;border:0;cursor:pointer;transition:transform .12s,filter .12s,box-shadow .12s}
+button:active{transform:scale(.92)!important;filter:brightness(1.4)}
+.app{max-width:480px;margin:auto;min-height:100vh;padding-bottom:118px;background:radial-gradient(ellipse at 50% -10%,#1a6b4a 0%,#0a2c21 38%,#061b16 80%);position:relative;overflow:hidden}
+@keyframes floatY{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(4deg)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,200,90,.8),0 0 20px #ffc85a}50%{box-shadow:0 0 0 14px rgba(255,200,90,0),0 0 45px #00e69a}}
+@keyframes shakeX{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+@keyframes spinV{from{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(1.3)}to{transform:rotate(360deg) scale(1)}}
+@keyframes glitch{0%{transform:translate(0) skew(0)}25%{transform:translate(4px,-3px) skew(4deg)}50%{transform:translate(-4px,3px) skew(-4deg)}75%{transform:translate(3px,2px) skew(2deg)}100%{transform:translate(0)}}
+@keyframes popIn{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+@keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes rainbow{0%{filter:hue-rotate(0)}100%{filter:hue-rotate(360deg)}}
+@keyframes fallDown{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+@keyframes winJump{0%{transform:scale(1)}30%{transform:scale(1.35) rotate(-3deg)}60%{transform:scale(1.2) rotate(3deg)}100%{transform:scale(1)}}
+@keyframes shineMove{0%{background-position:-200%}100%{background-position:200%}}
+@keyframes bounceY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes blink{50%{opacity:.3}}
+@keyframes orbitSpin{to{transform:rotate(360deg)}}
+@keyframes bigWinText{0%{transform:scale(.4);opacity:0}50%{transform:scale(1.4)}100%{transform:scale(1);opacity:1}}
+.header{padding:14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#061b16f2;z-index:40;backdrop-filter:blur(12px);border-bottom:3px solid var(--g)}
+.logo{font-size:18px;font-weight:950;letter-spacing:.5px}
+.logo span{background:linear-gradient(90deg,#fff,#b7ff63,#ffc85a,#fff);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shineMove 2s linear infinite}
+.balBox{display:flex;gap:5px}
+.balBox b{background:#000;border:2px solid #fff;border-radius:99px;padding:7px 8px;font-size:12px;white-space:nowrap;animation:popIn .4s}
+.balBox b span{color:var(--gold)}
+.online{margin:10px 13px;padding:12px 14px;border:1px solid #00e69a55;border-radius:16px;background:linear-gradient(100deg,#0c4935,#0b3025);display:flex;justify-content:space-between;align-items:center;animation:slideUp .4s}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--g);box-shadow:0 0 10px var(--g);animation:pulse 1.4s infinite}
+.soundBtn{margin:0 13px 12px;width:calc(100% - 26px);padding:12px;background:linear-gradient(90deg,#123d2e,#0c4935);border:2px solid var(--g);color:#a5ffe0;border-radius:12px;font-weight:900;font-size:11px;animation:glowPulse 2.5s infinite}
+.page{display:none;padding:0 13px;animation:slideUp .3s}.page.active{display:block}
+.heading{font-size:20px;font-weight:950;margin:14px 2px 4px}.sub{font-size:11px;color:#91b6a7;margin:0 2px 14px;line-height:1.4}
+.hero{text-align:center;padding:6px 6px 2px}
+.virusBig{width:150px;height:150px;margin:0 auto;border-radius:50%;border:5px solid #fff;background:radial-gradient(circle,#e8ff00,#0e8a52);display:flex;align-items:center;justify-content:center;font-size:82px;animation:floatY 2.6s infinite;box-shadow:0 18px 34px rgba(0,0,0,.5);cursor:pointer}
+.virusBig:active{animation:spinV .6s}
+.hero h1{font-size:38px;font-weight:950;text-shadow:0 4px 0 #000;margin-top:8px}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#b7ff63,#ffc85a,#ff4d8d,#b7ff63);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shineMove 2s linear infinite}
+.xpBar{height:15px;background:#000;border:2px solid #fff;border-radius:99px;margin:10px 28px;overflow:hidden}
+.xpBar div{height:100%;width:0%;background:linear-gradient(90deg,#b7ff63,#ffc85a,#00e69a);transition:width .5s}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.tile{min-height:128px;border-radius:22px;padding:15px 11px;border:2px solid rgba(255,255,255,.45);color:#fff;text-align:left;position:relative;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+.tile:before{content:"";position:absolute;width:90px;height:90px;border-radius:50%;right:-30px;top:-35px;background:#ffffff22}
+.tile:active{transform:scale(.92);animation:shakeX .3s}
+.tile i{font-size:42px;display:block;animation:bounceY 2s infinite}
+.tile b{display:block;font-size:15px;margin-top:5px}
+.tile span{font-size:11px;opacity:.92}
+.t1{background:linear-gradient(135deg,#f59e0b,#7c2d12)}.t2{background:linear-gradient(135deg,#ec4899,#500724)}.t3{background:linear-gradient(135deg,#facc15,#713f12)}.t4{background:linear-gradient(135deg,#22d3ee,#082f49)}.t5{background:linear-gradient(135deg,#8b5cf6,#2e1065)}.t6{background:linear-gradient(135deg,#ef4444,#450a0a)}.t7{background:linear-gradient(135deg,#16a34a,#052e16)}.t8{background:linear-gradient(135deg,#2563eb,#172554)}.t9{background:linear-gradient(135deg,#14b8a6,#134e4a)}.t10{background:linear-gradient(135deg,#111827,#000)}.t11{background:linear-gradient(135deg,#eab308,#422006)}.t12{background:linear-gradient(135deg,#06b6d4,#164e63)}
+.card{background:rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.28);border-radius:24px;padding:16px;margin:12px 0;animation:slideUp .35s}
+.card h2{font-size:18px}
+.small{font-size:12px;line-height:1.5;color:#d4f4e7}
+.btn{width:100%;border-radius:18px;padding:16px;font-size:15px;font-weight:950;cursor:pointer;color:#000}
+.btn:active{transform:scale(.94)}
+.gold{background:linear-gradient(180deg,#ffe600,#ffb800);box-shadow:0 6px 0 #7a4d00;animation:glowPulse 2s infinite}
+.green{background:linear-gradient(180deg,#b7ff63,#22c55e);box-shadow:0 6px 0 #14532d}
+.dark{background:#000;color:#fff;border:2px solid #fff}
+.red{background:linear-gradient(180deg,#ff5555,#b91c1c);color:#fff;box-shadow:0 6px 0 #450a0a}
+.purple{background:linear-gradient(180deg,#a855f7,#6d28d9);color:#fff;box-shadow:0 6px 0 #2e1065}
+.pink{background:linear-gradient(180deg,#ff4d8d,#9d174d);color:#fff}
+.row{display:flex;gap:8px}.row>*{flex:1}
+input,select{width:100%;padding:14px;border-radius:14px;border:0;margin:6px 0;font-weight:900;font-size:16px}
+.betRow{display:flex;gap:6px;margin:8px 0}
+.betRow button{flex:1;padding:11px;border-radius:12px;background:#ffffff18;color:#fff;border:1px solid #ffffff33;font-weight:950}
+.betRow button.on{background:var(--gold);color:#000;border-color:#fff;animation:pulse .5s}
+.winBox{background:#000;border:3px solid var(--gold);border-radius:18px;padding:14px;text-align:center;margin:10px 0}
+.winBox .lbl{font-size:10px;letter-spacing:2px;color:#91b6a7}
+.winBox .amt{font-size:44px;font-weight:950;color:var(--gold);text-shadow:0 3px 0 #000}
+.winBox .amt.win{animation:winJump .6s,bigWinText .5s}
+.mult{font-size:22px;font-weight:950;color:var(--lime)}
+.list{display:flex;justify-content:space-between;align-items:center;gap:10px;background:rgba(255,255,255,.14);padding:13px;border-radius:15px;margin-bottom:9px}
+.list:active{transform:scale(.97);background:rgba(255,255,255,.25)}
+.wheel{width:260px;height:260px;border-radius:50%;border:9px solid var(--gold);margin:14px auto;background:conic-gradient(#ef4444 0 45deg,#111 45deg 90deg,#f59e0b 90deg 135deg,#111 135deg 180deg,#22c55e 180deg 225deg,#111 225deg 270deg,#a855f7 270deg 315deg,#111 315deg 360deg);display:flex;align-items:center;justify-content:center;font-size:72px;transition:transform 4s cubic-bezier(.1,.7,.1,1);box-shadow:0 0 42px var(--gold)}
+.mines{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.cell{aspect-ratio:1;background:rgba(255,255,255,.25);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;border:2px solid #fff}
+.cell:active{transform:scale(.85);background:#b7ff63}
+.cell.hit{animation:popIn .3s;background:#b7ff63}
+.cell.boom{animation:shakeX .4s;background:#ff637c}
+.plinkoBoard{height:130px;background:#000;border-radius:18px;display:flex;align-items:flex-end;justify-content:center;gap:8px;padding:12px;border:2px solid var(--g)}
+.plinkoBoard span{font-size:11px;font-weight:950;background:#fff;color:#000;padding:6px 7px;border-radius:8px}
+.ball{font-size:42px;animation:bounceY .8s infinite}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;display:flex;background:#01130bee;backdrop-filter:blur(18px);border-top:4px solid var(--g);padding:9px 4px calc(13px + env(safe-area-inset-bottom));z-index:99}
+.nav{flex:1;background:#12291d;border:2px solid rgba(255,255,255,.25);color:#fff;border-radius:16px;margin:0 3px;padding:11px 2px;font-size:10px;font-weight:950;min-height:62px}
+.nav i{display:block;font-size:26px;animation:floatY 3s infinite}
+.nav.active{background:var(--lime);color:#000;border-color:#fff;animation:popIn .3s;box-shadow:0 0 18px var(--lime)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal.show{display:flex}
+.mbox{background:#fff;color:#000;border-radius:28px;padding:26px;text-align:center;width:100%;max-width:360px;border:5px solid var(--gold);animation:popIn .4s;box-shadow:0 0 50px var(--gold)}
+.mbox .bigE{font-size:74px;animation:bounceY 1s infinite}
+.mbox h2{font-size:24px}
+.mbox .winAmt{font-size:42px;font-weight:950;color:#16a34a;animation:bigWinText .6s}
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#000;color:#fff;padding:12px 16px;border-radius:99px;font-weight:950;z-index:300;display:none;border:3px solid var(--lime);white-space:nowrap;max-width:94vw;overflow:hidden;animation:popIn .3s}
+.conf{position:fixed;top:-30px;z-index:250;pointer-events:none;animation:fallDown linear forwards}
+.badge{background:var(--gold);color:#000;font-size:10px;padding:4px 8px;border-radius:99px;font-weight:950;animation:blink 1.2s infinite}
+.chip{display:inline-block;background:#ffffff1a;border:1px solid #ffffff33;padding:6px 10px;border-radius:99px;font-size:11px;font-weight:800;margin:3px}
+.rainbowText{background:linear-gradient(90deg,#ff4d8d,#ffc85a,#b7ff63,#22d3ee,#a855f7);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shineMove 2s linear infinite;font-weight:950}
 </style>
 </head>
 <body>
-<div class="ambient"></div><div class="ambient b"></div>
+<div class="app" id="app">
 <div class="toast" id="toast"></div>
-<div class="app">
-<header class="header">
- <div class="user"><div class="avatar">🐙</div><div><div class="user-name" id="username">Игрок</div><div class="user-sub">MICROBE 🦠 • MINI APP</div></div></div>
- <div class="balance">🟢 <span id="balance">0</span></div>
-</header>
-<div class="online">
- <div class="online-left"><i class="dot"></i><div><div class="online-label">СЕЙЧАС В ПРИЛОЖЕНИИ</div><div class="online-hint">Уникальные авторизованные игроки</div></div></div>
- <div class="online-right"><div class="online-count" id="onlineCount">—</div><div class="online-status" id="onlineStatus">ожидание сервера</div></div>
-</div>
-<button class="sound" id="soundBtn">🔇 ЗВУК ВЫКЛЮЧЕН · НАЖМИ, ЧТОБЫ ВКЛЮЧИТЬ</button>
+<header class="header"><div class="logo">MICROBE <span>🦠</span></div><div class="balBox"><b>🪙 <span id="tok">0</span></b><b>⭐ <span id="st">0</span></b></div></header>
+<div class="online"><div style="display:flex;gap:10px;align-items:center"><i class="dot"></i><div><div style="font-size:11px;font-weight:950">СЕЙЧАС ОНЛАЙН</div><div style="font-size:9px;color:#91b6a7">Живые игроки MICROBE 🦠</div></div></div><div style="text-align:right"><div style="font-size:24px;color:#00e69a;font-weight:950" id="onN">1,482</div><div style="font-size:8px;color:#91b6a7">ОНЛАЙН</div></div></div>
+<button class="soundBtn" id="sndBtn" onclick="toggleSound()">🔇 ЗВУК ВЫКЛЮЧЕН · НАЖМИ 1 РАЗ · ПОТОМ БУДЕТ ПИУ-ПИУ 🔊</button>
 
-<section class="page active" id="home">
- <div class="game-hero">
-  <div class="game-kicker">LIVE GAME EXPERIENCE</div>
-  <span class="game-virus">🦠</span>
-  <div class="game-title">MICROBE SPIN</div>
-  <div class="game-desc">Запусти вирусную анимацию и открой игровой экран</div>
-  <button class="game-start" type="button" data-action="open-spin">▶ ИГРАТЬ</button>
- </div>
- <h1 class="heading">ГЛАВНАЯ</h1><p class="subheading">Добро пожаловать в MICROBE 🦠</p>
- <div class="grid">
-  <button class="tile t-green" type="button" data-page="inventory"><div class="tile-icon">🎒</div><div><div class="tile-title">ИНВЕНТАРЬ</div><div class="tile-note">Предметы и награды</div></div></button>
-  <button class="tile t-olive" type="button" data-page="contests"><div class="tile-icon">🎉</div><div><div class="tile-title">КОНКУРСЫ</div><div class="tile-note">События и призы</div></div></button>
-  <button class="tile t-purple" type="button" data-page="games"><div class="tile-icon">🎮</div><div><div class="tile-title">ИГРЫ</div><div class="tile-note">Мини-игры</div></div></button>
-  <button class="tile t-mint" type="button" data-page="spin"><div class="tile-icon">🦠</div><div><div class="tile-title">ВИРУС SPIN</div
+<!-- ГЛАВНАЯ -->
+<section id="pg-home" class="page active">
+<div class="hero"><div class="virusBig" onclick="virusTap()">🦠</div><h1>MICROBE <em>🦠</em></h1><p class="small" id="hello">Привет! У тебя 0. Ткни вирус, забери бонус!</p><div class="xpBar"><div id="xpf"></div></div><p class="small">Уровень <b id="lvl">1</b> • Опыт <b id="xpT">0 / 100</b> • Побед <b id="winN">0</b> • Игр <b id="gameN">0</b></p><p><span class="chip">🔥 ХИТ</span><span class="chip">💰 ВЫИГРЫШ = СТАВКА × X</span><span class="chip">🎁 0 ⭐ СТАРТ</span></p></div>
+
+<div class="card" style="border:3px solid #ffc85a;animation:glowPulse 2s infinite"><h2>🎁 ТВОЙ СТАРТ С НУЛЯ</h2><p class="small">Было 0, станет много. Всё честно: сколько выиграл, столько и получил.</p><br><button class="btn gold" onclick="freeCase()">🎁 БЕСПЛАТНЫЙ КЕЙС · 0 ⭐ · +ПРИЗ</button><div style="height:8px"></div><button class="btn green" onclick="daily()">🎁 БОНУС +1000 🪙 · ЗАБРАТЬ</button><p id="dayT" style="text-align:center;font-size:12px;margin-top:8px;font-weight:800"></p></div>
+
+<div class="card"><h2 class="rainbowText">💰 КАЛЬКУЛЯТОР ВЫИГРЫША</h2><p class="small">Поставь ставку, выбери множитель, смотри, сколько получишь, если выиграешь:</p><input id="calcBet" type="number" value="100" oninput="calcWin()"><div class="betRow"><button onclick="setMult(1.5,this)">x1.5</button><button onclick="setMult(2,this)" class="on">x2</button><button onclick="setMult(5,this)">x5</button><button onclick="setMult(10,this)">x10</button></div><div class="winBox"><div class="lbl">ЕСЛИ ВЫИГРАЕШЬ, ПОЛУЧИШЬ РОВНО:</div><div class="amt" id="calcWin">200 🪙</div><div class="small">100 × x2 = 200 · без обмана</div></div><button class="btn purple" onclick="playCalc()">▶ ИГРАТЬ НА ЭТУ СУММУ</button></div>
+
+<div class="grid">
+<button class="tile t1" onclick="go('cases')"><i>📦</i><b>CASES</b><span>кейсы · приз сразу</span></button>
+<button class="tile t2" onclick="go('crash')"><i>🚀</i><b>CRASH</b><span>ставка × множитель</span></button>
+<button class="tile t3" onclick="go('mine')"><i>⛏️</i><b>ШАХТА 2.0</b><span>💎 +ставка</span></button>
+<button class="tile t4" onclick="go('roulette')"><i>🎡</i><b>РУЛЕТКА</b><span>крути · x10</span></button>
+<button class="tile t5" onclick="go('slots')"><i>🎰</i><b>СЛОТ</b><span>джекпот x20</span></button>
+<button class="tile t6" onclick="go('dice')"><i>🎲</i><b>КОСТИ</b><span>x2 честно</span></button>
+<button class="tile t7" onclick="go('plinko')"><i>🔴</i><b>ПЛИНКО</b><span>шарик · до x10</span></button>
+<button class="tile t8" onclick="go('grab')"><i>✋</i><b>ХВАТАЙКА</b><span>лови вирус</span></button>
+<button class="tile t9" onclick="go('cs2')"><i>🔫</i><b>CS2 РУЛЕТКА</b><span>скины</span></button>
+<button class="tile t10" onclick="go('surv')"><i>🪂</i><b>ВЫЖИВАНИЕ</b><span>50/50 · x2</span></button>
+<button class="tile t11" onclick="go('up')"><i>👑</i><b>УЛУЧШЕНИЕ</b><span>10 → 600 ⭐</span></button>
+<button class="tile t12" onclick="go('pand')"><i>😷</i><b>ПАНДЕМИЯ</b><span>зарази · +50</span></button>
+<button class="tile t5" onclick="go('pvp')"><i>⚔️</i><b>ПВП</b><span>дуэль · x2</span></button>
+<button class="tile t4" onclick="go('kaskad')"><i>💥</i><b>КАСКАД</b><span>3 в ряд · x3</span></button>
+<button class="tile t2" onclick="go('inv')"><i>🧰</i><b>ИНВЕНТАРЬ</b><span id="invC">0 призов</span></button>
+<button class="tile t3" onclick="go('contest')"><i>🏆</i><b>КОНКУРСЫ</b><span>1000 NFT</span></button>
+</div>
+
+<div class="card"><h2>🔥 LIVE · ТОЛЬКО ЧТО ВЫИГРАЛИ</h2><p class="small" id="liveFeed">🦠 @virus поставил 100, выиграл x4.2 = <b>420 🪙</b><br>🍭 @sara поставила 50, выиграла x2 = <b>100 🪙</b><br>⚔️ @dima поставил 200, выиграл x10 = <b>2000 🪙</b><br>🚀 @king поставил 10, выиграл x1.8 = <b>18 🪙</b></p><br><button class="btn dark" onclick="go('tasks')">✅ ЗАДАНИЯ · ЗАРАБОТАЙ 20,000 С НУЛЯ</button></div>
+<div class="card"><h2>👥 ПРИГЛАСИ ДРУГА</h2><p class="small">+20,000 за друга, честно, сразу на баланс.</p><br><button class="btn gold" onclick="invite()">📋 СКОПИРОВАТЬ ССЫЛКУ · +20,000</button></div>
+</section>
+
+<!-- CASES -->
+<section id="pg-cases" class="page"><div class="card" style="text-align:center"><h2>📦 CASES · MICROBE</h2><div style="font-size:72px;animation:floatY 2s infinite" id="caseBox">🎁</div><p id="caseR" style="font-weight:950;min-height:24px"></p><input id="caseBet" type="number" value="0"><p class="small">Ставка 0 = бесплатно. Ставка 50 = приз дороже.</p><div class="winBox"><div class="lbl">ПРИЗ МОЖЕТ БЫТЬ ДО:</div><div class="amt">1000 ⭐</div></div><button class="btn gold" onclick="openCase()">🎁 ОТКРЫТЬ КЕЙС</button><div style="height:8px"></div><div class="row"><button class="btn green" onclick="setBet('caseBet',15)">15 ⭐</button><button class="btn purple" onclick="setBet('caseBet',50)">50 ⭐</button><button class="btn dark" onclick="setBet('caseBet',150)">150 ⭐</button></div></div><div class="card"><button class="btn dark" onclick="go('home')">⬅ НАЗАД НА ГЛАВНУЮ</button></div></section>
+
+<!-- CRASH -->
+<section id="pg-crash" class="page"><div class="card" style="text-align:center"><h2>🚀 CRASH · СТАВКА × X = ВЫИГРЫШ</h2><div style="background:#000;border-radius:18px;padding:20px;border:3px solid #b7ff63"><div style="font-size:52px;font-weight:950;color:#b7ff63" id="crN">x1.00</div><div style="font-size:48px" id="rock">🚀</div></div><br><label class="small">ТВОЯ СТАВКА:</label><input id="crBet" type="number" value="10"><div class="betRow"><button onclick="setBet('crBet',10)" class="on">10</button><button onclick="setBet('crBet',50)">50</button><button onclick="setBet('crBet',100)">100</button><button onclick="setBet('crBet',500)">500</button></div><div class="winBox"><div class="lbl">СЕЙЧАС, ЕСЛИ ЗАБРАТЬ:</div><div class="amt" id="crWin">10 🪙</div><div class="small" id="crFormula">10 × x1.00 = 10</div></div><button class="btn gold" onclick="startCrash()">🚀 ЗАПУСТИТЬ · СТАВКА СПИШЕТСЯ</button><div style="height:8px"></div><button class="btn red" onclick="cashout()">💰 ЗАБРАТЬ · РОВНО СТОЛЬКО, СКОЛЬКО НА ЭКРАНЕ</button><p id="crM" style="font-weight:950;margin-top:8px"></p></div><div class="card"><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div></section>
+
+<!-- MINE -->
+<section id="pg-mine" class="page"><div class="card"><h2>⛏️ ШАХТА 2.0 · КАЖДАЯ 💎 = +СТАВКА</h2><p class="small">1 клетка = +10. 5 клеток = +50. Мина = сгорело.</p><input id="mineBet" type="number" value="10"><div class="betRow"><button onclick="setBet('mineBet',10)" class="on">10</button><button onclick="setBet('mineBet',50)">50</button><button onclick="setBet('mineBet',100)">100</button></div><div class="mines" id="board"></div><br><div class="winBox"><div class="lbl">НАКОПЛЕНО В ЭТОЙ ИГРЕ:</div><div class="amt" id="mineWin">0 🪙</div></div><button class="btn gold" onclick="initMine()">⛏️ НОВАЯ ИГРА</button><div style="height:8px"></div><button class="btn green" onclick="mineCash()">💰 ЗАБРАТЬ НАКОПЛЕННОЕ</button><p id="mineM" style="text-align:center;font-weight:950"></p></div><div class="card"><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div></section>
+
+<!-- ROULETTE -->
+<section id="pg-roulette" class="page"><div class="card" style="text-align:center"><h2>🎡 РУЛЕТКА</h2><div style="font-size:30px">⬇️</div><div class="wheel" id="wheel">🦠</div><input id="rouBet" type="number" value="5"><p class="small">Выигрыш: ставка × выпавший множитель</p><div class="winBox"><div class="lbl">МОЖНО ВЫИГРАТЬ ДО:</div><div class="amt" id="rouWin">50 🪙</div><div class="small">5 × x10 = 50</div></div><button class="btn gold" onclick="spin()">🎡 КРУТИТЬ</button><div style="height:8px"></div><button class="btn green" onclick="spinFree()">🆓 БЕСПЛАТНО 1 РАЗ · +10</button><p id="rouR" style="font-weight:950"></p></div><div
