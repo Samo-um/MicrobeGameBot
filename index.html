@@ -2,97 +2,243 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>MICROBE</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<title>MICROBE • Green Edition</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;color:#fff;min-height:100vh;background:linear-gradient(180deg,#3b0a54,#7b1e8a 35%,#0e6b4a 75%,#062a1e)}
-button{border:0;cursor:pointer}button:active{transform:scale(.92)}
-.w{max-width:480px;margin:auto;padding:12px 12px 110px}
-.top{display:flex;justify-content:space-between;background:rgba(0,0,0,.4);border-radius:16px;padding:11px}
-.bal span{background:#000;border:2px solid #fff;border-radius:99px;padding:6px 8px;font-size:12px;font-weight:900}
-.bal i{font-style:normal;color:#FFD700}
-.snd{width:100%;margin-top:10px;padding:13px;border-radius:14px;background:#000;color:#fff;font-weight:900;border:3px solid #FFD700}
-.pg{display:none}.pg.on{display:block}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:12px}
-.tile{min-height:126px;border-radius:22px;padding:14px;text-align:left;color:#fff;border:2px solid #fff}
-.tile b{display:block;font-size:16px;margin-top:8px}.tile span{font-size:11px}
-.tile .ic{font-size:42px;display:block}
-.a{background:linear-gradient(135deg,#ff8ac2,#c026d3)}.b{background:linear-gradient(135deg,#ffb800,#ff5a00)}.c{background:linear-gradient(135deg,#8b5cf6,#3b0764)}.d{background:linear-gradient(135deg,#38bdf8,#1e3a8a)}.e{background:linear-gradient(135deg,#22c55e,#052e16)}.f{background:linear-gradient(135deg,#facc15,#713f12)}
-.card{background:#fff;color:#111;border-radius:22px;padding:16px;margin-top:12px}
-.btn{width:100%;padding:15px;border-radius:16px;font-weight:900;margin-top:10px}
-.y{background:#FFE600}.g{background:#22C55E;color:#fff}.k{background:#111;color:#fff}
-input{width:100%;padding:13px;border-radius:13px;border:2px solid #111;margin-top:8px;font-weight:800}
-.nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:480px;z-index:999;display:flex;gap:5px;padding:9px 8px 14px;background:#000;border-top:3px solid #FFD700}
-.nav button{flex:1;background:#222;color:#fff;border-radius:14px;padding:10px 2px;font-size:10px;font-weight:900;min-height:60px}
-.nav button.on{background:#FFD700;color:#000}
-.nav i{display:block;font-size:24px;font-style:normal}
+:root{
+--bg1:#02120a; --bg2:#06281a; --bg3:#0a3d24; --card:#0e4d2e; --card2:#115c38;
+--light:#a7f3d0; --light2:#d1fae5; --mint:#34d399; --neon:#22ff88; --neon2:#4ade80;
+--gold:#fbbf24; --red:#ef4444; --text:#ecfdf5; --muted:#86efac;
+--pink:#f472b6; --blue:#38bdf8;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(800px 400px at 20% 0%,#14532d 0%,transparent 60%),radial-gradient(700px 500px at 90% 20%,#064e3b 0%,transparent 55%),linear-gradient(180deg,var(--bg1),var(--bg2) 45%,#03170d);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:110px}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 50% 120%,rgba(34,255,136,.18),transparent 60%);pointer-events:none;z-index:0}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(34,255,136,.6)}50%{box-shadow:0 0 0 14px rgba(34,255,136,0)}}
+@keyframes popIn{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes spinSlow{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes bounceBtn{0%{transform:scale(1)}50%{transform:scale(.93)}100%{transform:scale(1)}}
+@keyframes winFlash{0%{background:#22ff88}100%{background:transparent}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes microbeDance{0%{transform:rotate(-8deg) scale(1)}50%{transform:rotate(8deg) scale(1.12)}100%{transform:rotate(-8deg) scale(1)}}
+@keyframes caseOpen{0%{transform:scale(.8) rotate(-5deg)}50%{transform:scale(1.2) rotate(5deg)}100%{transform:scale(1)}}
+@keyframes crashFly{0%{transform:translate(0,0) rotate(0)}100%{transform:translate(80px,-60px) rotate(20deg)}}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:8px;padding:12px 12px 8px;background:rgba(2,18,10,.85);backdrop-filter:blur(14px)}
+.pill{background:rgba(255,255,255,.12);border:1px solid rgba(167,243,208,.35);padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800;display:flex;gap:6px;align-items:center;animation:slideUp .4s both}
+.bal{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.bal b{background:#052e1b;border:1px solid #22c55e;padding:7px 9px;border-radius:999px;font-size:12px;cursor:pointer;transition:.2s}
+.bal b:active{transform:scale(.9);background:#22ff88;color:#000}
+.online{font-size:11px;background:#052e1b;border:1px solid #34d399;padding:6px 8px;border-radius:999px}
+.dot{width:8px;height:8px;background:#22ff88;border-radius:50%;display:inline-block;animation:pulseGlow 1.4s infinite}
+.hero{padding:8px 14px 4px;position:relative;z-index:1}
+.hero h1{font-size:30px;letter-spacing:-.5px;line-height:1}
+.hero h1 span{color:var(--neon);text-shadow:0 0 20px #22ff88}
+.hero p{color:var(--muted);font-size:13px;margin-top:6px}
+.microbe{font-size:56px;animation:microbeDance 2.2s ease-in-out infinite;display:inline-block;filter:drop-shadow(0 10px 20px rgba(0,0,0,.5))}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:12px 14px}
+.stat{background:linear-gradient(160deg,var(--card),#052e1b);border:1px solid rgba(52,211,153,.4);border-radius:18px;padding:12px 8px;text-align:center;animation:popIn .5s both;cursor:pointer;transition:.2s}
+.stat:active{transform:scale(.94)}
+.stat small{color:var(--muted);font-size:10px;letter-spacing:.8px;text-transform:uppercase}
+.stat b{display:block;font-size:18px;margin-top:4px}
+.stat i{font-style:normal;font-size:11px;color:var(--gold)}
+.rate{margin:0 14px;background:#fef3c7;color:#78350f;border-radius:14px;padding:10px 12px;font-size:12px;font-weight:700;animation:slideUp .5s both}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:12px 14px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{white-space:nowrap;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;padding:9px 14px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer}
+.tab.active{background:var(--neon);color:#02120a;border-color:var(--neon)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:4px 14px;position:relative;z-index:1}
+.card{border-radius:24px;padding:16px 12px 14px;min-height:148px;position:relative;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.25);transition:transform .15s,box-shadow .2s;animation:popIn .45s both;user-select:none}
+.card:active{transform:scale(.94);animation:bounceBtn .3s}
+.card h3{font-size:17px;line-height:1.1;text-transform:uppercase;position:relative;z-index:2;text-shadow:0 2px 8px rgba(0,0,0,.4)}
+.card p{font-size:11px;opacity:.9;margin-top:4px;position:relative;z-index:2}
+.card .emoji{font-size:52px;display:block;margin-bottom:6px;animation:floaty 3s ease-in-out infinite;position:relative;z-index:2}
+.card .badge{position:absolute;top:10px;right:10px;background:#ef4444;color:#fff;font-size:10px;font-weight:900;padding:4px 7px;border-radius:999px;z-index:3}
+.c1{background:linear-gradient(150deg,#34d399,#059669 55%,#065f46)}
+.c2{background:linear-gradient(150deg,#a7f3d0,#34d399 50%,#047857);color:#052e1b}
+.c3{background:linear-gradient(150deg,#22c55e,#16a34a,#14532d)}
+.c4{background:linear-gradient(150deg,#052e16,#14532d,#22c55e)}
+.c5{background:linear-gradient(150deg,#bbf7d0,#4ade80,#166534)}
+.c6{background:linear-gradient(150deg,#6ee7b7,#10b981,#064e3b)}
+.c7{background:linear-gradient(150deg,#fde68a,#f59e0b,#92400e)}
+.c8{background:linear-gradient(150deg,#a3e635,#65a30d,#1a2e05)}
+.section{display:none;padding:6px 14px;animation:slideUp .35s both}
+.section.show{display:block}
+.panel{background:linear-gradient(165deg,rgba(14,77,46,.95),rgba(3,23,13,.95));border:1px solid rgba(52,211,153,.45);border-radius:22px;padding:16px;margin-bottom:12px}
+.panel h2{font-size:20px;margin-bottom:6px}
+.panel p{font-size:13px;color:var(--muted);line-height:1.5}
+.btn{width:100%;border:0;border-radius:16px;padding:14px;font-size:15px;font-weight:900;cursor:pointer;transition:.15s;background:linear-gradient(90deg,#22ff88,#4ade80);color:#02120a;margin-top:10px;box-shadow:0 8px 20px rgba(34,255,136,.35)}
+.btn:active{transform:scale(.96)}
+.btn.gold{background:linear-gradient(90deg,#fbbf24,#f59e0b);color:#422006}
+.btn.white{background:#ecfdf5;color:#052e1b}
+.btn.dark{background:#052e1b;color:#a7f3d0;border:1px solid #22c55e}
+.btn:disabled{opacity:.45;filter:grayscale(1)}
+input,select{width:100%;background:#02120a;border:1px solid #22c55e;color:#fff;border-radius:14px;padding:13px;font-size:15px;margin-top:8px;outline:none}
+input:focus{border-color:#22ff88;box-shadow:0 0 0 3px rgba(34,255,136,.25)}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.quest{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:12px;border-radius:16px;margin-top:8px}
+.quest .ic{font-size:28px}.quest b{font-size:13px;display:block}.quest small{color:var(--muted);font-size:11px}
+.quest button{margin-left:auto;background:#22ff88;border:0;padding:9px 12px;border-radius:999px;font-weight:900;font-size:12px;cursor:pointer;white-space:nowrap}
+.quest button:active{transform:scale(.9)}
+.quest.done{opacity:.6}.quest.done button{background:#6b7280;color:#fff}
+.hist{display:flex;gap:10px;align-items:center;padding:11px 4px;border-bottom:1px solid rgba(255,255,255,.08);font-size:13px}
+.hist b{margin-left:auto}.plus{color:#22ff88}.minus{color:#f87171}
+.leader{display:flex;gap:10px;align-items:center;padding:11px;background:rgba(255,255,255,.06);border-radius:14px;margin-top:8px}
+.leader .rank{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#22ff88;color:#000;font-weight:900}
+.mineGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:12px}
+.mine{aspect-ratio:1;border-radius:12px;border:1px solid #34d399;background:#052e1b;font-size:22px;cursor:pointer;transition:.15s;color:#fff}
+.mine:active{transform:scale(.9)}.mine.hit{background:#ef4444}.mine.safe{background:#22ff88;color:#000}
+.slotRow{font-size:44px;text-align:center;letter-spacing:8px;padding:14px;background:#02120a;border-radius:16px;margin-top:10px}
+.crashBox{height:120px;background:#02120a;border-radius:16px;position:relative;overflow:hidden;margin-top:10px;border:1px solid #22c55e}
+.crashBox .rocket{position:absolute;left:14px;bottom:14px;font-size:42px}
+.crashBox .mult{position:absolute;right:14px;top:12px;font-size:26px;font-weight:900;color:#22ff88}
+.plinko{height:170px;position:relative;background:#02120a;border-radius:16px;margin-top:10px;overflow:hidden}
+.ball{position:absolute;width:16px;height:16px;background:#22ff88;border-radius:50%;left:50%;top:8px;transition:all .7s cubic-bezier(.3,1.5,.5,1)}
+.toast{position:fixed;left:50%;bottom:125px;transform:translateX(-50%) translateY(20px);background:#ecfdf5;color:#052e1b;padding:12px 18px;border-radius:999px;font-weight:900;font-size:14px;z-index:99;opacity:0;pointer-events:none;transition:.3s;box-shadow:0 10px 30px rgba(0,0,0,.5);white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;place-items:center;z-index:100;padding:20px}
+.modal.show{display:grid}
+.modalCard{background:linear-gradient(160deg,#d1fae5,#34d399);color:#052e1b;border-radius:26px;padding:24px;text-align:center;animation:caseOpen .5s both;max-width:360px;width:100%}
+.modalCard .big{font-size:64px;animation:floaty 2s infinite}
+.modalCard h2{font-size:24px}.modalCard p{font-size:14px;margin:8px 0}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:98;overflow:hidden;display:none}
+.confetti.show{display:block}
+.confetti i{position:absolute;top:-20px;width:10px;height:16px;animation:fall 1.2s forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+.bottomNav{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(2,18,10,.96);backdrop-filter:blur(16px);border-top:1px solid rgba(52,211,153,.4);display:flex;padding:8px 6px calc(10px + env(safe-area-inset-bottom));}
+.navBtn{flex:1;background:transparent;border:0;color:#86efac;font-size:11px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 2px;border-radius:14px;cursor:pointer;position:relative;transition:.2s}
+.navBtn span{font-size:21px}
+.navBtn.active{background:#14532d;color:#fff;box-shadow:inset 0 0 0 1px #22c55e}
+.navBtn:active{transform:scale(.9)}
+.newTag{position:absolute;top:2px;right:14px;background:#ef4444;color:#fff;font-size:8px;padding:2px 5px;border-radius:999px;font-weight:900}
+.shopItem{display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.07);padding:12px;border-radius:16px;margin-top:8px}
+.shopItem .e{font-size:34px}.shopItem b{font-size:13px}.shopItem small{color:var(--muted);display:block;font-size:11px}
+.shopItem button{margin-left:auto;background:#fbbf24;border:0;padding:9px 11px;border-radius:999px;font-weight:900;cursor:pointer}
+.progress{height:10px;background:rgba(255,255,255,.15);border-radius:999px;overflow:hidden;margin-top:8px}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,#22ff88,#a7f3d0);transition:width .6s}
+.levelBadge{background:#fbbf24;color:#422006;padding:5px 10px;border-radius:999px;font-weight:900;font-size:12px}
+.marqueeBox{overflow:hidden;white-space:nowrap;margin:10px 14px;background:#052e1b;border:1px solid #22c55e;border-radius:999px;padding:8px}
+.marqueeBox div{display:inline-block;animation:marquee 14s linear infinite;font-size:12px;font-weight:700;color:#a7f3d0}
+.inventoryGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.inv{background:#052e1b;border:1px dashed #34d399;border-radius:16px;padding:14px 6px;text-align:center;font-size:26px}
+.inv small{display:block;font-size:10px;color:var(--muted);margin-top:4px}
+canvas{width:100%;border-radius:16px;background:#02120a;margin-top:10px}
+.small{font-size:11px;color:var(--muted)}
 </style>
 </head>
 <body>
-<div class="w">
-<div class="top"><b>🦠 MICROBE</b><div class="bal"><span>🦠 <i id="mp">0.0000</i></span><span>⭐ <i id="st">0</i></span></div></div>
-<button class="snd" id="sb" onclick="sndT()">🔇 ЗВУК ВЫКЛЮЧЕН — НАЖМИ МЕНЯ</button>
-<div id="v"></div>
-<nav class="nav">
-<button class="on" onclick="go('home',this)"><i>🏠</i>Главная</button>
-<button onclick="go('tasks',this)"><i>🎁</i>Задания</button>
-<button onclick="go('games',this)"><i>🎮</i>Игры</button>
-<button onclick="go('shop',this)"><i>🛒</i>Магазин</button>
-<button onclick="go('hist',this)"><i>📜</i>История</button>
-</nav>
+
+<div class="topbar">
+  <div class="pill">🔗 REFERRAL</div>
+  <div class="online"><span class="dot"></span> <span id="onlineCount">1</span> онлайн</div>
+  <div class="bal">
+    <b onclick="showCurr('microbe')" title="Microbe Points">🦠 <span id="bMP">0</span></b>
+    <b onclick="showCurr('gram')" title="GRAM">💎 <span id="bGram">0</span></b>
+    <b onclick="showCurr('stars')" title="Telegram Stars">⭐ <span id="bStars">0</span></b>
+  </div>
 </div>
-<script>
-var mp=0,stars=0,tok=0,wins=0,inv=[],hist=[];
-try{var o=JSON.parse(localStorage.getItem('mb1')||'null');if(o){mp=o.mp||0;stars=o.stars||0;tok=o.tok||0;inv=o.inv||[];hist=o.hist||[]}}catch(e){}
-var sound=false,AC=null;
-function fmt(n){return Number(n).toFixed(4)}
-function save(){localStorage.setItem('mb1',JSON.stringify({mp:mp,stars:stars,tok:tok,inv:inv,hist:hist}))}
-function beep(f){if(!sound)return;try{if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();var o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;g.gain.value=.2;o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+.15)}catch(e){}}
-function sndT(){sound=!sound;document.getElementById('sb').textContent=sound?'🔊 ЗВУК ВКЛЮЧЁН!':'🔇 ЗВУК ВЫКЛЮЧЕН — НАЖМИ МЕНЯ';if(sound)beep(800)}
-function toast(t){alert(t)}
-function upd(){document.getElementById('mp').textContent=fmt(mp);document.getElementById('st').textContent=stars;save()}
-function homeHTML(){
-return '<div style="text-align:center;padding:16px 4px"><div style="font-size:88px">🦠</div><h1 style="font-size:36px">MICROBE 🦠</h1><p>Уровень 1 • Всё 0 • Онлайн: 1 — ты один</p><button class="btn y" onclick="tap()">🦠 ТКНУТЬ +0.0001 MP</button></div>'
-+'<div class="card"><h2>🎁 Старт с нуля</h2><button class="btn y" onclick="openCase()">🎁 БЕСПЛАТНЫЙ КЕЙС</button><button class="btn g" onclick="daily()">🎁 БОНУС +1000 🪙 = +0.1000 MP</button></div>'
-+'<div class="grid">'
-+'<button class="tile a" onclick="go(\'inv\')"><span class="ic">🧰</span><b>ИНВЕНТАРЬ</b><span>CANDY CANE 427 ⭐</span></button>'
-+'<button class="tile b" onclick="go(\'contest\')"><span class="ic">🏆</span><b>КОНКУРСЫ</b><span>1000 NFT</span></button>'
-+'<button class="tile c" onclick="go(\'games\')"><span class="ic">🎮</span><b>ИГРЫ</b><span>Все игры</span></button>'
-+'<button class="tile d" onclick="go(\'crash\')"><span class="ic">🚀</span><b>CRASH</b><span>Ставка x X</span></button>'
-+'<button class="tile e" onclick="go(\'tasks\')"><span class="ic">✅</span><b>ЗАДАНИЯ</b><span>+20,000 🪙</span></button>'
-+'<button class="tile f" onclick="go(\'shop\')"><span class="ic">🛒</span><b>МАГАЗИН</b><span>Stars • GRAM</span></button></div>';
-}
-function go(id,btn){
-beep(700);
-var navs=document.querySelectorAll('.nav button');
-for(var i=0;i<navs.length;i++)navs[i].classList.remove('on');
-if(btn)btn.classList.add('on');
-var v=document.getElementById('v');
-if(id==='home'){v.innerHTML=homeHTML()}
-if(id==='inv'){v.innerHTML='<div class="card"><h2>🧰 ИНВЕНТАРЬ — открылось!</h2><p>'+(inv.length?inv.join('<br>'):'Пусто — 0. Открой кейс.')+'</p><button class="btn y" onclick="openCase()">🎁 ОТКРЫТЬ КЕЙС</button></div><button class="btn k" onclick="go(\'home\')">⬅ НАЗАД</button>'}
-if(id==='contest'){v.innerHTML='<div class="card"><h2>🏆 1000 NFT</h2><p>81,935 участников</p><button class="btn y" onclick="joinC()">УЧАСТВОВАТЬ +0.0010 MP</button></div><button class="btn k" onclick="go(\'home\')">⬅ НАЗАД</button>'}
-if(id==='games'){v.innerHTML='<div class="card"><h2>🎮 ИГРЫ — открылось!</h2><button class="btn y" onclick="go(\'crash\')">🚀 CRASH</button><button class="btn g" onclick="playWin(2)">🎲 ИГРА x2 — выиграл 0.02 = получил 0.02</button></div><button class="btn k" onclick="go(\'home\')">⬅ НАЗАД</button>'}
-if(id==='crash'){v.innerHTML='<div class="card" style="text-align:center"><h2>🚀 CRASH</h2><div style="font-size:44px;font-weight:900" id="cn">x1.00</div><input id="cb" type="number" value="0.01" step="0.0001"><button class="btn y" onclick="startC()">🚀 ЗАПУСТИТЬ</button><button class="btn g" onclick="cashC()">💰 ЗАБРАТЬ РОВНО СТОЛЬКО</button></div><button class="btn k" onclick="go(\'home\')">⬅ НАЗАД</button>'}
-if(id==='tasks'){v.innerHTML='<div class="card" style="background:#B8F5C8"><h2>✅ ЗАДАНИЯ — открылось!</h2><p>Ежедневный бонус +1000 🪙</p><button class="btn g" onclick="daily()">ЗАБРАТЬ +1000 🪙</button><p>Пригласи друга +20000 🪙</p><button class="btn y" onclick="invite()">📋 ПРИГЛАСИТЬ +2.0000 MP</button></div><button class="btn k" onclick="go(\'home\')">⬅ НАЗАД</button>'}
-if(id==='shop'){v.innerHTML='<div class="card"><h2>🛒 МАГАЗИН — открылось!</h2><p>MP: '+fmt(mp)+' • Stars: '+stars+' • Токены: '+tok+'</p><button class="btn y" onclick="demo()">ДЕМО +0.0500 MP</button><button class="btn g" onclick="buyS()">+100 ⭐ ДЕМО</button></div><button class="btn k" onclick="go(\'home\')">⬅ НАЗАД</button>'}
-if(id==='hist'){v.innerHTML='<div class="card"><h2>📜 ИСТОРИЯ — открылось!</h2><p>'+(hist.length?hist.join('<br>'):'Пока пусто. Выиграй 7, тут будет +7.')+'</p></div><button class="btn k" onclick="go(\'home\')">⬅ НАЗАД</button>'}
-window.scrollTo(0,0);upd();
-}
-function tap(){beep(900);mp=+(mp+0.0001).toFixed(4);tok++;hist.unshift('Тап +0.0001 MP');toast('🦠 +0.0001 MP! Было 0!');go('home')}
-function openCase(){beep(800);var p=['🌹 Роза 5 ⭐','🐻 Мишка 10 ⭐','🍭 CANDY CANE 427 ⭐'][Math.floor(Math.random()*3)];inv.push(p);stars+=5;mp=+(mp+0.005).toFixed(4);hist.unshift('Кейс: '+p);toast('🎁 Выпало: '+p+' • +0.0050 MP');go('home')}
-function daily(){beep(800);tok+=1000;mp=+(mp+0.1).toFixed(4);hist.unshift('Бонус +0.1000 MP');toast('🎁 +1000 🪙 = +0.1000 MP ровно!');go('home')}
-function joinC(){mp=+(mp+0.001).toFixed(4);toast('✅ +0.0010 MP');upd()}
-function invite(){tok+=20000;mp=+(mp+2).toFixed(4);toast('📋 +2.0000 MP за друга!');upd()}
-function demo(){mp=+(mp+0.05).toFixed(4);tok+=500;toast('+0.0500 MP! Теперь Crash!');upd()}
-function buyS(){stars+=100;toast('+100 ⭐');upd()}
-function playWin(m){var bet=0.01;if(mp<bet){toast('Нужно 0.01 — нажми ДЕМО в магазине');go('shop');return}mp=+(mp-bet).toFixed(4);var amt=+(bet*m).toFixed(4);mp=+(mp+amt).toFixed(4);wins++;hist.unshift('Игра: '+bet+' x'+m+' = +'+fmt(amt)+' MP');toast('💰 Выиграл '+fmt(amt)+' MP — получил ровно '+fmt(amt)+'!');go('home')}
-var crM=1,crOn=false,crT=null,crBet=0.01;
-function startC(){crBet=parseFloat(document.getElementById('cb').value)||0.01;if(mp<crBet){toast('Нужно '+fmt(crBet)+' — ДЕМО в магазине');go('shop');return}mp=+(mp-crBet).toFixed(4);crM=1;crOn=true;beep(700);var boom=1+Math.random()*3;clearInterval(crT);crT=setInterval(function(){crM+=0.13;var e=document.getElementById('cn');if(e)e.textContent='x'+crM.toFixed(2);if(crM>=boom){clearInterval(crT);crOn=false;toast('💥 Взорвалось! Минус '+fmt(crBet))}},130);upd()}
-function cashC(){if(!crOn){toast('Сначала запусти!');return}clearInterval(crT);crOn=false;var amt=+(crBet*crM).toFixed(4);mp=+(mp+amt).toFixed(4);hist.unshift('Crash: '+fmt(crBet)+' x'+crM.toFixed(2)+' = +'+fmt(amt)+' MP');toast('💰 +'+fmt(amt)+' MP — ровно столько, сколько выиграл!');go('home')}
-if(window.Telegram&&Telegram.WebApp){Telegram.WebApp.ready();Telegram.WebApp.expand()}
-go('home');
-</script>
-</body>
-</html>
+
+<div class="hero">
+  <div><span class="microbe">🦠</span></div>
+  <h1>MICROBE <span>GREEN</span></h1>
+  <p>Привет, <b id="userName">друг</b>! Всё честно. Выиграл 7 — получил 7. Потратил 8 — минус 8. Без фейков.</p>
+</div>
+
+<div class="stats">
+  <div class="stat" onclick="goTab('tasks')"><small>Уровень</small><b id="lvlTxt">1 LVL</b><i>0 / 100 XP</i></div>
+  <div class="stat" onclick="goTab('leader')"><small>Место</small><b id="rankTxt">#1</b><i>ты в топе</i></div>
+  <div class="stat" onclick="toggleSound()"><small>Звук</small><b id="soundTxt">🔊 ВКЛ</b><i>нажми</i></div>
+</div>
+
+<div class="rate">💱 КУРС МИЗЕРНЫЙ: 1 MP = 0.0012 ⭐ &nbsp;|&nbsp; 1 MP = 0.00012 GRAM &nbsp;|&nbsp; 1000 MP = 1.2 ⭐ &nbsp;•&nbsp; Обмен только точный, без округления в нашу пользу.</div>
+
+<div class="marqueeBox"><div>🦠 БЕЗ ФЕЙКОВ • ВЫИГРАЛ 7 = +7 MP • ПОТРАТИЛ 5 = -5 MP • ВСЁ РАБОТАЕТ • КЕЙСЫ • CRASH • ШАХТА • ПЛИНКО • СЛОТ • КОНКУРСЫ •&nbsp;</div></div>
+
+<div class="tabs" id="topTabs">
+  <button class="tab active" onclick="filterGames('all',this)">Все</button>
+  <button class="tab" onclick="filterGames('games',this)">Игры</button>
+  <button class="tab" onclick="filterGames('cases',this)">Кейсы</button>
+  <button class="tab" onclick="filterGames('earn',this)">Заработок</button>
+</div>
+
+<!-- ГЛАВНАЯ -->
+<div id="page-home" class="section show">
+  <div class="grid" id="mainGrid">
+    <div class="card c1" data-cat="earn" onclick="openInv()"><span class="emoji">🧰</span><h3>Инвентарь</h3><p id="invCount">Все 0 • Нажми</p></div>
+    <div class="card c2" data-cat="earn" onclick="goTab('contests')"><span class="emoji">🏆</span><h3>Конкурсы</h3><p>Розыгрыш 1000 NFT</p></div>
+    <div class="card c3" data-cat="earn" onclick="goTab('leader')"><span class="emoji">👑</span><h3>Таблица лидеров</h3><p>Награды через 4 д 22 ч</p></div>
+    <div class="card c4" data-cat="games" onclick="openGame('sim')"><span class="emoji">📱</span><h3>Симулятор Telegram</h3><p>3D • как в видео</p></div>
+    <div class="card c5" data-cat="games" onclick="openGame('crash')"><span class="emoji">🐰🥕</span><h3>Crash</h3><p>Правила • x2.00</p></div>
+    <div class="card c6" data-cat="cases" onclick="openGame('cases')"><span class="emoji">🦠⚔️</span><h3>Cases</h3><p>Бесплатный кейс <span id="caseTimer">00:23:19</span></p></div>
+    <div class="card c7" data-cat="games" onclick="openGame('mine')"><span class="emoji">⛏️</span><h3>Шахта 2.0</h3><p>5x5 • найди микробов</p></div>
+    <div class="card c8" data-cat="games" onclick="openGame('mineOnline')"><span class="badge">ONLINE</span><span class="emoji">🌍</span><h3>Шахта Онлайн</h3><p>Играй с <span class="onlineNow">1</span> онлайн</p></div>
+    <div class="card c3" data-cat="games" onclick="openGame('cs2')"><span class="emoji">🔫</span><h3>CS2 Рулетка</h3><p>Крути и выигрывай</p></div>
+    <div class="card c4" data-cat="games" onclick="openGame('survive')"><span class="emoji">🪂</span><h3>Выживание</h3><p>Прыгни и выживи</p></div>
+    <div class="card c5" data-cat="games" onclick="openGame('upgrade')"><span class="emoji">🧥</span><h3>Улучшения</h3><p>Апгрейд предметов</p></div>
+    <div class="card c6" data-cat="games" onclick="openGame('cascade')"><span class="emoji">💎</span><h3>Каскад</h3><p>3 в ряд • x2</p></div>
+    <div class="card c7" data-cat="games" onclick="openGame('plinko')"><span class="emoji">🎯</span><h3>Плинко</h3><p>Шарик вниз</p></div>
+    <div class="card c8" data-cat="games" onclick="openGame('pandemic')"><span class="badge">НОВИНКА</span><span class="emoji">🦠😷</span><h3>Пандемия</h3><p>Зарази всех</p></div>
+    <div class="card c1" data-cat="games" onclick="openGame('slot')"><span class="emoji">🎰</span><h3>Слот</h3><p>777 = джекпот</p></div>
+    <div class="card c2" data-cat="games" onclick="openGame('grab')"><span class="emoji">🕹️</span><h3>Хватайка</h3><p>Лови микробов</p></div>
+  </div>
+
+  <div class="panel" style="margin:14px">
+    <h2>💱 Обменник — точный курс</h2>
+    <p>Введи сколько MP хочешь обменять. Получишь ровно столько, сколько посчитал курс. Без комиссии, без фейков.</p>
+    <input id="exAmount" type="number" value="1000" min="1" placeholder="Сколько MP?">
+    <div class="row">
+      <button class="btn gold" onclick="exchange('stars')">MP → ⭐ Stars</button>
+      <button class="btn" onclick="exchange('gram')">MP → 💎 GRAM</button>
+    </div>
+    <p class="small" id="exPreview" style="margin-top:8px">1000 MP = 1.2000 ⭐ = 0.1200 GRAM</p>
+    <div class="row">
+      <button class="btn dark" onclick="exchangeBack('stars')">⭐ → MP</button>
+      <button class="btn dark" onclick="exchangeBack('gram')">GRAM → MP</button>
+    </div>
+  </div>
+
+  <div class="panel" style="margin:0 14px">
+    <h2>🎁 Ежедневный бонус</h2>
+    <p>Забери ровно <b>7 MP</b> каждый день. Не 70, не 700. Ровно 7.</p>
+    <button class="btn" onclick="dailyBonus(this)">Забрать +7 🦠</button>
+    <p class="small" id="dailyTxt">Сегодня ещё не забирал</p>
+  </div>
+</div>
+
+<!-- ЗАДАНИЯ -->
+<div id="page-tasks" class="section">
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center"><h2>Профиль >></h2><span class="levelBadge" id="lvlBadge">LVL 1</span></div>
+    <p>XP: <b id="xpTxt">0</b> / 100 • До следующего уровня: <b id="xpLeft">100</b></p>
+    <div class="progress"><i id="xpBar" style="width:0%"></i></div>
+    <h2 style="margin-top:18px">ЕЖЕДНЕВНЫЕ</h2>
+    <div class="quest"><span class="ic">🎬</span><div><b>Ролики в TikTok и Shorts</b><small>Платим за просмотры • до 200 $</small></div><button onclick="doQuest(this,7,'Ролик TikTok')">+7 MP</button></div>
+    <div class="quest"><span class="ic">📅</span><div><b>Ежедневный бонус</b><small>+7 MP ровно</small></div><button onclick="doQuest(this,7,'Ежедневный бонус')">+7 MP</button></div>
+    <div class="quest"><span class="ic">📖</span><div><b>Поделись историей</b><small>+20 MP</small></div><button onclick="doQuest(this,20,'История')">+20 MP</button></div>
+    <h2 style="margin-top:18px">КВЕСТЫ <span style="float:right;font-size:13px" id="questProg">1/9</span></h2>
+    <div id="questList"></div>
+  </div>
+</div>
+
+<!-- РУЛЕТКА / ИГРЫ -->
+<div id="page-roulette" class="section">
+  <div class="panel">
+    <h2>🎡 Рулетка • Все игры в одном месте</h2>
+    <p>Ставка списывается ровно столько, сколько поставил. Выигрыш начисляется ровно столько, сколько выпало. Старт: всё 0.</p>
+    <label class="small">Твоя ставка (MP)</label>
+    <input id="betInput" type="number" value="10" min="1">
+    <div class="row">
+      <button class="btn dark" onclick="setBet(7)">7</button>
+      <button class="btn dark" onclick="setBet(8)">8</button>
+      <button class="btn dark" onclick="setBet(10)">10</button>
+      <button class="btn dark" onclick="setBet(50)">50</button>
+    </div>
+    <div id="gameArea"></div>
+  </div>
+  <div class="panel">
+    <h2>Быстрые игры</h2>
+    <
