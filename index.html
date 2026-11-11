@@ -1,193 +1,98 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>MICROBE 🦠</title><script src="https://telegram.org/js/telegram-web-app.js"></script>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>MICROBE</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:Arial,system-ui,sans-serif;color:#06281c;min-height:100vh;background:linear-gradient(180deg,#E8FFF0 0%,#B8F5C8 18%,#7BE495 38%,#2E9E5B 62%,#0B3D2A 85%,#041F14 100%);background-attachment:fixed;overflow-x:hidden}
-button{font:inherit;border:0;cursor:pointer;transition:transform .12s,filter .12s,box-shadow .2s}
-button:active{transform:scale(.90)!important;filter:brightness(1.35)}
-@keyframes jump{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(4deg)}}
-@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
-@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(255,215,0,.9)}50%{box-shadow:0 0 0 14px rgba(255,215,0,0)}}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
-@keyframes spinV{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
-@keyframes shine{0%{background-position:-200%}100%{background-position:200%}}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes blink{50%{opacity:.35}}
-@keyframes slide{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-@keyframes rainbow{0%{filter:hue-rotate(0)}100%{filter:hue-rotate(360deg)}}
-.w{max-width:480px;margin:auto;min-height:100vh;padding:12px 12px 128px}
-.top{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:6px;background:rgba(255,255,255,.92);border:3px solid #0B3D2A;border-radius:20px;padding:10px 11px;box-shadow:0 8px 20px rgba(0,0,0,.25)}
-.top b{font-size:15px}.top small{display:block;font-size:10px;color:#2E9E5B;font-weight:800}
-.money{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}.money b{background:#041F14;color:#fff;padding:7px 7px;border-radius:99px;font-size:11px;white-space:nowrap;border:2px solid #FFE600}.money i{font-style:normal;color:#FFE600}
-.online{display:flex;justify-content:space-between;align-items:center;background:#fff;border:3px solid #2E9E5B;border-radius:18px;padding:11px 13px;margin-top:10px;animation:slide .4s}
-.dot{width:11px;height:11px;border-radius:50%;background:#22C55E;box-shadow:0 0 10px #22C55E;animation:pulse 1.3s infinite;display:inline-block}
-.snd{width:100%;padding:13px;border-radius:16px;background:#041F14;color:#B8F5C8;font-weight:900;margin-top:10px;border:3px solid #FFE600;animation:glow 2.2s infinite}
-.hero{text-align:center;padding:14px 4px 2px}
-.micro{width:148px;height:148px;margin:0 auto;border-radius:50%;border:5px solid #fff;background:radial-gradient(circle,#E8FF00,#0E8A52);display:flex;align-items:center;justify-content:center;font-size:80px;animation:jump 2.6s infinite;box-shadow:0 16px 30px rgba(0,0,0,.4);cursor:pointer}
-.hero h1{font-size:38px;text-shadow:0 3px 0 #fff;margin-top:6px}
-.hero h1 em{font-style:normal;background:linear-gradient(90deg,#0B3D2A,#2E9E5B,#FF8A00,#0B3D2A);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 2s linear infinite}
-.bar{height:14px;background:#041F14;border:2px solid #fff;border-radius:99px;margin:10px 28px;overflow:hidden}.bar div{height:100%;width:0%;background:linear-gradient(90deg,#FFE600,#22C55E);transition:.5s}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;color:#fff;min-height:100vh;background:linear-gradient(180deg,#3b0a54,#7b1e8a 35%,#0e6b4a 75%,#062a1e)}
+button{border:0;cursor:pointer}button:active{transform:scale(.92)}
+.w{max-width:480px;margin:auto;padding:12px 12px 110px}
+.top{display:flex;justify-content:space-between;background:rgba(0,0,0,.4);border-radius:16px;padding:11px}
+.bal span{background:#000;border:2px solid #fff;border-radius:99px;padding:6px 8px;font-size:12px;font-weight:900}
+.bal i{font-style:normal;color:#FFD700}
+.snd{width:100%;margin-top:10px;padding:13px;border-radius:14px;background:#000;color:#fff;font-weight:900;border:3px solid #FFD700}
+.pg{display:none}.pg.on{display:block}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:12px}
-.tile{min-height:132px;border-radius:24px;padding:15px 11px;border:3px solid #fff;color:#fff;text-align:left;box-shadow:0 10px 22px rgba(0,0,0,.35);position:relative;overflow:hidden}
-.tile:active{animation:shake .3s}
-.tile i{font-size:44px;display:block;animation:bounce 2.2s infinite}.tile b{display:block;font-size:15px;margin-top:4px;text-shadow:0 2px 0 rgba(0,0,0,.3)}.tile span{font-size:11px;opacity:.95}
-.pink{background:linear-gradient(135deg,#FF8AC2,#C026D3)}.orange{background:linear-gradient(135deg,#FFB800,#FF5A00)}.purp{background:linear-gradient(135deg,#8B5CF6,#3B0764)}.blue{background:linear-gradient(135deg,#38BDF8,#1E3A8A)}.green2{background:linear-gradient(135deg,#22C55E,#052E16)}.gold2{background:linear-gradient(135deg,#FACC15,#713F12)}.red2{background:linear-gradient(135deg,#FF6B6B,#7F1D1D)}.teal{background:linear-gradient(135deg,#14B8A6,#134E4A)}
-.box{background:rgba(255,255,255,.94);color:#06281c;border:3px solid #0B3D2A;border-radius:24px;padding:16px;margin-top:12px;animation:slide .35s;box-shadow:0 10px 22px rgba(0,0,0,.25)}
-.box h2{font-size:18px}.box p{font-size:13px;line-height:1.5}
-.btn{width:100%;padding:16px;border-radius:18px;font-size:15px;font-weight:900;color:#000;margin-top:9px}
-.gold{background:linear-gradient(180deg,#FFE600,#FFB800);box-shadow:0 6px 0 #7a4d00;animation:glow 2s infinite}
-.grn{background:linear-gradient(180deg,#B8F5C8,#22C55E);box-shadow:0 6px 0 #14532D}
-.dark{background:#041F14;color:#fff;border:2px solid #FFE600}
-.redb{background:linear-gradient(180deg,#FF5555,#B91C1C);color:#fff}
-.purb{background:linear-gradient(180deg,#C084FC,#6D28D9);color:#fff}
-input{width:100%;padding:14px;border-radius:14px;border:2px solid #0B3D2A;margin:6px 0;font-weight:800;font-size:16px;background:#fff;color:#000}
-.row{display:flex;gap:8px}.row>*{flex:1}
-.winBox{background:#041F14;color:#fff;border:3px solid #FFE600;border-radius:18px;padding:13px;text-align:center;margin:10px 0}
-.winBox small{font-size:10px;letter-spacing:1px;opacity:.7}.winBox div{font-size:36px;font-weight:900;color:#FFE600}
-.winBox div.big{animation:pop .5s}
-.list{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#E8FFF0;border:2px solid #2E9E5B;padding:12px;border-radius:15px;margin-top:8px}
-.list:active{transform:scale(.97)}
-.page{display:none}.page.on{display:block;animation:slide .3s}
-.chip{display:inline-block;background:#041F14;color:#B8F5C8;padding:6px 10px;border-radius:99px;font-size:11px;font-weight:800;margin:3px}
-.badge{background:#FF3B30;color:#fff;font-size:10px;padding:4px 7px;border-radius:99px;font-weight:900;animation:blink 1s infinite}
-.mines{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:10px}
-.cell{aspect-ratio:1;background:#B8F5C8;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid #0B3D2A;cursor:pointer}
-.cell:active{transform:scale(.85)}
-.wheel{width:250px;height:250px;border-radius:50%;border:9px solid #FFE600;margin:12px auto;background:conic-gradient(#FF8AC2 0 45deg,#041F14 45deg 90deg,#FFB800 90deg 135deg,#041F14 135deg 180deg,#22C55E 180deg 225deg,#041F14 225deg 270deg,#8B5CF6 270deg 315deg,#041F14 315deg 360deg);display:flex;align-items:center;justify-content:center;font-size:70px;transition:transform 4s cubic-bezier(.1,.7,.1,1);box-shadow:0 0 40px #FFE600}
-</style></head><body><div class="w">
-<div class="top"><div><b>🦠 MICROBE <span style="color:#2E9E5B">GAME</span></b><small id="nm">Игрок • Уровень 1 • Всё с 0</small></div><div class="money"><b>🦠 <i id="mp">0.0000</i></b><b>⭐ <i id="st">0</i></b><b>💎 <i id="gr">0.000</i></b><b>🪙 <i id="tk">0</i></b></div></div>
-<div class="online"><div><span class="dot"></span> <b>ОНЛАЙН СЕЙЧАС: <span id="onN" style="color:#16A34A;font-size:20px">1</span> 👤</b><br><small style="color:#666">Реальные открытые игры, без фейков. 1 = ты один, 2 = вас двое.</small></div><div style="font-size:26px;animation:pulse 1.5s infinite">🟢</div></div>
-<button class="snd" id="sndBtn" onclick="sndT()">🔇 ЗВУК ВЫКЛЮЧЕН • НАЖМИ 1 РАЗ • ПОТОМ ПИУ-ПИУ 🔊</button>
-<div id="toast" style="position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#041F14;color:#fff;padding:12px 16px;border-radius:99px;font-weight:900;z-index:300;display:none;border:3px solid #FFE600;max-width:94vw;text-align:center"></div><div id="pg-home" class="page on">
-<div class="hero"><div class="micro" onclick="tapMicro()">🦠</div><h1>MICROBE <em>🦠</em></h1><p style="font-weight:800">Привет! У тебя 0. Ткни микроба = +0.0001 MP</p><div class="bar"><div id="xpf"></div></div><p style="font-size:12px;font-weight:800">Уровень <b id="lvl">1</b> • Опыт <b id="xpT">0 / 100</b> • Побед <b id="winN">0</b> • Игр <b id="gameN">0</b></p><div><span class="chip">💰 Выиграл 7 = получил 7</span><span class="chip">💰 Потратил 5 = минус 5</span><span class="chip">📜 Меню листается вниз</span></div></div>
-<div class="box" style="border-color:#FFB800"><h2>🎁 ТВОЙ СТАРТ С НУЛЯ</h2><p>Было 0, станет много. Курс: <b>1 токен = 0.0001 MP</b>. 10,000 токенов = 1.0000 MP.</p><button class="btn gold" onclick="openCase()">🎁 БЕСПЛАТНЫЙ КЕЙС • 0 ⭐</button><button class="btn grn" onclick="daily()">🎁 БОНУС +1000 🪙 = +0.1000 MP</button><p id="dayT" style="text-align:center;font-weight:800;margin-top:6px"></p></div>
-<div class="box"><h2>💱 ОБМЕН • КУРС ОЧЕНЬ МАЛЕНЬКИЙ</h2><p>1000 🪙 → <b>0.1000 MP</b> • 100 ⭐ → <b>0.5000 MP</b> • 1 💎 GRAM → <b>2.0000 MP</b></p><div class="row"><button class="btn grn" onclick="conv('tok')">🪙→MP</button><button class="btn gold" onclick="conv('star')">⭐→MP</button><button class="btn purb" onclick="conv('gram')">💎→MP</button></div><p id="convT" style="font-weight:800;text-align:center;margin-top:6px"></p></div>
-<div class="grid">
-<button class="tile pink" onclick="go('inv')"><i>🧰</i><b>ИНВЕНТАРЬ</b><span>Призы • CANDY CANE 427 ⭐</span></button>
-<button class="tile orange" onclick="go('contest')"><i>🏆</i><b>КОНКУРСЫ</b><span>1000 NFT • 40 Gifts</span></button>
-<button class="tile purp" onclick="go('lead')"><i>📊</i><b>ТАБЛИЦА ЛИДЕРОВ</b><span>Награды через 4 ч 22 м</span></button>
-<button class="tile blue" onclick="go('sim')"><i>🧸</i><b>СИМУЛЯТОР ТЕЛЕГРАМ</b><span>Бесплатно • 3D</span></button>
-<button class="tile blue" onclick="go('crash')"><i>🐰</i><b>CRASH</b><span>Правила • до x100</span></button>
-<button class="tile blue" onclick="go('cases')"><i>🦠</i><b>CASES</b><span>Бесплатный кейс 00:23:19</span></button>
-<button class="tile gold2" onclick="go('roulette')"><i>🎡</i><b>РУЛЕТКА</b><span>Russian Roulette</span></button>
-<button class="tile green2" onclick="go('grab')"><i>✋</i><b>ХВАТАЙКА</b><span>НОВИНКА • лови!</span></button>
-<button class="tile gold2" onclick="go('slots')"><i>🎰</i><b>СЛОТ</b><span>Джекпот x20</span></button>
-<button class="tile green2" onclick="go('mine')"><i>⛏️</i><b>ШАХТА 2.0</b><span>Копай • ONLINE</span></button>
-<button class="tile blue" onclick="go('mine')"><i>🌍</i><b>ШАХТА ОНЛАЙН</b><span>ONLINE • с друзьями</span></button>
-<button class="tile red2" onclick="go('cs2')"><i>🔫</i><b>CS2 РУЛЕТКА</b><span>Скины • оружие</span></button>
-<button class="tile orange" onclick="go('surv')"><i>🪂</i><b>ВЫЖИВАНИЕ</b><span>50/50 • x2</span></button>
-<button class="tile purp" onclick="go('up')"><i>👻</i><b>УЛУЧШЕНИЕ</b><span>10 → 600 ⭐</span></button>
-<button class="tile red2" onclick="go('kaskad')"><i>💥</i><b>КАСКАД</b><span>3 в ряд • x3</span></button>
-<button class="tile green2" onclick="go('plinko')"><i>🔴</i><b>ПЛИНКО</b><span>Шарик • до x10</span></button>
-<button class="tile teal" onclick="go('pand')"><i>😷</i><b>ПАНДЕМИЯ</b><span>НОВИНКА • вирус</span></button>
-<button class="tile red2" onclick="go('pvp')"><i>⚔️</i><b>ПВП</b><span>Дуэль • x2</span></button>
-<button class="tile purp" onclick="go('dice')"><i>🎲</i><b>КОСТИ</b><span>Больше / меньше • x2</span></button>
-<button class="tile pink" onclick="go('lead')"><i>👑</i><b>ТОП ИГРОКОВ</b><span>Ты с 0, поднимайся!</span></button>
+.tile{min-height:126px;border-radius:22px;padding:14px;text-align:left;color:#fff;border:2px solid #fff}
+.tile b{display:block;font-size:16px;margin-top:8px}.tile span{font-size:11px}
+.tile .ic{font-size:42px;display:block}
+.a{background:linear-gradient(135deg,#ff8ac2,#c026d3)}.b{background:linear-gradient(135deg,#ffb800,#ff5a00)}.c{background:linear-gradient(135deg,#8b5cf6,#3b0764)}.d{background:linear-gradient(135deg,#38bdf8,#1e3a8a)}.e{background:linear-gradient(135deg,#22c55e,#052e16)}.f{background:linear-gradient(135deg,#facc15,#713f12)}
+.card{background:#fff;color:#111;border-radius:22px;padding:16px;margin-top:12px}
+.btn{width:100%;padding:15px;border-radius:16px;font-weight:900;margin-top:10px}
+.y{background:#FFE600}.g{background:#22C55E;color:#fff}.k{background:#111;color:#fff}
+input{width:100%;padding:13px;border-radius:13px;border:2px solid #111;margin-top:8px;font-weight:800}
+.nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:480px;z-index:999;display:flex;gap:5px;padding:9px 8px 14px;background:#000;border-top:3px solid #FFD700}
+.nav button{flex:1;background:#222;color:#fff;border-radius:14px;padding:10px 2px;font-size:10px;font-weight:900;min-height:60px}
+.nav button.on{background:#FFD700;color:#000}
+.nav i{display:block;font-size:24px;font-style:normal}
+</style>
+</head>
+<body>
+<div class="w">
+<div class="top"><b>🦠 MICROBE</b><div class="bal"><span>🦠 <i id="mp">0.0000</i></span><span>⭐ <i id="st">0</i></span></div></div>
+<button class="snd" id="sb" onclick="sndT()">🔇 ЗВУК ВЫКЛЮЧЕН — НАЖМИ МЕНЯ</button>
+<div id="v"></div>
+<nav class="nav">
+<button class="on" onclick="go('home',this)"><i>🏠</i>Главная</button>
+<button onclick="go('tasks',this)"><i>🎁</i>Задания</button>
+<button onclick="go('games',this)"><i>🎮</i>Игры</button>
+<button onclick="go('shop',this)"><i>🛒</i>Магазин</button>
+<button onclick="go('hist',this)"><i>📜</i>История</button>
+</nav>
 </div>
-<div class="box"><h2>🔥 LIVE • БЕЗ ФЕЙКОВ</h2><p id="live">🦠 Игрок только что выиграл 7 MP = получил ровно 7 MP<br>🍭 @sara выиграла 8 MP = получила ровно 8 MP<br>⚔️ @dima потратил 5 MP = минус ровно 5 MP</p><button class="btn dark" onclick="go('tasks')">✅ ЗАДАНИЯ • ЗАРАБОТАЙ 20,000 🪙</button></div>
-<div class="box"><h2>👥 ПРИГЛАСИ ДРУГА</h2><p>+20,000 🪙 = +2.0000 MP за друга. Сразу, честно.</p><button class="btn gold" onclick="invite()">📋 https://t.me/MicrobeGame_Bot</button></div>
-<div class="box"><h2>📜 ИСТОРИЯ ПОСЛЕДНЯЯ</h2><div id="histMini"><p>Пока пусто. Выиграй 7, тут будет: +7.0000 MP</p></div></div>
-</div>
-
-<div id="pg-inv" class="page"><div class="box"><h2>🧰 ИНВЕНТАРЬ</h2><p>Все • Вывод • С заданием • Трейд</p><div id="invL"></div><button class="btn gold" onclick="openCase()">🎁 ОТКРЫТЬ КЕЙС</button><div id="candyBox" style="display:none;margin-top:10px;text-align:center"><div style="font-size:64px">🍭</div><b>CANDY CANE</b><br><button class="btn dark" onclick="upgradeCandy()">УЛУЧШИТЬ</button><button class="btn gold" onclick="sellCandy()">ПРОДАТЬ ЗА 427 ⭐</button><button class="btn grn" onclick="getCandy()">ПОЛУЧИТЬ</button></div></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-contest" class="page"><div class="box" style="text-align:center"><h2>🏆 РОЗЫГРЫШ 1000 NFT</h2><div style="font-size:34px;font-weight:900" id="timer">1 Д 21 Ч</div><p>81,935 участников • Ваши билеты: 0</p><button class="btn gold" onclick="joinC()">УЧАСТВОВАТЬ БЕСПЛАТНО • +0.0010 MP</button></div><div class="box"><h2>TONPLAY × WINGRAM GIVEAWAY</h2><p>30,663 участника • 29 д 14 ч</p><button class="btn purb" onclick="joinC()">УЧАСТВОВАТЬ</button></div><div class="box"><h2>40 GIFTS • ЗАВЕРШЕНО</h2><p>555 участников • 15 ч 35 м</p><button class="btn dark" onclick="toast('Результаты скоро!')">ПОСМОТРЕТЬ РЕЗУЛЬТАТЫ</button></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-lead" class="page"><div class="box"><h2>📊 ТАБЛИЦА ЛИДЕРОВ</h2><div id="leadL"></div><p>Ты на последнем месте, у тебя 0. Играй, выигрывай ровно столько, сколько выиграл, и поднимайся!</p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-sim" class="page"><div class="box" style="text-align:center"><h2>🧸 СИМУЛЯТОР ТЕЛЕГРАМ</h2><div style="font-size:64px">🧸</div><p>Бесплатно, без денег. Тренировка.</p><button class="btn grn" onclick="sim()">ОТКРЫТЬ БЕСПЛАТНО</button><p id="simM" style="font-size:44px;font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-cases" class="page"><div class="box" style="text-align:center"><h2>📦 CASES</h2><div style="font-size:70px;animation:jump 2s infinite" id="caseBox">🎁</div><p id="caseR" style="font-weight:900"></p><input id="caseBet" type="number" value="0" step="0.0001"><p>Ставка в MP. 0 = бесплатно. Потратишь ровно столько, сколько ввел.</p><div class="row"><button class="btn grn" onclick="setV('caseBet',0)">0</button><button class="btn gold" onclick="setV('caseBet',0.01)">0.01 MP</button><button class="btn purb" onclick="setV('caseBet',0.05)">0.05 MP</button></div><button class="btn gold" onclick="openCase()">🎁 ОТКРЫТЬ КЕЙС</button></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-crash" class="page"><div class="box" style="text-align:center"><h2>🚀 CRASH • СТАВКА × X = ВЫИГРЫШ</h2><div style="background:#041F14;border-radius:18px;padding:18px"><div style="font-size:50px;font-weight:900;color:#FFE600" id="crN">x1.00</div><div style="font-size:46px" id="rock">🚀</div></div><input id="crBet" type="number" value="0.01" step="0.0001"><p>Ставка в MP. Пример: 0.01 × x2 = <b>0.0200 MP</b> ровно.</p><div class="winBox"><small>СЕЙЧАС ЗАБРАТЬ =</small><div class="big" id="crWin">0.0100 MP</div><div style="font-size:12px" id="crF">0.01 × x1.00 = 0.01</div></div><button class="btn gold" onclick="startCrash()">🚀 ЗАПУСТИТЬ • МИНУС СТАВКА</button><button class="btn redb" onclick="cashout()">💰 ЗАБРАТЬ РОВНО СТОЛЬКО</button><p id="crM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-mine" class="page"><div class="box"><h2>⛏️ ШАХТА 2.0 • ONLINE <span id="mineOn">1 👤</span></h2><p>Каждая 💎 = +ставка ровно. Мина = сгорело.</p><input id="mineBet" type="number" value="0.01" step="0.0001"><div class="mines" id="board"></div><div class="winBox"><small>НАКОПЛЕНО</small><div id="mineWin">0.0000 MP</div></div><button class="btn gold" onclick="initMine()">⛏️ НОВАЯ ИГРА</button><button class="btn grn" onclick="mineCash()">💰 ЗАБРАТЬ НАКОПЛЕННОЕ</button><p id="mineM" style="text-align:center;font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-roulette" class="page"><div class="box" style="text-align:center"><h2>🎡 РУЛЕТКА</h2><div class="wheel" id="wheel">🦠</div><input id="rouBet" type="number" value="0.01" step="0.0001"><div class="winBox"><small>МОЖНО ВЫИГРАТЬ ДО x10</small><div>0.1000 MP</div></div><button class="btn gold" onclick="spin()">🎡 КРУТИТЬ • МИНУС СТАВКА</button><button class="btn grn" onclick="spinFree()">🆓 БЕСПЛАТНО • +0.0010 MP</button><p id="rouR" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-slots" class="page"><div class="box" style="text-align:center"><h2>🎰 СЛОТ • x20</h2><div id="slotB" style="font-size:54px">🦠 🦠 🦠</div><input id="slotBet" type="number" value="0.01" step="0.0001"><button class="btn gold" onclick="slot()">🎰 КРУТИТЬ</button><p id="slotM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-dice" class="page"><div class="box" style="text-align:center"><h2>🎲 КОСТИ • x2</h2><div style="font-size:50px" id="diceB">🎲 🎲</div><input id="diceBet" type="number" value="0.01" step="0.0001"><div class="winBox"><small>УГАДАЕШЬ = СТАВКА × 2 РОВНО</small><div>0.0200 MP</div></div><div class="row"><button class="btn grn" onclick="dice('more')">БОЛЬШЕ 7</button><button class="btn redb" onclick="dice('less')">МЕНЬШЕ 7</button></div></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-plinko" class="page"><div class="box" style="text-align:center"><h2>🔴 ПЛИНКО</h2><div style="font-size:46px">🔴<br><span style="font-size:12px">x0.5 • x1 • x2 • x5 • x10</span></div><input id="plBet" type="number" value="0.01" step="0.0001"><button class="btn gold" onclick="plinko()">🔴 БРОСИТЬ</button><p id="plM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-grab" class="page"><div class="box" style="text-align:center"><h2>✋ ХВАТАЙКА</h2><div style="height:170px;background:#041F14;border-radius:18px;position:relative;overflow:hidden"><div id="grabV" onclick="grabHit()" style="position:absolute;font-size:52px;left:40%;top:40%">🦠</div></div><p style="font-weight:900">Поймано: <span id="grabN">0</span> • +0.0010 MP за каждое</p><button class="btn gold" onclick="startGrab()">▶ СТАРТ</button></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-cs2" class="page"><div class="box" style="text-align:center"><h2>🔫 CS2 РУЛЕТКА</h2><div style="font-size:54px">🔫 🔪 🎯</div><input id="csBet" type="number" value="0.02" step="0.0001"><button class="btn gold" onclick="cs2()">🔫 КРУТИТЬ</button><p id="cs2M" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-surv" class="page"><div class="box" style="text-align:center"><h2>🪂 ВЫЖИВАНИЕ • x2</h2><input id="survBet" type="number" value="0.01" step="0.0001"><div class="row"><button class="btn grn" onclick="surv()">⬅ СЛЕВА</button><button class="btn redb" onclick="surv()">СПРАВА ➡</button></div><p id="survM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-up" class="page"><div class="box" style="text-align:center"><h2>⬆️ УЛУЧШЕНИЕ</h2><div style="font-size:56px">🍭 ➡ 👑</div><input id="upBet" type="number" value="0.01" step="0.0001"><button class="btn gold" onclick="upgrade()">⬆️ УЛУЧШИТЬ</button><p id="upM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-kaskad" class="page"><div class="box" style="text-align:center"><h2>💥 КАСКАД • x3</h2><div style="font-size:42px">❤️ ⭐ 💎<br>💎 ❤️ ⭐<br>⭐ 💎 ❤️</div><input id="kasBet" type="number" value="0.01" step="0.0001"><button class="btn gold" onclick="kaskad()">💥 ИГРАТЬ</button><p id="kasM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-pand" class="page"><div class="box" style="text-align:center"><h2>😷 ПАНДЕМИЯ • НОВИНКА</h2><div style="font-size:60px;animation:pulse 1s infinite">🦠🦠🦠</div><p>Заражено: <b id="pandN">0</b> • Каждые 10 = +0.0050 MP</p><button class="btn gold" onclick="pand()">🦠 ЗАРАЗИТЬ +1</button><p id="pandM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-pvp" class="page"><div class="box" style="text-align:center"><h2>⚔️ ПВП • x2</h2><div style="font-size:52px">🦠 VS 😈</div><div id="pvpS" style="font-weight:900;font-size:22px">0 : 0</div><input id="pvpBet" type="number" value="0.01" step="0.0001"><button class="btn gold" onclick="pvp()">⚔️ БИТЬСЯ</button><p id="pvpM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-tasks" class="page"><div class="box"><h2>✅ ЗАДАНИЯ <span class="badge">NEW</span> • 1/9</h2><p>Ежедневные • Квесты друзей</p><div id="taskL"></div></div><div class="box"><h2>👥 КВЕСТЫ ДРУЗЕЙ</h2><p>1 друг +50,000 🪙 • 10 друзей +100,000 🪙 • 100 друзей +200,000 🪙 + NFT</p><button class="btn gold" onclick="invite()">📋 ПРИГЛАСИТЬ ДРУГА</button></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-shop" class="page"><div class="box"><h2>🛒 МАГАЗИН</h2><p>⭐ Stars: <b id="shopSt">0</b> • 💎 GRAM: <b id="shopGr">0.000</b> • 🦠 MP: <b id="shopMp">0.0000</b></p><div class="row"><button class="btn gold" onclick="buyStar(50)">50 ⭐</button><button class="btn gold" onclick="buyStar(100)">100 ⭐</button></div><div class="row"><button class="btn purb" onclick="buyGram(0.5)">0.5 💎</button><button class="btn purb" onclick="buyGram(1)">1 💎</button></div><button class="btn dark" onclick="demo()">ДЕМО: +0.0500 MP +500 🪙 • ПРОВЕРИТЬ</button><p>Демо, чтобы проверить: выиграл 7 = получил 7, потратил 5 = минус 5.</p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-hist" class="page"><div class="box"><h2>📜 ИСТОРИЯ</h2><div class="row"><button class="btn dark" onclick="histF('all')">ВСЕ</button><button class="btn grn" onclick="histF('win')">ДОСТИЖЕНИЯ</button><button class="btn purb" onclick="histF('ref')">ЗАРАЖЕНИЯ</button></div><div id="histL"></div></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-profile" class="page"><div class="box" style="text-align:center"><div style="font-size:68px;animation:jump 2s infinite">🦠</div><h2 id="pName">Новый игрок</h2><p>Уровень 1 • Всё с 0 • Без фейков</p><p style="font-weight:900;font-size:18px">🦠 <span id="mp2">0.0000</span> • ⭐ <span id="st2">0</span> • 💎 <span id="gr2">0.000</span> • 🪙 <span id="tk2">0</span></p></div><div class="box"><button class="btn dark" onclick="sndT()">🔊 ЗВУК ВКЛ / ВЫКЛ</button><button class="btn redb" onclick="resetAll()">🗑 СБРОСИТЬ ВСЁ В 0</button></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<nav style="position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:480px;z-index:99;display:flex;gap:5px;padding:9px 8px calc(13px + env(safe-area-inset-bottom));background:rgba(4,31,20,.97);border-top:4px solid #FFE600">
-<button class="navBtn on" style="flex:1;background:#1B5E3B;color:#fff;border:2px solid #fff;border-radius:16px;padding:11px 2px;font-size:10px;font-weight:900;min-height:64px" onclick="go('home',this)">⏳<br>Главная</button>
-<button class="navBtn" style="flex:1;background:#1B5E3B;color:#fff;border:2px solid #fff;border-radius:16px;padding:11px 2px;font-size:10px;font-weight:900;min-height:64px" onclick="go('tasks',this)">🎁<br>Задания <span style="color:#FF3B30">NEW</span></button>
-<button class="navBtn" style="flex:1;background:#1B5E3B;color:#fff;border:2px solid #fff;border-radius:16px;padding:11px 2px;font-size:10px;font-weight:900;min-height:64px" onclick="go('roulette',this)">🎡<br>Рулетка</button>
-<button class="navBtn" style="flex:1;background:#1B5E3B;color:#fff;border:2px solid #fff;border-radius:16px;padding:11px 2px;font-size:10px;font-weight:900;min-height:64px" onclick="go('shop',this)">🛒<br>Магазин</button>
-<button class="navBtn" style="flex:1;background:#1B5E3B;color:#fff;border:2px solid #fff;border-radius:16px;padding:11px 2px;font-size:10px;font-weight:900;min-height:64px" onclick="go('hist',this)">📜<br>История</button>
-                           <div id="modal" style="position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;display:none;align-items:center;justify-content:center;padding:20px"><div style="background:#fff;color:#111;border-radius:28px;padding:26px;text-align:center;width:100%;max-width:360px;border:5px solid #FFE600;animation:pop .4s"><div style="font-size:70px;animation:bounce 1s infinite" id="mE">🎉</div><h2 id="mT">ТЫ ВЫИГРАЛ!</h2><div style="font-size:42px;font-weight:900;color:#16A34A" id="mAmt">+7.0000 MP</div><p id="mX" style="font-weight:800;margin:8px 0"></p><button class="btn grn" onclick="closeM()">ЗАБРАТЬ 🎁</button></div></div>
 <script>
-let tg=window.Telegram&&Telegram.WebApp?Telegram.WebApp:null;if(tg){tg.ready();tg.expand();}
-let K='microbe_ULTRA_v10_ZERO';
-let S={stars:0,gram:0,mp:0,tok:0,xp:0,wins:0,games:0,inv:[],hist:[],done:{},candy:false};
-try{let o=JSON.parse(localStorage.getItem(K)||'null');if(o)S=o}catch(e){}
-let stars=S.stars||0,gram=S.gram||0,mp=S.mp||0,tok=S.tok||0,xp=S.xp||0,wins=S.wins||0,games=S.games||0,inv=S.inv||[],hist=S.hist||[],done=S.done||{},hasCandy=S.candy||false;
-let sound=false,AC=null,crOn=false,crM=1,crBet=0.01,crT=null,bomb=0,acc=0,grabN=0,pandN=0;
+var mp=0,stars=0,tok=0,wins=0,inv=[],hist=[];
+try{var o=JSON.parse(localStorage.getItem('mb1')||'null');if(o){mp=o.mp||0;stars=o.stars||0;tok=o.tok||0;inv=o.inv||[];hist=o.hist||[]}}catch(e){}
+var sound=false,AC=null;
 function fmt(n){return Number(n).toFixed(4)}
-function fmtG(n){return Number(n).toFixed(3)}
-function ac(){try{if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume()}catch(e){}}
-document.addEventListener('touchstart',ac);document.addEventListener('click',ac);
-function beep(f,d,t,v){if(!sound)return;ac();if(!AC)return;try{let o=AC.createOscillator(),g=AC.createGain();o.type=t||'sine';o.frequency.setValueAtTime(f,AC.currentTime);g.gain.setValueAtTime(v||.22,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+(d||.15));o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+(d||.15))}catch(e){}}
-function ck(){beep(760,.09,'square',.18);if(tg&&tg.HapticFeedback)tg.HapticFeedback.impactOccurred('medium')}
-function sWin(){[523,659,784,1047,1318].forEach((f,i)=>setTimeout(()=>beep(f,.25,'triangle',.25),i*110))}
-function sLose(){beep(200,.3,'sawtooth',.18)}
-function sndT(){sound=!sound;document.getElementById('sndBtn').textContent=sound?'🔊 ЗВУК ВКЛЮЧЁН • СЛЫШНО ПИУ-ПИУ!':'🔇 ЗВУК ВЫКЛЮЧЕН • НАЖМИ 1 РАЗ';if(sound)sWin();save()}
-function save(){localStorage.setItem(K,JSON.stringify({stars,gram,mp,tok,xp,wins,games,inv,hist,done,candy:hasCandy}))}
-function toast(t){let e=document.getElementById('toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',2600)}
-function conf(){for(let i=0;i<36;i++){let d=document.createElement('div');d.style.cssText='position:fixed;top:-30px;z-index:250;pointer-events:none;animation:fall linear forwards';d.textContent=['🎉','⭐','🍭','💎','🦠','💰'][i%6];d.style.left=Math.random()*100+'vw';d.style.fontSize=(22+Math.random()*26)+'px';d.style.animationDuration=(1.4+Math.random()*1.5)+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),3300)}}
-function showWin(e,t,amt,unit,x){document.getElementById('mE').textContent=e;document.getElementById('mT').textContent=t;document.getElementById('mAmt').textContent='+'+amt+' '+unit;document.getElementById('mX').textContent=x;document.getElementById('modal').style.display='flex';conf();sWin()}
-function closeM(){ck();document.getElementById('modal').style.display='none'}
-function go(id,btn){ck();document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));let el=document.getElementById('pg-'+id);if(el)el.classList.add('on');document.querySelectorAll('.navBtn').forEach(b=>{b.style.background='#1B5E3B';b.style.color='#fff'});if(btn){btn.style.background='linear-gradient(90deg,#FFE600,#22C55E)';btn.style.color='#000'}window.scrollTo({top:0,behavior:'smooth'});upd()}
-function upd(){document.getElementById('mp').textContent=fmt(mp);document.getElementById('st').textContent=stars;document.getElementById('gr').textContent=fmtG(gram);document.getElementById('tk').textContent=tok.toLocaleString();let a=document.getElementById('mp2');if(a)a.textContent=fmt(mp);let b=document.getElementById('st2');if(b)b.textContent=stars;let c=document.getElementById('gr2');if(c)c.textContent=fmtG(gram);let d=document.getElementById('tk2');if(d)d.textContent=tok.toLocaleString();let e=document.getElementById('shopMp');if(e)e.textContent=fmt(mp);let f=document.getElementById('shopSt');if(f)f.textContent=stars;let g=document.getElementById('shopGr');if(g)g.textContent=fmtG(gram);document.getElementById('lvl').textContent=1+Math.floor(xp/100);document.getElementById('xpT').textContent=xp+' / 100';document.getElementById('xpf').style.width=Math.min(100,xp%100)+'%';document.getElementById('winN').textContent=wins;document.getElementById('gameN').textContent=games;document.getElementById('invL').innerHTML=inv.length?inv.map(i=>'<div class="list"><span>'+i.e+' <b>'+i.n+'</b></span><b>'+i.p+' ⭐</b></div>').join(''):'<p>Пусто — 0 призов. Открой бесплатный кейс, выпадет CANDY CANE!</p>';if(hasCandy)document.getElementById('candyBox').style.display='block';document.getElementById('histL').innerHTML=hist.length?hist.map(h=>'<div class="list"><span>'+h+'</span></div>').join(''):'<p>Пока пусто. Выиграй 7 MP, тут будет +7.0000 MP</p>';document.getElementById('histMini').innerHTML=hist.length?hist.slice(0,3).map(h=>'<p>• '+h+'</p>').join(''):'<p>Пока пусто.</p>';document.getElementById('leadL').innerHTML=[['🦠','VirusKing','154.2000'],['👑','MicrobePro','128.0000'],['💎','Diamond','94.0000'],['🚀','Rocket','72.0000'],['⭐','ТЫ • '+fmt(mp),'']].map((r,i)=>'<div class="list"><span><b>#'+(i+1)+'</b> '+r[0]+' '+r[1]+'</span><b>'+r[2]+' MP</b></div>').join('');save()}
-function addH(t){hist.unshift(t);upd()}
-function setV(id,v){ck();document.getElementById(id).value=v;toast('Ставка '+v+' MP • Потратишь ровно '+v)}
-function tapMicro(){ck();mp=+(mp+0.0001).toFixed(4);tok+=1;xp+=2;toast('🦠 +0.0001 MP • +1 🪙 • Было 0!');addH('Тап по микробу +0.0001 MP');upd()}
-function tokToMP(t){return +(t*0.0001).toFixed(4)}
-function conv(kind){ck();if(kind==='tok'){if(tok<1000){toast('Нужно 1000 🪙, забери бонус!');return}tok-=1000;let a=0.1000;mp=+(mp+a).toFixed(4);addH('Обмен: -1000 🪙 +0.1000 MP');showWin('💱','ОБМЕН!',fmt(a),'MP','1000 🪙 × 0.0001 = 0.1000 MP ровно')}if(kind==='star'){if(stars<100){toast('Нужно 100 ⭐');return}stars-=100;mp=+(mp+0.5).toFixed(4);addH('Обмен: -100 ⭐ +0.5000 MP');showWin('💱','ОБМЕН!',fmt(0.5),'MP','100 ⭐ = 0.5000 MP')}if(kind==='gram'){if(gram<1){toast('Нужно 1 GRAM');return}gram-=1;mp=+(mp+2).toFixed(4);addH('Обмен: -1 GRAM +2.0000 MP');showWin('💱','ОБМЕН!',fmt(2),'MP','1 GRAM = 2.0000 MP')}upd()}
-const PR=[{e:'🌹',n:'Роза',p:5},{e:'🐻',n:'Мишка',p:10},{e:'🚀',n:'Ракета',p:25},{e:'💎',n:'Алмаз',p:50},{e:'👑',n:'Корона',p:100},{e:'🍭',n:'CANDY CANE',p:427},{e:'🧬',n:'МЕГА ВИРУС',p:1000}];
-function openCase(){ck();let bet=parseFloat(document.getElementById('caseBet')?.value||0)||0;if(bet>0){if(mp<bet){toast('Нужно '+fmt(bet)+' MP, минус ровно столько! Забери демо!');return}mp=+(mp-bet).toFixed(4);addH('Кейс: -'+fmt(bet)+' MP')}games++;let pr=PR[Math.floor(Math.random()*PR.length)];inv.push(pr);stars+=pr.p;let mpWin=tokToMP(pr.p*10);mp=+(mp+mpWin).toFixed(4);if(pr.n==='CANDY CANE')hasCandy=true;xp+=20;addH('Кейс: '+pr.n+' +'+pr.p+' ⭐ +'+fmt(mpWin)+' MP');document.getElementById('caseBox').textContent=pr.e;let r=document.getElementById('caseR');if(r)r.textContent='ВЫПАЛО: '+pr.e+' '+pr.n+' • +'+pr.p+' ⭐';showWin(pr.e,'ПРИЗ ИЗ КЕЙСА!',pr.p,'⭐','+'+pr.p+' ⭐ и +'+fmt(mpWin)+' MP • Уже на балансе!');upd()}
-function upgradeCandy(){ck();if(stars<10){toast('Нужно 10 ⭐ для улучшения');return}stars-=10;toast('🍭 CANDY CANE улучшен! -10 ⭐ ровно');addH('Улучшил CANDY CANE -10 ⭐');upd()}
-function sellCandy(){ck();if(!hasCandy){toast('Нет CANDY CANE');return}hasCandy=false;stars+=427;addH('Продал CANDY CANE +427 ⭐');showWin('🍭','ПРОДАНО!',427,'⭐','CANDY CANE продан ровно за 427 ⭐');upd()}
-function getCandy(){ck();toast('🍭 CANDY CANE в инвентаре! Получить — в боте.');upd()}
-function daily(){sWin();tok+=1000;let a=0.1000;mp=+(mp+a).toFixed(4);document.getElementById('dayT').textContent='✅ +1000 🪙 = +0.1000 MP забрано!';addH('Бонус +1000 🪙 +0.1000 MP');showWin('🎁','БОНУС!',fmt(a),'MP','+1000 🪙 = +0.1000 MP ровно');upd()}
-function joinC(){sWin();mp=+(mp+0.0010).toFixed(4);toast('✅ Участвуешь! +0.0010 MP');addH('Конкурс +0.0010 MP');upd()}
-function invite(){let l='https://t.me/MicrobeGame_Bot';if(navigator.clipboard)navigator.clipboard.writeText(l);tok+=20000;mp=+(mp+2).toFixed(4);addH('Друг +20000 🪙 +2.0000 MP');sWin();toast('Ссылка скопирована! +2.0000 MP');upd()}
-function sim(){ck();let pr=PR[Math.floor(Math.random()*PR.length)];document.getElementById('simM').textContent=pr.e+' '+pr.n;toast('Симулятор: '+pr.n+' • бесплатно');}
-function startCrash(){crBet=parseFloat(document.getElementById('crBet').value)||0.01;if(mp<crBet){toast('Нужно '+fmt(crBet)+' MP • Забери демо в магазине!');go('shop');return}mp=+(mp-crBet).toFixed(4);addH('Crash: -'+fmt(crBet)+' MP ставка');crM=1;crOn=true;ck();let boom=1+Math.random()*4;clearInterval(crT);crT=setInterval(()=>{crM+=0.13;document.getElementById('crN').textContent='x'+crM.toFixed(2);let cur=+(crBet*crM).toFixed(4);document.getElementById('crWin').textContent=fmt(cur)+' MP';document.getElementById('crF').textContent=fmt(crBet)+' × x'+crM.toFixed(2)+' = '+fmt(cur);beep(450+crM*70,.04,'sine',.06);if(crM>=boom){clearInterval(crT);crOn=false;sLose();document.getElementById('crN').textContent='💥 ВЗРЫВ';document.getElementById('rock').textContent='💥';document.getElementById('crM').textContent='Взорвалось! -'+fmt(crBet)+' MP сгорело.';addH('Crash проиграл -'+fmt(crBet)+' MP');upd();setTimeout(()=>document.getElementById('rock').textContent='🚀',2000)}},130);upd()}
-function cashout(){if(!crOn){toast('Сначала запусти!');return}clearInterval(crT);crOn=false;let amt=+(crBet*crM).toFixed(4);mp=+(mp+amt).toFixed(4);wins++;games++;addH('Crash: '+fmt(crBet)+' × x'+crM.toFixed(2)+' = +'+fmt(amt)+' MP');showWin('🚀','CRASH!',fmt(amt),'MP',fmt(crBet)+' × x'+crM.toFixed(2)+' = '+fmt(amt)+' MP • Ровно столько получил!');upd()}
-function initMine(){let bet=parseFloat(document.getElementById('mineBet').value)||0.01;if(mp<bet){toast('Нужно '+fmt(bet)+' MP');return}mp=+(mp-bet).toFixed(4);acc=0;document.getElementById('mineWin').textContent='0.0000 MP';ck();bomb=Math.floor(Math.random()*25);let b=document.getElementById('board');b.innerHTML='';for(let i=0;i<25;i++){let d=document.createElement('div');d.className='cell';d.textContent='?';d.onclick=()=>{ck();if(d.textContent!=='?')return;if(i===bomb){d.textContent='💣';sLose();document.getElementById('mineM').textContent='МИНА! '+fmt(acc)+' сгорело.';acc=0;document.getElementById('mineWin').textContent='0.0000 MP'}else{d.textContent='💎';beep(950,.09,'triangle',.16);acc=+(acc+bet).toFixed(4);document.getElementById('mineWin').textContent=fmt(acc)+' MP';document.getElementById('mineM').textContent='+'+fmt(bet)+' • Всего '+fmt(acc)}};b.appendChild(d)}upd()}
-function mineCash(){if(acc<=0){toast('Сначала копай 💎!');return}mp=+(mp+acc).toFixed(4);wins++;addH('Шахта: +'+fmt(acc)+' MP');showWin('💎','ШАХТА!',fmt(acc),'MP','Накопал ровно '+fmt(acc)+' MP');acc=0;document.getElementById('mineWin').textContent='0.0000 MP';upd()}
-function spin(){let bet=parseFloat(document.getElementById('rouBet').value)||0.01;if(mp<bet){toast('Нужно '+fmt(bet)+' MP');return}mp=+(mp-bet).toFixed(4);ck();let w=document.getElementById('wheel');w.style.transform='rotate('+(1440+Math.random()*360)+'deg)';setTimeout(()=>{let mult=[0,1,2,5,10][Math.floor(Math.random()*5)];let amt=+(bet*mult).toFixed(4);games++;if(amt>0){mp=+(mp+amt).toFixed(4);wins++;addH('Рулетка: '+fmt(bet)+' × x'+mult+' = +'+fmt(amt)+' MP');document.getElementById('rouR').textContent='x'+mult+' = +'+fmt(amt)+' MP';showWin('🎡','РУЛЕТКА!',fmt(amt),'MP',fmt(bet)+' × x'+mult+' = '+fmt(amt)+' MP')}else{sLose();document.getElementById('rouR').textContent='x0 • -'+fmt(bet)+' MP сгорело'}upd()},4100);upd()}
-function spinFree(){ck();mp=+(mp+0.0010).toFixed(4);showWin('🎡','БЕСПЛАТНО!',fmt(0.0010),'MP','+0.0010 MP без ставки');upd()}
-function slot(){let bet=parseFloat(document.getElementById('slotBet').value)||0.01;if(mp<bet){toast('Нужно '+fmt(bet)+' MP');return}mp=+(mp-bet).toFixed(4);ck();let em=['🦠','💎','🍭','👑','🚀'];let a=em[Math.floor(Math.random()*5)],b=em[Math.floor(Math.random()*5)],c=em[Math.floor(Math.random()*5)];document.getElementById('slotB').textContent=a+' '+b+' '+c;games++;if(a===b&&b===c){let amt=+(bet*20).toFixed(4);mp=+(mp+amt).toFixed(4);wins++;addH('Слот: '+fmt(bet)+' × 20 = +'+fmt(amt)+' MP');showWin('🎰','ДЖЕКПОТ x20!',fmt(amt),'MP',fmt(bet)+' × 20 = '+fmt(amt)+' MP')}else if(a===b||b===c){let amt=+(bet*2).toFixed(4);mp=+(mp+amt).toFixed(4);document.getElementById('slotM').textContent='+'+fmt(amt)+' MP';sWin()}else{sLose();document.getElementById('slotM').textContent='Не повезло • -'+fmt(bet)+' MP'}upd()}
-function dice(ch){let bet=parseFloat(document.getElementById('diceBet').value)||0.01;if(mp<bet){toast('Нужно '+fmt(bet)+' MP');return}mp=+(mp-bet).toFixed(4);ck();let d1=1+Math.floor(Math.random()*6),d2=1+Math.floor(Math.random()*6),s=d1+d2;document.getElementById('diceB').textContent=d1+' + '+d2+' = '+s;let w=(ch==='more'&&s>7)||(ch==='less'&&s<7);if(w){let amt=+(bet*2).toFixed(4);mp=+(mp+amt).toFixed(4);wins++;addH('Кости: '+fmt(bet)+' × 2 = +'+fmt(amt)+' MP');showWin('🎲','УГАДАЛ!',fmt(amt),'MP',fmt(bet)+' × 2 = '+fmt(amt)+' MP')}else{sLose();toast('Не угадал • -'+fmt(bet)+' MP')}upd()}
-function plinko(){let bet=parseFloat(document.getElementById('plBet').value)||0.01;if(mp<bet){toast('Нужно '+fmt(bet)+' MP');return}mp=+(mp-bet).toFixed(4);ck();let m=[0.5,1,2,5,10][Math.floor(Math.random()*5)];let amt=+(bet*m).toFixed(4);mp=+(mp+amt).toFixed(4);document.getElementById('plM').textContent=fmt(bet)+' × x'+m+' = +'+fmt(amt)+' MP';addH('Плинко: +'+fmt(amt)+' MP');if(m>=5)showWin('🔴','ПЛИНКО!',fmt(amt),'MP',fmt(bet)+' × x'+m+' = '+fmt(amt)+' MP');upd()}
-function grabHit(){grabN++;ck();mp=+(mp+0.0010).toFixed(4);document.getElementById('grabN').textContent=grabN;let v=document.getElementById('grabV');v.style.left=Math.random()*70+'%';v.style.top=Math.random()*60+'%';if(grabN%5===0)toast('🔥 +'+fmt(grabN*0.0010)+' MP уже!');upd()}
-function startGrab(){grabN=0;document.getElementById('grabN').textContent='0';sWin();toast('Лови! Каждое = +0.0010 MP ровно!')}
-function cs2(){let bet=parseFloat(document.getElementById('csBet').value)||0.02;if(mp<bet){toast('Нужно '+fmt(bet)+' MP');return}mp=+(mp-bet).toFixed(4);ck();let amt=0.0300;mp=+(mp+amt).toFixed(4);document.getElementById('cs2M').textContent='Скин! -'+fmt(bet)+' +'+fmt(amt)+' MP';sWin();addH('CS2: +'+fmt(amt)+' MP');upd()}
-function surv(){let bet=parseFloat(document.getElementById('survBet').value)||0.01;if(mp<bet){toast('Нужно '+fmt(bet)+' MP');return}mp=+(mp-bet).toFixed(4);ck();if(Math.random()<.5){let amt=+(bet*2).toFixed(4);mp=+(mp+amt).toFixed(4);wins++;document.getElementById('survM').textContent='ВЫЖИЛ! '+fmt(bet)+' × 2 = '+fmt(amt)+' MP';showWin('🪂','ВЫЖИЛ!',fmt(amt),'MP',fmt(bet)+' × 2 = '+fmt(amt)+' MP')}else{sLose();document.getElementById('survM').textContent='Не выжил • -'+fmt(bet)+' MP'}upd()}
-function upgrade(){let bet=parseFloat(document.getElementById('upBet').value)||0.01;if(mp<bet){toast('Нужно '+fmt(bet)+' MP');return}mp=+(mp-bet).toFixed(4);ck();if(Math.random()<.45){inv.push({e:'👑',n:'КОРОНА PRO',p:600});stars+=600;document.getElementById('upM').textContent='👑 УЛУЧШЕНО! +600 ⭐';showWin('👑','УЛУЧШЕНО!',600,'⭐','Корона PRO 600 ⭐')}else{sLose();document.getElementById('upM').textContent='Сгорело • -'+fmt(bet)+' MP'}upd()}
-function kaskad(){let bet=parseFloat(document.getElementById('kasBet').value)||0.01;if(mp<bet){toast('Нужно '+fmt(bet)+' MP');return}mp=+(mp-bet).toFixed(4);ck();if(Math.random()<.5){let amt=+(bet*3).toFixed(4);mp=+(mp+amt).toFixed(4);document.getElementById('kasM').textContent='СОВПАЛО! '+fmt(bet)+' × 3 = '+fmt(amt)+' MP';showWin('💥','КАСКАД x3!',fmt(amt),'MP',fmt(bet)+' × 3 = '+fmt(amt)+' MP')}else{sLose();document.getElementById('kasM').textContent='Не совпало • -'+fmt(bet)+' MP'}upd()}
-function pand(){pandN++;ck();mp=+(mp+0.0005).toFixed(4);document.getElementById('pandN').textContent=pandN;if(pandN%10===0){mp=+(mp+0.0050).toFixed(4);document.getElementById('pandM').textContent='🦠 10 заражений! +0.0050 MP бонус!';sWin()}upd()}
-function pvp(){let bet=parseFloat(document.getElementById('pvpBet').value)||0.01;if(mp<bet){toast('Нужно '+fmt(bet)+' MP');return}mp=+(mp-bet).toFixed(4);ck();let me=1+Math.floor(Math.random()*100),en=1+Math.floor(Math.random()*100);document.getElementById('pvpS').textContent=me+' : '+en;if(me>en){let amt=+(bet*2).toFixed(4);mp=+(mp+amt).toFixed(4);wins++;document.getElementById('pvpM').textContent='ПОБЕДА! '+fmt(bet)+' × 2 = '+fmt(amt)+' MP';showWin('⚔️','ПВП!',fmt(amt),'MP',fmt(bet)+' × 2 = '+fmt(amt)+' MP')}else{sLose();document.getElementById('pvpM').textContent='Поражение • -'+fmt(bet)+' MP'}upd()}
-function buyStar(n){ck();stars+=n;gram=+(gram+0.010).toFixed(3);toast('Демо: +'+n+' ⭐ +0.010 GRAM');addH('Магазин: +'+n+' ⭐');upd()}
-function buyGram(n){ck();gram=+(gram+n).toFixed(3);toast('Демо: +'+n+' GRAM');upd()}
-function demo(){mp=+(mp+0.05).toFixed(4);tok+=500;winS();toast('+0.0500 MP +500 🪙! Проверь: 0.01 × x2 = 0.0200!');addH('Демо +0.0500 MP');upd()}
-function resetAll(){if(confirm('Сбросить ВСЁ в 0? Stars, GRAM, MP, токены — всё 0?')){localStorage.removeItem(K);location.reload()}}
-const TASKS=[['Подпишись на канал','+5000 🪙',5000,'tok'],['Пригласи 1 друга','+20000 🪙',20000,'tok'],['Открой 3 кейса','+1000 🪙',1000,'tok'],['Выиграй в Crash','+0.0050 MP',0.0050,'mp'],['Подпишись на X','+10000 🪙',10000,'tok'],['Зарази друга','+0.0100 MP',0.01,'mp']];
-document.getElementById('taskL').innerHTML=TASKS.map((t,i)=>'<div class="list"><div><b>'+t[0]+'</b><br><span style="font-size:12px">'+t[1]+'</span></div><button class="btn grn" style="width:auto;margin:0;padding:11px 14px" onclick="claim('+i+')">'+(done[i]?'✅':'ЗАБРАТЬ')+'</button></div>').join('');
-function claim(i){if(done[i]){toast('Уже забрано');return}done[i]=true;if(TASKS[i][3]==='mp'){mp=+(mp+TASKS[i][2]).toFixed(4);addH('Задание: +'+fmt(TASKS[i][2])+' MP')}else{tok+=TASKS[i][2];mp=+(mp+tokToMP(TASKS[i][2])).toFixed(4);addH('Задание: +'+TASKS[i][2]+' 🪙')}xp+=30;sWin();toast('🎁 Забрано!');upd();document.getElementById('taskL').innerHTML=TASKS.map((t,j)=>'<div class="list"><div><b>'+t[0]+'</b><br><span style="font-size:12px">'+t[1]+'</span></div><button class="btn grn" style="width:auto;margin:0;padding:11px 14px" onclick="claim('+j+')">'+(done[j]?'✅':'ЗАБРАТЬ')+'</button></div>').join('')}
-function histF(f){ck();let arr=hist;if(f==='win')arr=hist.filter(h=>h.includes('+'));if(f==='ref')arr=hist.filter(h=>h.includes('Друг')||h.includes('Зараз'));document.getElementById('histL').innerHTML=arr.length?arr.map(h=>'<div class="list"><span>'+h+'</span></div>').join(''):'<p>Пока пусто</p>'}
-let myId='mp_'+Math.random().toString(36).slice(2,9),peers={};peers[myId]=Date.now();
-let bc=null;try{bc=new BroadcastChannel('microbe_online_v10')}catch(e){}
-function sendOnline(){if(bc)bc.postMessage({id:myId,t:Date.now()})}
-if(bc){bc.onmessage=e=>{let d=e.data;if(d&&d.id&&d.id!==myId){let isNew=!peers[d.id];peers[d.id]=Date.now();if(isNew){beep(880,.2,'triangle',.22);toast('🟢 Зашёл ещё 1 человек! Онлайн: '+Object.keys(peers).length);conf()}updateOnline()}}}
-function updateOnline(){let now=Date.now();for(let k in peers){if(now-peers[k]>7000)delete peers[k]}peers[myId]=now;let n=Object.keys(peers).length;document.getElementById('onN').textContent=n;let m=document.getElementById('mineOn');if(m)m.textContent=n+' 👤'}
-setInterval(()=>{sendOnline();updateOnline()},2000);sendOnline();updateOnline();
-setInterval(()=>{let el=document.getElementById('timer');if(el)el.textContent='1 Д 21 Ч'},1000);
-if(tg&&tg.initDataUnsafe&&tg.initDataU                       </nav>
+function save(){localStorage.setItem('mb1',JSON.stringify({mp:mp,stars:stars,tok:tok,inv:inv,hist:hist}))}
+function beep(f){if(!sound)return;try{if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();var o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;g.gain.value=.2;o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+.15)}catch(e){}}
+function sndT(){sound=!sound;document.getElementById('sb').textContent=sound?'🔊 ЗВУК ВКЛЮЧЁН!':'🔇 ЗВУК ВЫКЛЮЧЕН — НАЖМИ МЕНЯ';if(sound)beep(800)}
+function toast(t){alert(t)}
+function upd(){document.getElementById('mp').textContent=fmt(mp);document.getElementById('st').textContent=stars;save()}
+function homeHTML(){
+return '<div style="text-align:center;padding:16px 4px"><div style="font-size:88px">🦠</div><h1 style="font-size:36px">MICROBE 🦠</h1><p>Уровень 1 • Всё 0 • Онлайн: 1 — ты один</p><button class="btn y" onclick="tap()">🦠 ТКНУТЬ +0.0001 MP</button></div>'
++'<div class="card"><h2>🎁 Старт с нуля</h2><button class="btn y" onclick="openCase()">🎁 БЕСПЛАТНЫЙ КЕЙС</button><button class="btn g" onclick="daily()">🎁 БОНУС +1000 🪙 = +0.1000 MP</button></div>'
++'<div class="grid">'
++'<button class="tile a" onclick="go(\'inv\')"><span class="ic">🧰</span><b>ИНВЕНТАРЬ</b><span>CANDY CANE 427 ⭐</span></button>'
++'<button class="tile b" onclick="go(\'contest\')"><span class="ic">🏆</span><b>КОНКУРСЫ</b><span>1000 NFT</span></button>'
++'<button class="tile c" onclick="go(\'games\')"><span class="ic">🎮</span><b>ИГРЫ</b><span>Все игры</span></button>'
++'<button class="tile d" onclick="go(\'crash\')"><span class="ic">🚀</span><b>CRASH</b><span>Ставка x X</span></button>'
++'<button class="tile e" onclick="go(\'tasks\')"><span class="ic">✅</span><b>ЗАДАНИЯ</b><span>+20,000 🪙</span></button>'
++'<button class="tile f" onclick="go(\'shop\')"><span class="ic">🛒</span><b>МАГАЗИН</b><span>Stars • GRAM</span></button></div>';
+}
+function go(id,btn){
+beep(700);
+var navs=document.querySelectorAll('.nav button');
+for(var i=0;i<navs.length;i++)navs[i].classList.remove('on');
+if(btn)btn.classList.add('on');
+var v=document.getElementById('v');
+if(id==='home'){v.innerHTML=homeHTML()}
+if(id==='inv'){v.innerHTML='<div class="card"><h2>🧰 ИНВЕНТАРЬ — открылось!</h2><p>'+(inv.length?inv.join('<br>'):'Пусто — 0. Открой кейс.')+'</p><button class="btn y" onclick="openCase()">🎁 ОТКРЫТЬ КЕЙС</button></div><button class="btn k" onclick="go(\'home\')">⬅ НАЗАД</button>'}
+if(id==='contest'){v.innerHTML='<div class="card"><h2>🏆 1000 NFT</h2><p>81,935 участников</p><button class="btn y" onclick="joinC()">УЧАСТВОВАТЬ +0.0010 MP</button></div><button class="btn k" onclick="go(\'home\')">⬅ НАЗАД</button>'}
+if(id==='games'){v.innerHTML='<div class="card"><h2>🎮 ИГРЫ — открылось!</h2><button class="btn y" onclick="go(\'crash\')">🚀 CRASH</button><button class="btn g" onclick="playWin(2)">🎲 ИГРА x2 — выиграл 0.02 = получил 0.02</button></div><button class="btn k" onclick="go(\'home\')">⬅ НАЗАД</button>'}
+if(id==='crash'){v.innerHTML='<div class="card" style="text-align:center"><h2>🚀 CRASH</h2><div style="font-size:44px;font-weight:900" id="cn">x1.00</div><input id="cb" type="number" value="0.01" step="0.0001"><button class="btn y" onclick="startC()">🚀 ЗАПУСТИТЬ</button><button class="btn g" onclick="cashC()">💰 ЗАБРАТЬ РОВНО СТОЛЬКО</button></div><button class="btn k" onclick="go(\'home\')">⬅ НАЗАД</button>'}
+if(id==='tasks'){v.innerHTML='<div class="card" style="background:#B8F5C8"><h2>✅ ЗАДАНИЯ — открылось!</h2><p>Ежедневный бонус +1000 🪙</p><button class="btn g" onclick="daily()">ЗАБРАТЬ +1000 🪙</button><p>Пригласи друга +20000 🪙</p><button class="btn y" onclick="invite()">📋 ПРИГЛАСИТЬ +2.0000 MP</button></div><button class="btn k" onclick="go(\'home\')">⬅ НАЗАД</button>'}
+if(id==='shop'){v.innerHTML='<div class="card"><h2>🛒 МАГАЗИН — открылось!</h2><p>MP: '+fmt(mp)+' • Stars: '+stars+' • Токены: '+tok+'</p><button class="btn y" onclick="demo()">ДЕМО +0.0500 MP</button><button class="btn g" onclick="buyS()">+100 ⭐ ДЕМО</button></div><button class="btn k" onclick="go(\'home\')">⬅ НАЗАД</button>'}
+if(id==='hist'){v.innerHTML='<div class="card"><h2>📜 ИСТОРИЯ — открылось!</h2><p>'+(hist.length?hist.join('<br>'):'Пока пусто. Выиграй 7, тут будет +7.')+'</p></div><button class="btn k" onclick="go(\'home\')">⬅ НАЗАД</button>'}
+window.scrollTo(0,0);upd();
+}
+function tap(){beep(900);mp=+(mp+0.0001).toFixed(4);tok++;hist.unshift('Тап +0.0001 MP');toast('🦠 +0.0001 MP! Было 0!');go('home')}
+function openCase(){beep(800);var p=['🌹 Роза 5 ⭐','🐻 Мишка 10 ⭐','🍭 CANDY CANE 427 ⭐'][Math.floor(Math.random()*3)];inv.push(p);stars+=5;mp=+(mp+0.005).toFixed(4);hist.unshift('Кейс: '+p);toast('🎁 Выпало: '+p+' • +0.0050 MP');go('home')}
+function daily(){beep(800);tok+=1000;mp=+(mp+0.1).toFixed(4);hist.unshift('Бонус +0.1000 MP');toast('🎁 +1000 🪙 = +0.1000 MP ровно!');go('home')}
+function joinC(){mp=+(mp+0.001).toFixed(4);toast('✅ +0.0010 MP');upd()}
+function invite(){tok+=20000;mp=+(mp+2).toFixed(4);toast('📋 +2.0000 MP за друга!');upd()}
+function demo(){mp=+(mp+0.05).toFixed(4);tok+=500;toast('+0.0500 MP! Теперь Crash!');upd()}
+function buyS(){stars+=100;toast('+100 ⭐');upd()}
+function playWin(m){var bet=0.01;if(mp<bet){toast('Нужно 0.01 — нажми ДЕМО в магазине');go('shop');return}mp=+(mp-bet).toFixed(4);var amt=+(bet*m).toFixed(4);mp=+(mp+amt).toFixed(4);wins++;hist.unshift('Игра: '+bet+' x'+m+' = +'+fmt(amt)+' MP');toast('💰 Выиграл '+fmt(amt)+' MP — получил ровно '+fmt(amt)+'!');go('home')}
+var crM=1,crOn=false,crT=null,crBet=0.01;
+function startC(){crBet=parseFloat(document.getElementById('cb').value)||0.01;if(mp<crBet){toast('Нужно '+fmt(crBet)+' — ДЕМО в магазине');go('shop');return}mp=+(mp-crBet).toFixed(4);crM=1;crOn=true;beep(700);var boom=1+Math.random()*3;clearInterval(crT);crT=setInterval(function(){crM+=0.13;var e=document.getElementById('cn');if(e)e.textContent='x'+crM.toFixed(2);if(crM>=boom){clearInterval(crT);crOn=false;toast('💥 Взорвалось! Минус '+fmt(crBet))}},130);upd()}
+function cashC(){if(!crOn){toast('Сначала запусти!');return}clearInterval(crT);crOn=false;var amt=+(crBet*crM).toFixed(4);mp=+(mp+amt).toFixed(4);hist.unshift('Crash: '+fmt(crBet)+' x'+crM.toFixed(2)+' = +'+fmt(amt)+' MP');toast('💰 +'+fmt(amt)+' MP — ровно столько, сколько выиграл!');go('home')}
+if(window.Telegram&&Telegram.WebApp){Telegram.WebApp.ready();Telegram.WebApp.expand()}
+go('home');
+</script>
+</body>
+</html>
