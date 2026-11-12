@@ -3,102 +3,117 @@
 <title>MICROBE</title><script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:Arial,sans-serif;color:#062a1e;min-height:100vh;background:linear-gradient(180deg,#E8FFF0 0%,#B8F5C8 22%,#6EE7A0 42%,#1FA85C 65%,#0B3D2A 85%,#041F14 100%);background-attachment:fixed;overflow-x:hidden}
-button{border:0;cursor:pointer;font-family:Arial,sans-serif;transition:transform .12s,filter .12s,box-shadow .2s}
+body{font-family:Arial,sans-serif;color:#fff;min-height:100vh;background:linear-gradient(180deg,#2B0A4A 0%,#7B1E8A 35%,#C026D3 70%,#E879F9 100%);background-attachment:fixed;overflow-x:hidden}
+body.green{background:linear-gradient(180deg,#E8FFF0 0%,#B8F5C8 25%,#22C55E 55%,#0B3D2A 85%,#041F14 100%)}
+button{border:0;cursor:pointer;font-family:Arial,sans-serif;transition:transform .12s,filter .12s}
 button:active{transform:scale(.90)!important;filter:brightness(1.4)}
-@keyframes jump{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes jump{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 @keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
-@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(255,215,0,.9),0 0 18px #FFE600}50%{box-shadow:0 0 0 13px rgba(255,215,0,0),0 0 38px #22FF88}}
-@keyframes shine{0%{background-position:-200%}100%{background-position:200%}}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(255,215,0,.9),0 0 18px #FFE600}50%{box-shadow:0 0 0 12px rgba(255,215,0,0),0 0 34px #22FF88}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.13)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
 @keyframes slide{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-.w{max-width:480px;margin:auto;min-height:100vh;padding:12px 12px 128px}
-.top{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:6px;background:rgba(255,255,255,.95);border:3px solid #0B3D2A;border-radius:20px;padding:10px 11px;box-shadow:0 8px 22px rgba(0,0,0,.3)}
-.top b{font-size:15px}.top small{font-size:10px;color:#1FA85C;font-weight:800;display:block}
-.money{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}.money b{background:#041F14;color:#fff;padding:7px;border-radius:99px;font-size:11px;border:2px solid #FFE600;white-space:nowrap}.money i{font-style:normal;color:#FFE600}
-.online{display:flex;justify-content:space-between;align-items:center;background:#fff;border:3px solid #22C55E;border-radius:18px;padding:11px 13px;margin-top:10px;animation:slide .4s}
-.dot{width:11px;height:11px;border-radius:50%;background:#22C55E;box-shadow:0 0 12px #22C55E;animation:pulse 1.3s infinite;display:inline-block}
-.snd{width:100%;padding:13px;border-radius:16px;background:#041F14;color:#B8F5C8;font-weight:900;margin-top:10px;border:3px solid #FFE600;animation:glow 2.2s infinite;font-size:13px}
-.scroll{display:flex;gap:8px;overflow-x:auto;padding:12px 2px;scrollbar-width:none}
-.scroll button{flex:0 0 auto;padding:11px 15px;border-radius:99px;background:#041F14;color:#fff;font-weight:900;border:2px solid #FFE600;white-space:nowrap}
-.hero{text-align:center;padding:12px 4px 2px}
-.micro{width:148px;height:148px;margin:0 auto;border-radius:50%;border:5px solid #fff;background:radial-gradient(circle,#E8FF00,#0E8A52);display:flex;align-items:center;justify-content:center;font-size:80px;animation:jump 2.6s infinite;box-shadow:0 0 42px #22FF88;cursor:pointer}
-.hero h1{font-size:38px;text-shadow:0 3px 0 #fff}
-.hero h1 em{font-style:normal;background:linear-gradient(90deg,#0B3D2A,#22C55E,#FF8A00,#0B3D2A);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 2s linear infinite}
-.bar{height:14px;background:#041F14;border:2px solid #fff;border-radius:99px;margin:10px 28px;overflow:hidden}.bar div{height:100%;width:0%;background:linear-gradient(90deg,#FFE600,#22FF88);transition:.5s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.w{max-width:480px;margin:auto;min-height:100vh;padding:10px 12px 120px}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:6px 2px}
+.topbar b{font-size:12px;background:rgba(255,255,255,.22);padding:8px 12px;border-radius:99px}
+.money{display:flex;gap:5px}.money b{background:rgba(0,0,0,.55);padding:8px 10px;border-radius:99px;font-size:12px;border:1px solid rgba(255,255,255,.4)}.money i{font-style:normal;color:#FFE600}
+.backrow{display:flex;justify-content:space-between;align-items:center;margin:4px 0 8px}.backrow b{font-size:13px}
+.snd{width:100%;padding:12px;border-radius:16px;background:#000;color:#B8F5C8;font-weight:900;border:3px solid #FFE600;animation:glow 2.2s infinite;font-size:12px}
+.scroll{display:flex;gap:8px;overflow-x:auto;padding:10px 2px;scrollbar-width:none}
+.scroll button{flex:0 0 auto;padding:10px 14px;border-radius:99px;background:rgba(0,0,0,.55);color:#fff;font-weight:900;border:2px solid #FFE600;white-space:nowrap;font-size:12px}
+.hero{text-align:center;padding:8px 4px}
+.micro{width:128px;height:128px;margin:0 auto;border-radius:50%;border:5px solid #fff;background:radial-gradient(circle,#E8FF00,#0E8A52);display:flex;align-items:center;justify-content:center;font-size:72px;animation:jump 2.6s infinite;box-shadow:0 0 42px #22FF88;cursor:pointer}
+.hero h1{font-size:34px;text-shadow:0 3px 0 rgba(0,0,0,.4)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:12px}
-.tile{min-height:132px;border-radius:24px;padding:15px 11px;border:3px solid #fff;color:#fff;text-align:left;box-shadow:0 10px 22px rgba(0,0,0,.35)}
-.tile:active{animation:shake .3s}.tile i{font-size:44px;display:block;animation:bounce 2.2s infinite}.tile b{display:block;font-size:15px;margin-top:4px}.tile span{font-size:11px}
-.g1{background:linear-gradient(135deg,#FF8AC2,#C026D3)}.g2{background:linear-gradient(135deg,#FFB800,#FF5A00)}.g3{background:linear-gradient(135deg,#8B5CF6,#3B0764)}.g4{background:linear-gradient(135deg,#38BDF8,#1E3A8A)}.g5{background:linear-gradient(135deg,#22C55E,#052E16)}.g6{background:linear-gradient(135deg,#FACC15,#713F12)}.g7{background:linear-gradient(135deg,#FF6B6B,#7F1D1D)}.g8{background:linear-gradient(135deg,#14B8A6,#134E4A)}
-.box{background:rgba(255,255,255,.95);color:#062a1e;border:3px solid #0B3D2A;border-radius:24px;padding:16px;margin-top:12px;animation:slide .35s;box-shadow:0 10px 22px rgba(0,0,0,.25)}
+.tile{min-height:128px;border-radius:22px;padding:14px 11px;border:0;color:#fff;text-align:left;box-shadow:0 10px 22px rgba(0,0,0,.35);position:relative;overflow:hidden}
+.tile:active{animation:shake .3s}.tile i{font-size:42px;display:block;animation:bounce 2.2s infinite}.tile b{display:block;font-size:15px;margin-top:4px;text-transform:uppercase}.tile span{font-size:11px;opacity:.95}
+.badge{position:absolute;top:8px;right:8px;background:#FF3B30;color:#fff;font-size:9px;font-weight:900;padding:4px 7px;border-radius:99px;z-index:2}
+.g1{background:linear-gradient(135deg,#FF8AC2,#C026D3)}.g2{background:linear-gradient(135deg,#FFB800,#FF5A00)}.g3{background:linear-gradient(135deg,#8B5CF6,#3B0764)}.g4{background:linear-gradient(135deg,#38BDF8,#1E3A8A)}.g5{background:linear-gradient(135deg,#22C55E,#052E16)}.g6{background:linear-gradient(135deg,#FACC15,#713F12)}.g7{background:linear-gradient(135deg,#FF6B6B,#7F1D1D)}.g8{background:linear-gradient(135deg,#14B8A6,#134E4A)}.g9{background:linear-gradient(135deg,#F472B6,#7C3AED)}
+.box{background:rgba(255,255,255,.95);color:#111;border-radius:22px;padding:16px;margin-top:12px;animation:slide .35s;box-shadow:0 10px 22px rgba(0,0,0,.25)}
 .box h2{font-size:18px}.box p{font-size:13px;line-height:1.5}
-.btn{width:100%;padding:16px;border-radius:18px;font-size:15px;font-weight:900;color:#000;margin-top:9px}
+.gbox{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);border-radius:20px;padding:15px;margin-top:11px;animation:slide .35s}
+.btn{width:100%;padding:15px;border-radius:16px;font-size:14px;font-weight:900;color:#000;margin-top:9px}
 .gold{background:linear-gradient(180deg,#FFE600,#FFB800);box-shadow:0 6px 0 #7a4d00;animation:glow 2s infinite}
 .grn{background:linear-gradient(180deg,#B8F5C8,#22C55E);box-shadow:0 6px 0 #14532D}
-.dark{background:#041F14;color:#fff;border:2px solid #FFE600}.redb{background:linear-gradient(180deg,#FF5555,#B91C1C);color:#fff}.purb{background:linear-gradient(180deg,#C084FC,#6D28D9);color:#fff}
-input{width:100%;padding:14px;border-radius:14px;border:2px solid #0B3D2A;margin:6px 0;font-weight:800;font-size:16px}
+.dark{background:#111;color:#fff;border:2px solid #FFE600}.redb{background:linear-gradient(180deg,#FF5555,#B91C1C);color:#fff}.whiteb{background:#fff;color:#111}
+input{width:100%;padding:13px;border-radius:13px;border:2px solid #111;margin:6px 0;font-weight:800;font-size:16px}
 .row{display:flex;gap:8px}.row>*{flex:1}
-.winBox{background:#041F14;color:#fff;border:3px solid #FFE600;border-radius:18px;padding:13px;text-align:center;margin:10px 0}
-.winBox small{font-size:10px;opacity:.7;letter-spacing:1px}.winBox div{font-size:36px;font-weight:900;color:#FFE600}
-.list{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#E8FFF0;border:2px solid #22C55E;padding:12px;border-radius:15px;margin-top:8px}
+.winBox{background:#111;color:#fff;border:3px solid #FFE600;border-radius:18px;padding:13px;text-align:center;margin:10px 0}
+.winBox small{font-size:10px;opacity:.7;letter-spacing:1px}.winBox div{font-size:34px;font-weight:900;color:#FFE600}
+.list{display:flex;justify-content:space-between;align-items:center;gap:8px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:12px;border-radius:15px;margin-top:8px;color:#fff}
+.list2{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#E8FFF0;border:2px solid #22C55E;padding:12px;border-radius:15px;margin-top:8px;color:#111}
+.tabs{display:flex;gap:6px;margin:10px 0}.tabs button{flex:1;padding:10px 4px;border-radius:99px;background:rgba(255,255,255,.25);color:#fff;font-weight:900;font-size:11px}.tabs button.on{background:#fff;color:#111}
+.tabs2 button{background:#E8FFF0;color:#111;border:2px solid #22C55E}.tabs2 button.on{background:#041F14;color:#fff}
 .page{display:none}.page.on{display:block;animation:slide .3s}
-.chip{display:inline-block;background:#041F14;color:#B8F5C8;padding:6px 10px;border-radius:99px;font-size:11px;font-weight:800;margin:3px}
+.chip{display:inline-block;background:#000;color:#B8F5C8;padding:6px 10px;border-radius:99px;font-size:11px;font-weight:800;margin:3px}
 .mines{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:10px}
-.cell{aspect-ratio:1;background:#B8F5C8;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid #0B3D2A;cursor:pointer}
+.cell{aspect-ratio:1;background:#B8F5C8;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid #0B3D2A;cursor:pointer;color:#111}
 </style></head><body><div class="w">
-<div class="top"><div><b>🦠 MICROBE <span style="color:#1FA85C">GAME</span></b><small id="nm">Игрок • Уровень 1 • Всё с 0</small></div><div class="money"><b>🦠 <i id="mp">0.0000</i></b><b>⭐ <i id="st">0</i></b><b>💎 <i id="gr">0.000</i></b><b>🪙 <i id="tk">0</i></b></div></div>
-<div class="online"><div><span class="dot"></span> <b>ОНЛАЙН: <span id="onN" style="color:#16A34A;font-size:22px">1</span> 👤</b><br><small style="color:#666">Реально. 1 = ты один. 2 = вас двое.</small></div><div style="font-size:28px;animation:pulse 1.4s infinite">🟢</div></div>
+<div class="topbar"><b>🔗 REFERRAL</b><div class="money"><b>🎫 <i id="tkTop">1</i></b><b>⭐ <i id="st">0</i></b><b>🦠 <i id="mp">0.0000</i></b><b>💎 <i id="gr">0.000</i></b></div></div>
+<div class="backrow"><b id="backBtn">✕ Закрыть</b><b>🟢 ОНЛАЙН: <span id="onN">1</span></b><b>⋮</b></div>
 <button class="snd" id="sndBtn" onclick="sndT()">🔇 ЗВУК ВЫКЛЮЧЕН • НАЖМИ 1 РАЗ • ПОТОМ ПИУ-ПИУ 🔊</button>
-<div class="scroll"><button onclick="go('home')">🏠 Главная</button><button onclick="go('cases')">📦 Кейсы</button><button onclick="go('crash')">🚀 Crash</button><button onclick="go('mine')">⛏️ Шахта</button><button onclick="go('roulette')">🎡 Рулетка</button><button onclick="go('tasks')">✅ Задания</button><button onclick="go('shop')">🛒 Магазин</button><button onclick="go('hist')">📜 История</button></div>
-<div id="toast" style="position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#041F14;color:#fff;padding:12px 16px;border-radius:99px;font-weight:900;z-index:300;display:none;border:3px solid #FFE600;max-width:94vw;text-align:center"></div>
+<div class="scroll"><button onclick="go('home')">🏠 Главная</button><button onclick="go('inv')">🧰 Инвентарь</button><button onclick="go('contest')">🏆 Конкурсы</button><button onclick="go('cases')">📦 Кейсы</button><button onclick="go('crash')">🚀 Crash</button><button onclick="go('mine')">⛏️ Шахта</button><button onclick="go('roulette')">🎡 Рулетка</button><button onclick="go('tasks')">✅ Задания</button><button onclick="go('shop')">🛒 Магазин</button><button onclick="go('hist')">📜 История</button></div>
+<div id="toast" style="position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#000;color:#fff;padding:12px 16px;border-radius:99px;font-weight:900;z-index:300;display:none;border:3px solid #FFE600;max-width:94vw;text-align:center"></div>
+
 <div id="pg-home" class="page on">
-<div class="hero"><div class="micro" onclick="tapMicro()">🦠</div><h1>MICROBE <em>🦠</em></h1><p style="font-weight:800">Привет! У тебя 0. Ткни микроба = +0.0001 MP</p><div class="bar"><div id="xpf"></div></div><p style="font-size:12px;font-weight:800">Уровень <b id="lvl">1</b> • Опыт <b id="xpT">0 / 100</b> • Побед <b id="winN">0</b></p><div><span class="chip">💰 Выиграл 7 = получил 7</span><span class="chip">💰 Потратил 5 = минус 5</span><span class="chip">📜 Листай вниз</span></div></div>
-<div class="box" style="border-color:#FFB800"><h2>🎁 ТВОЙ СТАРТ С НУЛЯ</h2><p>Курс очень маленький: <b>1 токен = 0.0001 MP</b>. 10,000 токенов = 1 MP.</p><button class="btn gold" onclick="openWheel()">🎡 ОТКРЫТЬ • ЗЕЛЁНОЕ БЛЕСТЯЩЕЕ КОЛЕСО • 0 ⭐</button><button class="btn grn" onclick="daily()">🎁 БОНУС +1000 🪙 = +0.1000 MP</button></div>
+<div class="hero"><div class="micro" onclick="tapMicro()">🦠</div><h1>MICROBE 🦠</h1><p style="font-weight:800;font-size:13px">Ткни микроба = +0.0001 MP • Токены +1/сек, как в видео</p><p style="font-size:12px;font-weight:800">Уровень <b id="lvl">1</b> • Токены <b id="tk">0</b> • Побед <b id="winN">0</b></p><div><span class="chip">Выиграл 7 = 7</span><span class="chip">Потратил 5 = -5</span></div>
+<button class="btn gold" onclick="openWheel()">🎡 ОТКРЫТЬ • ЗЕЛЁНОЕ БЛЕСТЯЩЕЕ КОЛЕСО</button><button class="btn grn" onclick="daily()">🎁 БОНУС +1000 🪙 = +0.1000 MP</button></div>
 <div class="grid">
-<button class="tile g1" onclick="go('inv')"><i>🧰</i><b>ИНВЕНТАРЬ</b><span>CANDY CANE 427 ⭐</span></button>
-<button class="tile g2" onclick="go('contest')"><i>🏆</i><b>КОНКУРСЫ</b><span>1000 NFT • 40 Gifts</span></button>
-<button class="tile g3" onclick="go('lead')"><i>📊</i><b>ТАБЛИЦА ЛИДЕРОВ</b><span>Награды через 4 ч</span></button>
-<button class="tile g4" onclick="go('sim')"><i>🧸</i><b>СИМУЛЯТОР</b><span>Бесплатно • 3D</span></button>
-<button class="tile g4" onclick="go('crash')"><i>🐰</i><b>CRASH</b><span>До x100</span></button>
-<button class="tile g4" onclick="go('cases')"><i>🦠</i><b>CASES</b><span>Колесо фортуны</span></button>
+<button class="tile g1" onclick="go('inv')"><i>🧰</i><b>ИНВЕНТАРЬ</b><span>Сундук • CANDY CANE</span></button>
+<button class="tile g2" onclick="go('contest')"><i>🏆</i><b>КОНКУРСЫ</b><span>1000 NFT • 40 GIFTS</span></button>
+<button class="tile g3" onclick="go('lead')"><i>🐸</i><b>ТАБЛИЦА ЛИДЕРОВ</b><span id="leadTimer">НАГРАДЫ ЧЕРЕЗ 4 Д 22 Ч</span></button>
+<button class="tile g9" onclick="go('sim')"><i>🧸</i><b>СИМУЛЯТОР ТЕЛЕГРАМ</b><span>3D • Мишка</span></button>
+<button class="tile g4" onclick="go('crash')"><span class="badge">ПРАВИЛА</span><i>🐰</i><b>CRASH</b><span>Заяц на морковке</span></button>
+<button class="tile g4" onclick="go('cases')"><i>👹</i><b>CASES</b><span id="caseTimer">БЕСПЛАТНЫЙ КЕЙС ЧЕРЕЗ 00:23:19</span></button>
 <button class="tile g6" onclick="go('roulette')"><i>🎡</i><b>РУЛЕТКА</b><span>Russian Roulette</span></button>
-<button class="tile g5" onclick="go('grab')"><i>✋</i><b>ХВАТАЙКА</b><span>НОВИНКА</span></button>
+<button class="tile g5" onclick="go('grab')"><i>✋</i><b>ХВАТАЙКА</b><span>Лови микроба</span></button>
 <button class="tile g6" onclick="go('slots')"><i>🎰</i><b>СЛОТ</b><span>Джекпот x20</span></button>
-<button class="tile g5" onclick="go('mine')"><i>⛏️</i><b>ШАХТА 2.0</b><span>ONLINE</span></button>
+<button class="tile g5" onclick="go('mine')"><i>⛏️</i><b>ШАХТА 2.0</b><span>Копай 💎</span></button>
+<button class="tile g5" onclick="go('mine')"><span class="badge">ONLINE</span><i>🌍</i><b>ШАХТА ОНЛАЙН</b><span>Онлайн шахта</span></button>
 <button class="tile g7" onclick="go('cs2')"><i>🔫</i><b>CS2 РУЛЕТКА</b><span>Скины</span></button>
-<button class="tile g2" onclick="go('surv')"><i>🪂</i><b>ВЫЖИВАНИЕ</b><span>50/50 • x2</span></button>
-<button class="tile g3" onclick="go('up')"><i>👻</i><b>УЛУЧШЕНИЕ</b><span>10 → 600 ⭐</span></button>
+<button class="tile g2" onclick="go('surv')"><i>🪂</i><b>ВЫЖИВАНИЕ</b><span>Парашют • x2</span></button>
+<button class="tile g3" onclick="go('up')"><i>👻</i><b>УЛУЧШЕНИЕ</b><span>Призрак • 10 → 600 ⭐</span></button>
 <button class="tile g7" onclick="go('kaskad')"><i>💥</i><b>КАСКАД</b><span>3 в ряд • x3</span></button>
 <button class="tile g5" onclick="go('plinko')"><i>🔴</i><b>ПЛИНКО</b><span>До x10</span></button>
-<button class="tile g8" onclick="go('pand')"><i>😷</i><b>ПАНДЕМИЯ</b><span>НОВИНКА</span></button>
+<button class="tile g8" onclick="go('pand')"><span class="badge">НОВИНКА</span><i>😷</i><b>ПАНДЕМИЯ</b><span>Микроб в маске</span></button>
 <button class="tile g7" onclick="go('pvp')"><i>⚔️</i><b>ПВП</b><span>Дуэль • x2</span></button>
 <button class="tile g3" onclick="go('dice')"><i>🎲</i><b>КОСТИ</b><span>x2 честно</span></button>
 </div>
-<div class="box"><h2>🔥 БЕЗ ФЕЙКОВ</h2><p>🦠 Игрок выиграл 7 MP = получил ровно 7<br>🍭 @sara выиграла 8 MP = получила ровно 8<br>⚔️ @dima потратил 5 MP = минус ровно 5</p><button class="btn dark" onclick="go('tasks')">✅ ЗАДАНИЯ • +20,000 🪙</button></div>
-<div class="box"><h2>👥 ДРУГ = +2.0000 MP</h2><button class="btn gold" onclick="invite()">📋 https://t.me/MicrobeGame_Bot</button></div>
+<div class="gbox"><h2>🔥 КАК В ВИДЕО</h2><p>Инвентарь, конкурсы, лидеры, симулятор, Crash, кейсы, рулетка, шахта, CS2, выживание, улучшение, каскад, плинко, пандемия, всё открывается.</p><button class="btn dark" onclick="go('tasks')">✅ ЗАДАНИЯ • NEW</button></div>
 </div>
-<div id="pg-inv" class="page"><div class="box"><h2>🧰 ИНВЕНТАРЬ — ОТКРЫЛОСЬ!</h2><div id="invL"></div><button class="btn gold" onclick="openWheel()">🎡 ОТКРЫТЬ КОЛЕСО</button><div id="candyBox" style="display:none;text-align:center;margin-top:10px"><div style="font-size:60px">🍭</div><b>CANDY CANE</b><br><button class="btn dark" onclick="sellCandy()">ПРОДАТЬ ЗА 427 ⭐</button></div></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-contest" class="page"><div class="box" style="text-align:center"><h2>🏆 1000 NFT</h2><p>81,935 участников • 1 день 21 час</p><button class="btn gold" onclick="joinC()">УЧАСТВОВАТЬ • +0.0010 MP</button></div><div class="box"><h2>🎁 40 GIFTS</h2><p>555 участников</p><button class="btn grn" onclick="joinC()">УЧАСТВОВАТЬ</button></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-lead" class="page"><div class="box"><h2>📊 ТАБЛИЦА ЛИДЕРОВ</h2><div id="leadL"></div><p>Ты с 0. Поднимайся честно!</p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-sim" class="page"><div class="box" style="text-align:center"><h2>🧸 СИМУЛЯТОР ТЕЛЕГРАМ</h2><div style="font-size:60px">🧸</div><button class="btn grn" onclick="sim()">ОТКРЫТЬ БЕСПЛАТНО</button><p id="simM" style="font-size:42px;font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-cases" class="page"><div class="box" style="text-align:center"><h2>📦 CASES • КОЛЕСО ФОРТУНЫ</h2><p>Нажми ОТКРЫТЬ, появится яркое зелёное блестящее колесо, оно покрутится и даст приз!</p><button class="btn gold" onclick="openWheel()">🎡 ОТКРЫТЬ • КОЛЕСО • 0 ⭐</button><input id="caseBet" type="number" value="0" step="0.0001"><p>Ставка в MP, 0 = бесплатно.</p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-crash" class="page"><div class="box" style="text-align:center"><h2>🚀 CRASH • СТАВКА × X</h2><div style="background:#041F14;border-radius:18px;padding:18px"><div style="font-size:50px;font-weight:900;color:#FFE600" id="crN">x1.00</div><div style="font-size:46px">🚀</div></div><input id="crBet" type="number" value="0.01" step="0.0001"><div class="winBox"><small>ЗАБРАТЬ СЕЙЧАС =</small><div id="crWin">0.0100 MP</div><div style="font-size:12px" id="crF">0.01 × x1.00</div></div><button class="btn gold" onclick="startCrash()">🚀 ЗАПУСТИТЬ • МИНУС СТАВКА</button><button class="btn redb" onclick="cashout()">💰 ЗАБРАТЬ РОВНО СТОЛЬКО</button><p id="crM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-mine" class="page"><div class="box"><h2>⛏️ ШАХТА 2.0</h2><p>Каждая 💎 = +ставка ровно. Мина = сгорело.</p><input id="mineBet" type="number" value="0.01" step="0.0001"><div class="mines" id="board"></div><div class="winBox"><small>НАКОПЛЕНО</small><div id="mineWin">0.0000 MP</div></div><button class="btn gold" onclick="initMine()">⛏️ НОВАЯ ИГРА</button><button class="btn grn" onclick="mineCash()">💰 ЗАБРАТЬ</button><p id="mineM" style="text-align:center;font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-roulette" class="page"><div class="box" style="text-align:center"><h2>🎡 РУЛЕТКА</h2><div style="font-size:64px">🎡</div><input id="rouBet" type="number" value="0.01" step="0.0001"><button class="btn gold" onclick="spin()">🎡 КРУТИТЬ</button><button class="btn grn" onclick="spinFree()">🆓 БЕСПЛАТНО +0.0010 MP</button><p id="rouR" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
+
+<div id="pg-inv" class="page"><h2>ИНВЕНТАРЬ</h2><div class="tabs"><button class="on" onclick="invTab(this)">Все 1</button><button onclick="invTab(this)">Вывод 0</button><button onclick="invTab(this)">С заданием 1</button><button onclick="invTab(this)">Трейд</button></div><div class="gbox" style="text-align:center"><div style="font-size:72px">🍭</div><b>CANDY CANE</b><div id="invL" style="margin-top:8px"></div><button class="btn gold" onclick="openWheel()">УЛУЧШИТЬ</button><button class="btn gold" onclick="sellCandy()">ПРОДАТЬ ЗА 427 ⭐</button><button class="btn whiteb" onclick="toast('✅ Получить: CANDY CANE уже у тебя!')">ПОЛУЧИТЬ</button></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
+
+<div id="pg-contest" class="page"><h2>КОНКУРСЫ</h2>
+<div class="gbox" style="text-align:center"><div style="font-size:44px">🏆🎁👾</div><h3>РОЗЫГРЫШ 1000 NFT</h3><p>81935 УЧАСТНИКОВ, ВАШИ БИЛЕТЫ 0</p><p>⏰ ЗАКОНЧИТСЯ ЧЕРЕЗ 1 Д 21 Ч</p><button class="btn gold" onclick="joinC()">УЧАСТВОВАТЬ • +0.0010 MP</button></div>
+<div class="gbox" style="text-align:center"><h3>TONPLAY x WINGRAM GIVEAWAY</h3><p>30683 УЧАСТНИКА, ВАШИ БИЛЕТЫ 0</p><p>⏰ ЗАКОНЧИТСЯ ЧЕРЕЗ 29 Д 14 Ч</p><button class="btn gold" onclick="joinC()">УЧАСТВОВАТЬ</button></div>
+<div id="giftL"></div>
+<button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
+
+<div id="pg-lead" class="page"><div class="box"><h2>📊 ТАБЛИЦА ЛИДЕРОВ</h2><p id="leadTimer2">Награды через 4 д 22 ч</p><div id="leadL"></div></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
+<div id="pg-sim" class="page"><div class="box" style="text-align:center"><h2>🧸 СИМУЛЯТОР ТЕЛЕГРАМ • 3D</h2><div style="font-size:60px">🧸</div><button class="btn grn" onclick="sim()">ОТКРЫТЬ БЕСПЛАТНО</button><p id="simM" style="font-size:42px;font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
+<div id="pg-cases" class="page"><div class="gbox" style="text-align:center"><h2>📦 CASES</h2><p id="caseTimer2">Бесплатный кейс через 00:23:19</p><button class="btn gold" onclick="openWheel()">🎡 ОТКРЫТЬ • КОЛЕСО • 0 ⭐</button><p>Колесо крутится 3,5 сек и останавливается.</p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
+<div id="pg-crash" class="page"><div class="box" style="text-align:center"><h2>🚀 CRASH</h2><div style="background:#111;border-radius:18px;padding:18px"><div style="font-size:50px;font-weight:900;color:#FFE600" id="crN">x1.00</div><div style="font-size:46px">🚀🐰</div></div><input id="crBet" type="number" value="0.01" step="0.0001"><div class="winBox"><small>ЗАБРАТЬ СЕЙЧАС =</small><div id="crWin">0.0100 MP</div><div style="font-size:12px" id="crF">0.01 × x1.00</div></div><button class="btn gold" onclick="startCrash()">🚀 ЗАПУСТИТЬ • МИНУС СТАВКА</button><button class="btn redb" onclick="cashout()">💰 ЗАБРАТЬ РОВНО СТОЛЬКО</button><p id="crM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
+<div id="pg-mine" class="page"><div class="box"><h2>⛏️ ШАХТА 2.0 / ОНЛАЙН</h2><p>Каждая 💎 = +ставка ровно. Мина = сгорело.</p><input id="mineBet" type="number" value="0.01" step="0.0001"><div class="mines" id="board"></div><div class="winBox"><small>НАКОПЛЕНО</small><div id="mineWin">0.0000 MP</div></div><button class="btn gold" onclick="initMine()">⛏️ НОВАЯ ИГРА</button><button class="btn grn" onclick="mineCash()">💰 ЗАБРАТЬ</button><p id="mineM" style="text-align:center;font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
+<div id="pg-roulette" class="page"><div class="gbox" style="text-align:center"><h2>🎡 РУЛЕТКА • RUSSIAN ROULETTE</h2><div style="font-size:64px">🎡</div><input id="rouBet" type="number" value="0.01" step="0.0001"><button class="btn gold" onclick="spin()">🎡 КРУТИТЬ • -5 ⭐ КАК В ВИДЕО, ЕСЛИ ЕСТЬ</button><button class="btn grn" onclick="spinFree()">🆓 БЕСПЛАТНО +0.0010 MP</button><p id="rouR" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
 <div id="pg-slots" class="page"><div class="box" style="text-align:center"><h2>🎰 СЛОТ • x20</h2><div id="slotB" style="font-size:54px">🦠 🦠 🦠</div><input id="slotBet" type="number" value="0.01" step="0.0001"><button class="btn gold" onclick="slot()">🎰 КРУТИТЬ</button><p id="slotM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
 <div id="pg-dice" class="page"><div class="box" style="text-align:center"><h2>🎲 КОСТИ • x2</h2><div style="font-size:50px" id="diceB">🎲 🎲</div><input id="diceBet" type="number" value="0.01" step="0.0001"><div class="row"><button class="btn grn" onclick="dice('more')">БОЛЬШЕ 7</button><button class="btn redb" onclick="dice('less')">МЕНЬШЕ 7</button></div></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
 <div id="pg-plinko" class="page"><div class="box" style="text-align:center"><h2>🔴 ПЛИНКО</h2><div style="font-size:46px">🔴</div><p>x0.5 • x1 • x2 • x5 • x10</p><input id="plBet" type="number" value="0.01" step="0.0001"><button class="btn gold" onclick="plinko()">🔴 БРОСИТЬ</button><p id="plM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-grab" class="page"><div class="box" style="text-align:center"><h2>✋ ХВАТАЙКА</h2><div style="height:170px;background:#041F14;border-radius:18px;position:relative;overflow:hidden"><div id="grabV" onclick="grabHit()" style="position:absolute;font-size:52px;left:40%;top:40%">🦠</div></div><p style="font-weight:900">Поймано: <span id="grabN">0</span> • +0.0010 MP каждое</p><button class="btn gold" onclick="startGrab()">▶ СТАРТ</button></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-cs2" class="page"><div class="box" style="text-align:center"><h2>🔫 CS2</h2><div style="font-size:52px">🔫 🔪 🎯</div><input id="csBet" type="number" value="0.02" step="0.0001"><button class="btn gold" onclick="cs2()">🔫 КРУТИТЬ</button><p id="cs2M" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-surv" class="page"><div class="box" style="text-align:center"><h2>🪂 ВЫЖИВАНИЕ • x2</h2><input id="survBet" type="number" value="0.01" step="0.0001"><div class="row"><button class="btn grn" onclick="surv()">⬅ СЛЕВА</button><button class="btn redb" onclick="surv()">СПРАВА ➡</button></div><p id="survM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-up" class="page"><div class="box" style="text-align:center"><h2>⬆️ УЛУЧШЕНИЕ</h2><div style="font-size:56px">🍭 ➡ 👑</div><input id="upBet" type="number" value="0.01" step="0.0001"><button class="btn gold" onclick="upgrade()">⬆️ УЛУЧШИТЬ</button><p id="upM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
+<div id="pg-grab" class="page"><div class="box" style="text-align:center"><h2>✋ ХВАТАЙКА</h2><div style="height:170px;background:#111;border-radius:18px;position:relative;overflow:hidden"><div id="grabV" onclick="grabHit()" style="position:absolute;font-size:52px;left:40%;top:40%">🦠</div></div><p style="font-weight:900">Поймано: <span id="grabN">0</span> • +0.0010 MP</p><button class="btn gold" onclick="startGrab()">▶ СТАРТ</button></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
+<div id="pg-cs2" class="page"><div class="box" style="text-align:center"><h2>🔫 CS2 РУЛЕТКА</h2><div style="font-size:52px">🔫 🔪 🎯</div><input id="csBet" type="number" value="0.02" step="0.0001"><button class="btn gold" onclick="cs2()">🔫 КРУТИТЬ</button><p id="cs2M" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
+<div id="pg-surv" class="page"><div class="box" style="text-align:center"><h2>🪂 ВЫЖИВАНИЕ • x2</h2><div style="font-size:52px">🪂</div><input id="survBet" type="number" value="0.01" step="0.0001"><div class="row"><button class="btn grn" onclick="surv()">⬅ СЛЕВА</button><button class="btn redb" onclick="surv()">СПРАВА ➡</button></div><p id="survM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
+<div id="pg-up" class="page"><div class="box" style="text-align:center"><h2>👻 УЛУЧШЕНИЕ</h2><div style="font-size:56px">🍭 ➡ 👑</div><input id="upBet" type="number" value="0.01" step="0.0001"><button class="btn gold" onclick="upgrade()">⬆️ УЛУЧШИТЬ</button><p id="upM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
 <div id="pg-kaskad" class="page"><div class="box" style="text-align:center"><h2>💥 КАСКАД • x3</h2><div style="font-size:42px">❤️ ⭐ 💎<br>💎 ❤️ ⭐<br>⭐ 💎 ❤️</div><input id="kasBet" type="number" value="0.01" step="0.0001"><button class="btn gold" onclick="kaskad()">💥 ИГРАТЬ</button><p id="kasM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-pand" class="page"><div class="box" style="text-align:center"><h2>😷 ПАНДЕМИЯ</h2><div style="font-size:60px;animation:pulse 1s infinite">🦠🦠🦠</div><p>Заражено: <b id="pandN">0</b> • Каждые 10 = +0.0050 MP</p><button class="btn gold" onclick="pand()">🦠 ЗАРАЗИТЬ +1</button><p id="pandM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
+<div id="pg-pand" class="page"><div class="box" style="text-align:center"><h2>😷 ПАНДЕМИЯ • НОВИНКА</h2><div style="font-size:60px;animation:pulse 1s infinite">🦠🦠🦠</div><p>Заражено: <b id="pandN">0</b> • Каждые 10 = +0.0050 MP</p><button class="btn gold" onclick="pand()">🦠 ЗАРАЗИТЬ +1 • @arsen07070 = 10K</button><p id="pandM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
 <div id="pg-pvp" class="page"><div class="box" style="text-align:center"><h2>⚔️ ПВП • x2</h2><div style="font-size:52px">🦠 VS 😈</div><div id="pvpS" style="font-weight:900;font-size:22px">0 : 0</div><input id="pvpBet" type="number" value="0.01" step="0.0001"><button class="btn gold" onclick="pvp()">⚔️ БИТЬСЯ</button><p id="pvpM" style="font-weight:900"></p></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-tasks" class="page"><div class="box" style="background:linear-gradient(180deg,#E8FFF0,#B8F5C8)"><h2>✅ ЗАДАНИЯ • ЕЖЕДНЕВНЫЕ</h2><div id="taskL"></div></div><div class="box"><h2>👥 КВЕСТЫ ДРУЗЕЙ</h2><p>1 друг +50,000 🪙 • 10 друзей +100,000 🪙</p><button class="btn gold" onclick="invite()">📋 ПРИГЛАСИТЬ</button></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-shop" class="page"><div class="box"><h2>🛒 МАГАЗИН</h2><p>⭐ <span id="shopSt">0</span> • 💎 <span id="shopGr">0.000</span> • 🦠 <span id="shopMp">0.0000</span> • 🪙 <span id="shopTk">0</span></p><div class="row"><button class="btn gold" onclick="buyStar(50)">50 ⭐</button><button class="btn gold" onclick="buyStar(100)">100 ⭐</button></div><div class="row"><button class="btn purb" onclick="buyGram(0.5)">0.5 💎</button><button class="btn purb" onclick="buyGram(1)">1 💎</button></div><button class="btn dark" onclick="demo()">ДЕМО: +0.0500 MP +500 🪙</button></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-hist" class="page"><div class="box"><h2>📜 ИСТОРИЯ</h2><div id="histL"></div></div><button class="btn dark" onclick="go('home')">⬅ НАЗАД</button></div>
-<div id="pg-profile" class="page"><div class="box" style="text-align:ce
+
+<div id="pg-tasks" class="page">
+<div style="display:flex;justify-content:space-between;align-items:center"><b>👤 Профиль &gt;&gt;</b><b style="background:#fff;color:#111;padding:8px 12px;border-radius:99px">🪙 <span id="tkBig">0</span></b></div>
+<h2 style="margin-top:12px">ЕЖЕДНЕВНЫЕ</h2>
+<div class="list"><div><b>Ролики в TikTok и Shorts</b><br><small>Платим за просмотры роликов</small></div><b>до 2 200 $</b></div>
+<div class="list"><div><b>Ежедневный бонус</b><br><small>+20,000 coins</small></div><button class="btn grn" style="width:auto;margin:0;padding:10px 14px" onclick="daily20()">ЗАБРАТЬ</button></div>
+<div class="list"><div><b>Поделись историей</b><br><small>+20,000 токенов</small></div><button class="btn grn" style="width:auto;margin:0;padding:10px 14px" onclick="shareStory()">ПРОВЕРИТЬ</button></div>
+<h2 style="margin-top:14px">КВЕСТЫ <span style="float:right">1/9</span></h2><div id="taskL"></div>
+<button class="btn dark" onclick="go('
