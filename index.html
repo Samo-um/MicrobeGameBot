@@ -11,19 +11,17 @@
 <body>
 <div id="toast" class="toast"></div>
 
-<!-- ВЕРХНЯЯ ПАНЕЛЬ -->
 <header class="topbar">
   <button class="icon-btn" onclick="goBack()">←</button>
   <button class="pill pill-gold" onclick="showPage('profile')">🔗 REFERRAL</button>
   <div class="pill">💎 <b id="ui-bal">0</b></div>
   <div class="pill">⭐ <b id="ui-stars">0</b></div>
-  <button class="icon-btn" onclick="showPage('inventory')">🎒 <span class="badge">0</span></button>
+  <button class="icon-btn" onclick="showPage('inventory')">🎒 <span class="badge" id="invBadge">0</span></button>
   <button class="icon-btn" id="soundBtn" onclick="toggleSound()">🔊</button>
 </header>
 
 <main id="app">
 
-<!-- ===== ГЛАВНАЯ ===== -->
 <section id="page-home" class="page active">
   <div class="hero">
     <div class="hero-decor">✨ 🌿 ✨</div>
@@ -35,25 +33,16 @@
     </div>
     <h1>MICROBE</h1>
     <p class="sub">Тапай • Собирай • Играй • Выигрывай</p>
-    <div class="collect-row">
-      <div class="collect">🎁</div><div class="collect">💎</div><div class="collect">👑</div><div class="collect">🚀</div><div class="collect">🎲</div>
-    </div>
-    <!-- МНОЖИТЕЛЬ -->
-    <div class="mult-row" id="multRow">
-      <button class="mult active" data-m="1">1X</button>
-      <button class="mult" data-m="10">10X</button>
-      <button class="mult" data-m="100">100X</button>
-      <button class="mult vip" data-m="1000">1000X <span>VIP</span></button>
-    </div>
+    <div class="collect-row"><div class="collect">🎁</div><div class="collect">💎</div><div class="collect">👑</div><div class="collect">🚀</div><div class="collect">🎲</div></div>
+    <div class="mult-row"><button class="mult active" data-m="1">1X</button><button class="mult" data-m="10">10X</button><button class="mult" data-m="100">100X</button><button class="mult vip" data-m="1000">1000X <span>VIP</span></button></div>
     <button class="cta" onclick="tapMicrobe()">🦠 ТЫКНУТЬ МИКРОБА</button>
-    <p class="center small">Тапов: <b id="taps">0</b> • Уровень: <b>0</b> • Опыт: <b>0</b></p>
+    <p class="center small">Тапов: <b id="taps">0</b> • Уровень: <b>0</b> • Опыт: <b>0</b> • Баланс: <b id="homeBal">0</b></p>
     <div class="progress"><i style="width:0%"></i></div>
   </div>
-
   <h3 class="sec-title">🎮 Игровые разделы</h3>
   <div class="grid2">
     <div class="card game-card" onclick="showPage('cases')"><div class="big">🎁</div><b>CASES</b><p>Кейсы • 0 открыто</p><span class="gold-tag">БЕСПЛАТНЫЙ КЕЙС</span></div>
-    <div class="card game-card" onclick="showPage('roulette')"><div class="big">🎡</div><b>РУЛЕТКА</b><p>Крути • 0 побед</p><span class="gold-tag">×1000</span></div>
+    <div class="card game-card" onclick="showPage('roulette')"><div class="big">🎡</div><b>РУЛЕТКА</b><p>Приз каждый раз</p><span class="gold-tag">🎁 ПРИЗ НА КОЛЕСЕ</span></div>
     <div class="card game-card" onclick="showPage('simulator')"><div class="big">✈️</div><b>СИМУЛЯТОР TELEGRAM</b><p>Симулятор • 0 очков</p></div>
     <div class="card game-card" onclick="showPage('leaders')"><div class="big">🏆</div><b>ТАБЛИЦА ЛИДЕРОВ</b><p>Топ игроков • 0</p></div>
     <div class="card game-card" onclick="showPage('contests')"><div class="big">🎉</div><b>КОНКУРСЫ</b><p>40 GIFTS • 0 участников</p></div>
@@ -61,106 +50,108 @@
   </div>
 </section>
 
-<!-- ===== ЗАДАНИЯ ===== -->
 <section id="page-tasks" class="page">
   <div class="tasks-head">
-    <div class="profile-mini"><div class="ava">🦠</div><div><b id="tasks-name">Гость</b><br><small>ID: 0 • Ур. 0</small></div><div class="pill">💎 0</div></div>
+    <div class="profile-mini"><div class="ava">🦠</div><div><b id="tasks-name">Гость</b><br><small>ID: 0 • Ур. 0 • Баланс: 0</small></div><div class="pill">💎 0</div></div>
     <h2>✅ ЗАДАНИЯ</h2><p>Выполняй и получай награды</p>
     <div class="stat-row"><div><b>0</b><span>Выполнено</span></div><div><b>0</b><span>Наград</span></div><div><b>0</b><span>Друзей</span></div></div>
   </div>
-  <div class="card task"><div class="ico">💬</div><div class="info"><b>Оставь комментарий</b><span>Оставь комментарий под постом</span><span class="reward">+0 MP</span></div><button onclick="doTask(this)">ПРОВЕРИТЬ</button></div>
-  <div class="card task"><div class="ico">🎬</div><div class="info"><b>Посмотри короткое видео</b><span>Досмотри видео до конца</span><span class="reward">+0 MP</span></div><button onclick="doTask(this)">ПРОВЕРИТЬ</button></div>
-  <div class="card task"><div class="ico">🎁</div><div class="info"><b>Ежедневный бонус</b><span>Забери бонус сегодня</span><span class="reward">+0 MP</span></div><button onclick="doTask(this)">ЗАБРАТЬ</button></div>
-  <div class="card task"><div class="ico">📱</div><div class="info"><b>Опубликуй историю</b><span>Опубликуй историю с MICROBE</span><span class="reward">+0 MP</span></div><button onclick="doTask(this)">ПРОВЕРИТЬ</button></div>
+  <div class="card task"><div class="ico">💬</div><div class="info"><b>Оставь комментарий</b><span>Оставь комментарий под постом</span><span class="reward">Награда: 0</span></div><button onclick="doTask(this)">ПРОВЕРИТЬ</button></div>
+  <div class="card task"><div class="ico">🎬</div><div class="info"><b>Посмотри короткое видео</b><span>Досмотри видео до конца</span><span class="reward">Награда: 0</span></div><button onclick="doTask(this)">ПРОВЕРИТЬ</button></div>
+  <div class="card task"><div class="ico">🎁</div><div class="info"><b>Ежедневный бонус</b><span>Забери бонус сегодня</span><span class="reward">Награда: 0</span></div><button onclick="doTask(this)">ЗАБРАТЬ</button></div>
+  <div class="card task"><div class="ico">📱</div><div class="info"><b>Опубликуй историю</b><span>Опубликуй историю с MICROBE</span><span class="reward">Награда: 0</span></div><button onclick="doTask(this)">ПРОВЕРИТЬ</button></div>
   <h3 class="sec-title">🏆 КВЕСТЫ — Прогресс 0/9</h3>
   <div class="progress"><i style="width:0%"></i></div>
   <div id="quests"></div>
 </section>
 
-<!-- ===== РУЛЕТКА ===== -->
 <section id="page-roulette" class="page">
   <h2 class="center">🎡 РУЛЕТКА</h2>
-  <p class="center small">Баланс: 0 • Победы: 0 • Поражения: 0</p>
-  <div class="wheel-wrap"><div class="pointer"></div><div class="wheel" id="wheel"><div class="wheel-center" id="wheelText">КРУТИ</div></div></div>
-  <div class="mult-row small-mult" id="rouletteMult"><button class="mult active">1X</button><button class="mult">10X</button><button class="mult">100X</button><button class="mult vip">1000X <span>VIP</span></button></div>
-  <button class="cta" onclick="spinWheel()">🎡 КРУТИТЬ</button>
-  <p class="center small" id="rouletteResult">Результат: — • Пока ничего не выпало</p>
-  <div class="card center">История вращений: <b>0</b><br><span class="small">Пока пусто</span></div>
+  <p class="center small">Баланс: <b id="rouletteBal">0</b> • Победы: <span id="rouletteWins">0</span> • Призов: <span id="roulettePrizes">0</span></p>
+  <div class="wheel-wrap"><div class="pointer"></div>
+    <div class="wheel" id="wheel">
+      <div class="prize-label p1">🎁<small>+5</small></div><div class="prize-label p2">💎<small>+20</small></div>
+      <div class="prize-label p3">👑<small>+50</small></div><div class="prize-label p4">🧸<small>+10</small></div>
+      <div class="prize-label p5">⭐<small>+5</small></div><div class="prize-label p6">🦠<small>+3</small></div>
+      <div class="prize-label p7">💖<small>+15</small></div><div class="prize-label p8">🚀<small>+25</small></div>
+      <div class="wheel-center" id="wheelText">🎡<br>КРУТИ</div>
+    </div>
+  </div>
+  <p class="center small">Призы: 🦠+3 🎁+5 ⭐+5 🧸+10 💖+15 💎+20 🚀+25 👑+50</p>
+  <div class="mult-row"><button class="mult active">1X</button><button class="mult">10X</button><button class="mult">100X</button><button class="mult vip">1000X <span>VIP</span></button></div>
+  <button class="cta gold" onclick="spinWheel()">🎡 КРУТИТЬ — ПОЛУЧИТЬ ПРИЗ</button>
+  <p class="center small" id="rouletteResult">Результат: — • Пока ничего не выпало • Баланс: 0</p>
+  <div class="card center">История вращений: <b id="spinCount">0</b><br><span class="small">Пока пусто</span></div>
+  <div class="card center" id="lastPrizeBox" style="display:none">🏆 Последний приз: <b id="lastPrize">—</b></div>
 </section>
 
-<!-- ===== МАГАЗИН ===== -->
 <section id="page-shop" class="page">
   <h2>🛒 МАГАЗИН</h2>
-  <div class="filters" data-filter-group="shop"><button class="filter active" onclick="setFilter(this,'shop')">Все</button><button class="filter" onclick="setFilter(this,'shop')">Подарки</button><button class="filter" onclick="setFilter(this,'shop')">Персонажи</button><button class="filter" onclick="setFilter(this,'shop')">Особые</button></div>
+  <p class="small">Твой баланс: <b class="bal-text">0</b> • Куплено: 0</p>
+  <div class="filters"><button class="filter active" onclick="setFilter(this,'shop')">Все</button><button class="filter" onclick="setFilter(this,'shop')">Подарки</button><button class="filter" onclick="setFilter(this,'shop')">Персонажи</button><button class="filter" onclick="setFilter(this,'shop')">Особые</button></div>
   <div class="grid2" id="shopGrid"></div>
-  <div class="card center">Куплено: <b>0</b> • Покупок: <b>0</b></div>
+  <div class="card center">Куплено: <b>0</b> • Покупок: <b>0</b> • Баланс: <b class="bal-text">0</b></div>
 </section>
 
-<!-- ===== ИСТОРИЯ ===== -->
 <section id="page-history" class="page history-page">
   <h2>📜 ИСТОРИЯ</h2>
+  <p class="small">Баланс: <b class="bal-text">0</b></p>
   <div class="stat-row dark"><div><b>0</b><span>Всего операций</span></div><div><b>0</b><span>Зачислений</span></div><div><b>0</b><span>Покупок</span></div><div><b>0</b><span>Выводов</span></div></div>
   <div class="filters"><button class="filter active" onclick="setFilter(this,'hist')">Всё</button><button class="filter" onclick="setFilter(this,'hist')">Активность</button><button class="filter" onclick="setFilter(this,'hist')">Зачисления</button></div>
   <div class="empty">📭<br><b>Пока нет операций</b><br><span>Здесь появятся твои операции</span></div>
 </section>
 
-<!-- ===== ИНВЕНТАРЬ ===== -->
 <section id="page-inventory" class="page">
   <h2>🎒 ИНВЕНТАРЬ <span class="gold-tag">0 предметов</span></h2>
+  <p class="small">Баланс: <b class="bal-text">0</b> • Призов: <span id="invPrizes">0</span></p>
   <div class="grid2" id="invGrid"></div>
-  <div class="empty">🎒 Инвентарь пуст<br><span>Открой кейс или выиграй в рулетке</span></div>
+  <div class="empty" id="invEmpty">🎒 Инвентарь пуст<br><span>Открой кейс или выиграй в рулетке</span></div>
 </section>
 
-<!-- ===== КОНКУРСЫ ===== -->
 <section id="page-contests" class="page">
   <h2>🎉 КОНКУРСЫ</h2>
   <div class="card contest"><h3>40 GIFTS</h3><span class="status">ЗАВЕРШЕНО</span><p>Участников: 0 • Подарков: 0 • Наград: 0</p><div class="mini-gifts">🎁 🎁 🎁 🎁 🎁</div><button class="cta gold" onclick="toast('Конкурс завершён')">ПОСМОТРЕТЬ РЕЗУЛЬТАТЫ</button></div>
   <div class="card contest"><h3>10 GIFTS — НЕДЕЛЬНЫЙ</h3><span class="status">АКТИВЕН</span><p>Участников: 0 • Подарков: 0</p><button class="cta" onclick="toast('Ты в списке участников: 0')">УЧАСТВОВАТЬ</button></div>
 </section>
 
-<!-- ===== ЛИДЕРЫ ===== -->
 <section id="page-leaders" class="page">
   <h2 class="center">🏆 ТАБЛИЦА ЛИДЕРОВ</h2>
   <div class="podium"><div><div class="pod p2">🥈<br>2 место<br><b>0</b></div></div><div><div class="pod p1">🥇<br>1 место<br><b>0</b></div></div><div><div class="pod p3">🥉<br>3 место<br><b>0</b></div></div></div>
   <div class="empty">Пока нет участников<br><span>Стань первым!</span></div>
-  <div class="card"><p>Твоё место: <b>—</b> • Очки: <b>0</b> • Победы: <b>0</b> • Уровень: <b>0</b></p></div>
+  <div class="card"><p>Твоё место: <b>—</b> • Очки: <b>0</b> • Победы: <b>0</b> • Уровень: <b>0</b> • Баланс: <b class="bal-text">0</b></p></div>
 </section>
 
-<!-- ===== СИМУЛЯТОР ===== -->
 <section id="page-simulator" class="page">
   <h2 class="center">✈️ СИМУЛЯТОР TELEGRAM</h2>
-  <div class="sim-card"><div class="sim-circle">✈️</div><h3>Твой Telegram-канал</h3><p>Подписчиков: <b>0</b> • Постов: <b>0</b> • Очков: <b>0</b></p><button class="cta" onclick="simAction('post')">📝 Опубликовать пост</button><button class="cta green" onclick="simAction('sub')">👥 Пригласить подписчика</button></div>
+  <div class="sim-card"><div class="sim-circle">✈️</div><h3>Твой Telegram-канал</h3><p>Подписчиков: <b>0</b> • Постов: <b>0</b> • Очков: <b>0</b> • Баланс: <b class="bal-text">0</b></p><button class="cta" onclick="simAction('post')">📝 Опубликовать пост</button><button class="cta green" onclick="simAction('sub')">👥 Пригласить подписчика</button></div>
 </section>
 
-<!-- ===== CASES ===== -->
 <section id="page-cases" class="page">
   <h2>CASES <button class="icon-btn" onclick="showPage('inventory')">🎒 0</button></h2>
+  <p class="small">Твой баланс: <b class="bal-text">0</b></p>
   <div class="filters"><button class="filter active" onclick="setFilter(this,'cases')">Все</button><button class="filter" onclick="setFilter(this,'cases')">Бесплатные</button><button class="filter" onclick="setFilter(this,'cases')">50/50</button><button class="filter" onclick="setFilter(this,'cases')">CS2</button><button class="filter" onclick="setFilter(this,'cases')">Особые</button></div>
   <div class="card free-case"><b>🎁 БЕСПЛАТНЫЙ КЕЙС</b><p>Следующий бесплатный: <b id="freeTimer">23:59:59</b></p><button class="cta gold" onclick="openCase('Бесплатный')">ОТКРЫТЬ БЕСПЛАТНО</button></div>
   <div class="grid2" id="casesGrid"></div>
-  <p class="center small">Открыто кейсов: 0 • Получено подарков: 0</p>
+  <p class="center small">Открыто кейсов: 0 • Получено подарков: 0 • Баланс: <b class="bal-text">0</b></p>
 </section>
 
-<!-- ===== ЗОМБИ ===== -->
 <section id="page-zombie" class="page">
   <h2 class="center">🧟 ЗОМБИ-ТИП</h2>
-  <div class="card center"><div style="font-size:80px">🧟</div><h3>Очки: <span id="zombieScore">0</span></h3><p>Тапай зомби, пока он не убежал</p><button class="cta green" onclick="zombieTap()">🧟 ТЫКНУТЬ ЗОМБИ</button></div>
+  <div class="card center"><div style="font-size:80px">🧟</div><h3>Очки: <span id="zombieScore">0</span></h3><p>Тапай зомби • Баланс: <b class="bal-text">0</b></p><button class="cta green" onclick="zombieTap()">🧟 ТЫКНУТЬ ЗОМБИ</button></div>
 </section>
 
-<!-- ===== ПРОФИЛЬ ===== -->
 <section id="page-profile" class="page">
   <div class="card center"><div style="font-size:70px">🦠</div><h2 id="profileName">Гость</h2><p>ID: <b>0</b> • Уровень: <b>0</b> • Опыт: <b>0</b></p></div>
   <div class="grid2">
-    <div class="card center"><b>💎 Баланс</b><h3>0</h3></div><div class="card center"><b>⭐ Звёзды</b><h3>0</h3></div>
+    <div class="card center"><b>💎 Баланс</b><h3 class="bal-text">0</h3></div><div class="card center"><b>⭐ Звёзды</b><h3>0</h3></div>
     <div class="card center"><b>🎁 Подарки</b><h3>0</h3></div><div class="card center"><b>🏆 Победы</b><h3>0</h3></div>
     <div class="card center"><b>👥 Друзья</b><h3>0</h3></div><div class="card center"><b>🎯 Очки</b><h3>0</h3></div>
   </div>
-  <div class="card"><h3>🔗 Рефералка</h3><p>Приглашено: 0 • Бонус: 0</p><button class="cta" onclick="copyRef()">Скопировать ссылку</button></div>
+  <div class="card"><h3>🔗 Рефералка</h3><p>Приглашено: 0 • Бонус: 0 • Баланс: <b class="bal-text">0</b></p><button class="cta" onclick="copyRef()">Скопировать ссылку</button></div>
 </section>
 
 </main>
 
-<!-- НИЖНЯЯ НАВИГАЦИЯ -->
 <nav class="bottom-nav">
   <button class="nav-btn active" onclick="showPage('home',this)"><i>⏳</i><span>Главная</span></button>
   <button class="nav-btn" onclick="showPage('tasks',this)"><i>🦠</i><span>Задания</span><em class="new">NEW</em></button>
@@ -173,5 +164,5 @@
 <script src="js/navigation.js"></script>
 <script src="js/animations.js"></script>
 <script src="js/app.js"></script>
-</body> 
+</body>
 </html>
