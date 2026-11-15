@@ -6,7 +6,6 @@ function showPage(id, btn){
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
   else {
-    // подсветка нижней навигации по id
     let map = {home:0, tasks:1, roulette:2, shop:3, history:4};
     if(map[id]!==undefined) document.querySelectorAll('.nav-btn')[map[id]].classList.add('active');
   }
