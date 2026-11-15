@@ -1,168 +1,177 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#190d25">
-<title>Microbe — Game Hub</title>
-<style>
-:root{
- --bg:#170d22;--panel:#261431;--panel2:#32183d;--purple:#8d38bd;--pink:#ed4bb9;
- --gold:#ffc83d;--green:#20c995;--mint:#8bf0c9;--text:#fff8ff;--muted:#bda9c8;
- --line:rgba(255,255,255,.09);--shadow:0 12px 35px #08040d80;
-}
-*{box-sizing:border-box} html{background:var(--bg)} body{margin:0;background:radial-gradient(ellipse at 50% -20%,#55216c 0,#21102c 42%,#100a17 100%);color:var(--text);font:14px/1.4 Inter,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
-button{font:inherit;color:inherit;border:0;cursor:pointer}button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-.app{max-width:520px;min-height:100vh;margin:auto;padding:12px 13px 92px;position:relative}
-.top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 2px 16px}
-.brand{display:flex;align-items:center;gap:9px;font-weight:1000;letter-spacing:1px;font-size:18px}
-.logo{width:36px;height:36px;border-radius:13px;background:linear-gradient(145deg,#a5ff70,#1ecb93);display:grid;place-items:center;color:#143325;font-size:23px;box-shadow:0 5px 20px #29d69a55}
-.top-actions{display:flex;gap:7px;align-items:center}.pill{border:1px solid var(--line);background:#ffffff12;padding:8px 11px;border-radius:20px;font-weight:800;font-size:12px}
-.gold{color:#241500;background:linear-gradient(135deg,#ffe77a,#ffb92d)}.page{display:none;animation:appear .18s ease}.page.active{display:block}@keyframes appear{from{opacity:.3;transform:translateY(5px)}to{opacity:1;transform:none}}
-.hero{border-radius:24px;padding:18px;min-height:178px;background:linear-gradient(135deg,#7934a7,#3b1a56 62%,#20102d);box-shadow:var(--shadow);position:relative;overflow:hidden;margin-bottom:14px}
-.hero:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:-55px;top:-55px;background:#d65dff22;box-shadow:0 0 0 24px #d65dff0d,0 0 0 48px #d65dff08}
-.hero h1{font-size:24px;line-height:1.1;margin:5px 0 8px;max-width:250px}.hero p{color:#eadcf2;max-width:245px;margin:0 0 14px}.microbe{position:absolute;right:18px;bottom:15px;font-size:92px;filter:drop-shadow(0 9px 12px #09040c88);transform:rotate(-9deg)}
-.eyebrow{color:var(--mint);font-weight:900;font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
-.section-head{display:flex;align-items:center;justify-content:space-between;margin:20px 2px 10px}.section-head h2{font-size:16px;margin:0}.muted{color:var(--muted)}.tiny{font-size:11px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.tile{min-height:116px;border-radius:19px;padding:13px;text-align:left;position:relative;overflow:hidden;box-shadow:0 7px 18px #08040c55;background:linear-gradient(145deg,#913fc0,#4b2469);border:1px solid #ffffff12;transition:.15s}
-.tile:active{transform:scale(.97)}.tile .emoji{display:block;font-size:32px;margin-bottom:7px;filter:drop-shadow(0 4px 5px #0005)}.tile strong{display:block;font-size:13px}.tile small{display:block;color:#f0dff8a8;margin-top:3px;font-size:10px}
-.tile.orange{background:linear-gradient(145deg,#ff9c48,#a94770)}.tile.blue{background:linear-gradient(145deg,#39a7dd,#3655a2)}.tile.green{background:linear-gradient(145deg,#20c99a,#176c69)}.tile.pink{background:linear-gradient(145deg,#ed63b6,#7b328e)}.tile.dark{background:linear-gradient(145deg,#3d3a55,#17172b)}
-.panel{background:linear-gradient(145deg,#2c1738,#21122c);border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0;box-shadow:0 7px 22px #09040d30}
-.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.row+.row{margin-top:10px}
-.btn{border-radius:13px;padding:10px 14px;background:linear-gradient(135deg,#a84bd0,#7132a6);font-weight:900;box-shadow:0 5px 14px #07030b40}.btn.gold{background:linear-gradient(135deg,#ffe66e,#ffb92e)}.btn.green{background:linear-gradient(135deg,#36e0ad,#16a87e);color:#062b20}.btn.ghost{background:#ffffff10;border:1px solid var(--line);box-shadow:none}.btn.full{width:100%}
-.stat{background:#ffffff0b;border:1px solid var(--line);border-radius:14px;padding:12px;flex:1}.stat b{font-size:18px;display:block}.stat span{font-size:10px;color:var(--muted)}
-.task{display:flex;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}.task:last-child{border:0}.task-icon{width:36px;height:36px;border-radius:12px;background:#ffffff12;display:grid;place-items:center;font-size:19px}.task-info{flex:1;min-width:0}.task-info b{display:block;font-size:12px}.task-info small{color:var(--muted);font-size:10px}
-.progress{height:7px;background:#ffffff17;border-radius:10px;overflow:hidden;margin-top:10px}.progress i{display:block;height:100%;width:22%;background:linear-gradient(90deg,#48e4ad,#b2ff7c);border-radius:10px}
-.list-card{display:flex;align-items:center;gap:11px;padding:12px;border-radius:15px;background:#ffffff09;margin:8px 0;border:1px solid var(--line)}.list-card .emoji{font-size:29px}.list-card .grow{flex:1}.list-card b{font-size:12px}.list-card small{display:block;color:var(--muted);font-size:10px}
-.tabs{display:flex;gap:7px;overflow:auto;padding:3px 0 10px}.tab{white-space:nowrap;border-radius:18px;padding:8px 12px;background:#ffffff0c;border:1px solid var(--line);font-size:11px;font-weight:800}.tab.active{background:var(--gold);color:#2c1b00}
-.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:#160c20ed;backdrop-filter:blur(18px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);z-index:10}
-.nav{background:none;color:#9e8aa9;display:grid;justify-items:center;gap:3px;font-size:9px;font-weight:800;padding:5px 0}.nav span{font-size:20px}.nav.active{color:#ffe06a}
-input{width:100%;background:#100a17;border:1px solid var(--line);border-radius:12px;padding:12px;color:white;margin:6px 0}
-.notice{font-size:10px;color:#b9a8c3;text-align:center;margin:12px 8px}
-.big-number{font-size:56px;font-weight:1000;text-align:center;padding:30px 0}
-@media(min-width:600px){body{padding:18px 0}.app{border:1px solid #ffffff12;border-radius:26px;overflow:hidden;background:#1a0e25;box-shadow:0 20px 80px #0008}.bottom{bottom:18px;border-radius:0 0 26px 26px}}
-</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#260D2B">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<title>MICROBE</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="app">
-<header class="top">
- <div class="brand"><div class="logo">🦠</div><span>MICROBE</span></div>
- <div class="top-actions"><button class="pill" onclick="go('profile')">👤 Профиль</button><button class="pill gold" id="balance" onclick="go('profile')">⭐ 2 450</button></div>
+<div id="toast" class="toast"></div>
+
+<!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+<header class="topbar">
+  <button class="icon-btn" onclick="goBack()">←</button>
+  <button class="pill pill-gold" onclick="showPage('profile')">🔗 REFERRAL</button>
+  <div class="pill">💎 <b id="ui-bal">0</b></div>
+  <div class="pill">⭐ <b id="ui-stars">0</b></div>
+  <button class="icon-btn" onclick="showPage('inventory')">🎒 <span class="badge">0</span></button>
+  <button class="icon-btn" id="soundBtn" onclick="toggleSound()">🔊</button>
 </header>
 
-<main>
-<section class="page active" id="home">
- <div class="hero"><div class="eyebrow">ТВОЯ ИГРОВАЯ ВСЕЛЕННАЯ</div><h1>Добро пожаловать в MICROBE!</h1><p>Играй, выполняй задания и собирай коллекцию.</p><button class="btn gold" onclick="go('games')">Открыть игры →</button><div class="microbe">🦠</div></div>
- <div class="row"><div class="stat"><b>⭐ 2 450</b><span>Твои Microbe Points</span></div><div class="stat"><b>🔥 7 дней</b><span>Серия активности</span></div></div>
- <div class="section-head"><h2>Популярное</h2><button class="pill" onclick="go('games')">Все игры →</button></div>
- <div class="grid">
-  <button class="tile pink" onclick="openGame('Хватайка','🧸')"><span class="emoji">🧸</span><strong>Хватайка</strong><small>Проверь удачу</small></button>
-  <button class="tile orange" onclick="openGame('Плинко','🔴')"><span class="emoji">🔴</span><strong>Плинко</strong><small>Падающие шарики</small></button>
-  <button class="tile blue" onclick="openGame('Crash','🚀')"><span class="emoji">🚀</span><strong>Crash</strong><small>Аркадный режим</small></button>
-  <button class="tile green" onclick="openGame('Пандемия','🦠')"><span class="emoji">🦠</span><strong>Пандемия</strong><small>Стратегическая игра</small></button>
- </div>
- <div class="section-head"><h2>Ежедневный бонус</h2><span class="tiny muted">Обновляется каждый день</span></div>
- <div class="panel row"><div><b>🎁 Забери награду</b><div class="tiny muted">Бонус за посещение приложения</div></div><button class="btn gold" onclick="claimDaily()">Получить</button></div>
- <div class="section-head"><h2>Твои задания</h2><button class="pill" onclick="go('tasks')">Все →</button></div>
- <div class="panel"><div class="row"><b>Прогресс заданий</b><b class="tiny">2 / 9</b></div><div class="progress"><i style="width:22%"></i></div></div>
+<main id="app">
+
+<!-- ===== ГЛАВНАЯ ===== -->
+<section id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-decor">✨ 🌿 ✨</div>
+    <div class="microbe-wrap">
+      <div class="crown">👑</div>
+      <div class="microbe" onclick="tapMicrobe()">🦠</div>
+      <div class="glasses">😎</div>
+      <div class="vines">🌿 &nbsp; 🌿</div>
+    </div>
+    <h1>MICROBE</h1>
+    <p class="sub">Тапай • Собирай • Играй • Выигрывай</p>
+    <div class="collect-row">
+      <div class="collect">🎁</div><div class="collect">💎</div><div class="collect">👑</div><div class="collect">🚀</div><div class="collect">🎲</div>
+    </div>
+    <!-- МНОЖИТЕЛЬ -->
+    <div class="mult-row" id="multRow">
+      <button class="mult active" data-m="1">1X</button>
+      <button class="mult" data-m="10">10X</button>
+      <button class="mult" data-m="100">100X</button>
+      <button class="mult vip" data-m="1000">1000X <span>VIP</span></button>
+    </div>
+    <button class="cta" onclick="tapMicrobe()">🦠 ТЫКНУТЬ МИКРОБА</button>
+    <p class="center small">Тапов: <b id="taps">0</b> • Уровень: <b>0</b> • Опыт: <b>0</b></p>
+    <div class="progress"><i style="width:0%"></i></div>
+  </div>
+
+  <h3 class="sec-title">🎮 Игровые разделы</h3>
+  <div class="grid2">
+    <div class="card game-card" onclick="showPage('cases')"><div class="big">🎁</div><b>CASES</b><p>Кейсы • 0 открыто</p><span class="gold-tag">БЕСПЛАТНЫЙ КЕЙС</span></div>
+    <div class="card game-card" onclick="showPage('roulette')"><div class="big">🎡</div><b>РУЛЕТКА</b><p>Крути • 0 побед</p><span class="gold-tag">×1000</span></div>
+    <div class="card game-card" onclick="showPage('simulator')"><div class="big">✈️</div><b>СИМУЛЯТОР TELEGRAM</b><p>Симулятор • 0 очков</p></div>
+    <div class="card game-card" onclick="showPage('leaders')"><div class="big">🏆</div><b>ТАБЛИЦА ЛИДЕРОВ</b><p>Топ игроков • 0</p></div>
+    <div class="card game-card" onclick="showPage('contests')"><div class="big">🎉</div><b>КОНКУРСЫ</b><p>40 GIFTS • 0 участников</p></div>
+    <div class="card game-card" onclick="showPage('zombie')"><div class="big">🧟</div><b>ЗОМБИ-ТИП</b><p>Мини-игра • 0 очков</p></div>
+  </div>
 </section>
 
-<section class="page" id="tasks">
- <div class="section-head"><h2>📋 Задания и квесты</h2><span class="pill">2 / 9</span></div>
- <div class="panel"><div class="row"><b>Ежедневные задания</b><span class="tiny muted">Сброс через 12 ч</span></div>
-  <div class="task"><div class="task-icon">📱</div><div class="task-info"><b>Посети приложение</b><small>Открой MICROBE сегодня</small></div><button class="btn green" onclick="completeTask(this,25)">+25</button></div>
-  <div class="task"><div class="task-icon">🎮</div><div class="task-info"><b>Открой любую игру</b><small>Познакомься с игровым каталогом</small></div><button class="btn green" onclick="completeTask(this,40)">+40</button></div>
-  <div class="task"><div class="task-icon">👥</div><div class="task-info"><b>Пригласи друга</b><small>Поделись ссылкой-приглашением</small></div><button class="btn ghost" onclick="toast('Ссылка-приглашение скопирована (демо)')">Пригласить</button></div>
-  <div class="task"><div class="task-icon">🏆</div><div class="task-info"><b>Посмотри конкурсы</b><small>Открой страницу конкурсов</small></div><button class="btn ghost" onclick="go('contests')">Открыть</button></div>
- </div>
- <div class="section-head"><h2>Квесты</h2><span class="tiny muted">Награды за активность</span></div>
- <div class="panel"><div class="task"><div class="task-icon">🌟</div><div class="task-info"><b>Первый шаг</b><small>Посети три раздела</small></div><span class="pill">1/3</span></div><div class="progress"><i style="width:33%"></i></div></div>
+<!-- ===== ЗАДАНИЯ ===== -->
+<section id="page-tasks" class="page">
+  <div class="tasks-head">
+    <div class="profile-mini"><div class="ava">🦠</div><div><b id="tasks-name">Гость</b><br><small>ID: 0 • Ур. 0</small></div><div class="pill">💎 0</div></div>
+    <h2>✅ ЗАДАНИЯ</h2><p>Выполняй и получай награды</p>
+    <div class="stat-row"><div><b>0</b><span>Выполнено</span></div><div><b>0</b><span>Наград</span></div><div><b>0</b><span>Друзей</span></div></div>
+  </div>
+  <div class="card task"><div class="ico">💬</div><div class="info"><b>Оставь комментарий</b><span>Оставь комментарий под постом</span><span class="reward">+0 MP</span></div><button onclick="doTask(this)">ПРОВЕРИТЬ</button></div>
+  <div class="card task"><div class="ico">🎬</div><div class="info"><b>Посмотри короткое видео</b><span>Досмотри видео до конца</span><span class="reward">+0 MP</span></div><button onclick="doTask(this)">ПРОВЕРИТЬ</button></div>
+  <div class="card task"><div class="ico">🎁</div><div class="info"><b>Ежедневный бонус</b><span>Забери бонус сегодня</span><span class="reward">+0 MP</span></div><button onclick="doTask(this)">ЗАБРАТЬ</button></div>
+  <div class="card task"><div class="ico">📱</div><div class="info"><b>Опубликуй историю</b><span>Опубликуй историю с MICROBE</span><span class="reward">+0 MP</span></div><button onclick="doTask(this)">ПРОВЕРИТЬ</button></div>
+  <h3 class="sec-title">🏆 КВЕСТЫ — Прогресс 0/9</h3>
+  <div class="progress"><i style="width:0%"></i></div>
+  <div id="quests"></div>
 </section>
 
-<section class="page" id="games">
- <div class="section-head"><h2>🎮 Игровой каталог</h2><span class="tiny muted">Выбери режим</span></div>
- <div class="grid" id="gameGrid"></div>
- <p class="notice">Игры представлены как демонстрационные режимы. Очки виртуальные, не имеют денежной стоимости.</p>
+<!-- ===== РУЛЕТКА ===== -->
+<section id="page-roulette" class="page">
+  <h2 class="center">🎡 РУЛЕТКА</h2>
+  <p class="center small">Баланс: 0 • Победы: 0 • Поражения: 0</p>
+  <div class="wheel-wrap"><div class="pointer"></div><div class="wheel" id="wheel"><div class="wheel-center" id="wheelText">КРУТИ</div></div></div>
+  <div class="mult-row small-mult" id="rouletteMult"><button class="mult active">1X</button><button class="mult">10X</button><button class="mult">100X</button><button class="mult vip">1000X <span>VIP</span></button></div>
+  <button class="cta" onclick="spinWheel()">🎡 КРУТИТЬ</button>
+  <p class="center small" id="rouletteResult">Результат: — • Пока ничего не выпало</p>
+  <div class="card center">История вращений: <b>0</b><br><span class="small">Пока пусто</span></div>
 </section>
 
-<section class="page" id="contests">
- <div class="section-head"><h2>🏆 Конкурсы</h2><span class="pill">Активные</span></div>
- <div class="panel" style="background:linear-gradient(135deg,#6b278b,#321344)"><div class="eyebrow">MICROBE COMMUNITY</div><h2>Большой розыгрыш</h2><p class="muted">Выполняй задания сообщества и следи за новостями.</p><button class="btn gold" onclick="toast('Участие в демо-конкурсе отмечено')">Участвовать</button></div>
- <div class="list-card"><span class="emoji">🎁</span><div class="grow"><b>Еженедельный подарок</b><small>Награда за активность</small></div><span class="pill">7 дней</span></div>
- <div class="list-card"><span class="emoji">🌈</span><div class="grow"><b>Коллекционный набор</b><small>Собери все предметы</small></div><span class="pill">Активен</span></div>
+<!-- ===== МАГАЗИН ===== -->
+<section id="page-shop" class="page">
+  <h2>🛒 МАГАЗИН</h2>
+  <div class="filters" data-filter-group="shop"><button class="filter active" onclick="setFilter(this,'shop')">Все</button><button class="filter" onclick="setFilter(this,'shop')">Подарки</button><button class="filter" onclick="setFilter(this,'shop')">Персонажи</button><button class="filter" onclick="setFilter(this,'shop')">Особые</button></div>
+  <div class="grid2" id="shopGrid"></div>
+  <div class="card center">Куплено: <b>0</b> • Покупок: <b>0</b></div>
 </section>
 
-<section class="page" id="inventory">
- <div class="section-head"><h2>🎒 Инвентарь</h2><span class="pill">4 предмета</span></div>
- <div class="tabs"><button class="tab active" onclick="filterInventory('all',this)">Все</button><button class="tab" onclick="filterInventory('gift',this)">Подарки</button><button class="tab" onclick="filterInventory('collect',this)">Коллекция</button></div>
- <div class="grid" id="inventoryGrid"></div>
+<!-- ===== ИСТОРИЯ ===== -->
+<section id="page-history" class="page history-page">
+  <h2>📜 ИСТОРИЯ</h2>
+  <div class="stat-row dark"><div><b>0</b><span>Всего операций</span></div><div><b>0</b><span>Зачислений</span></div><div><b>0</b><span>Покупок</span></div><div><b>0</b><span>Выводов</span></div></div>
+  <div class="filters"><button class="filter active" onclick="setFilter(this,'hist')">Всё</button><button class="filter" onclick="setFilter(this,'hist')">Активность</button><button class="filter" onclick="setFilter(this,'hist')">Зачисления</button></div>
+  <div class="empty">📭<br><b>Пока нет операций</b><br><span>Здесь появятся твои операции</span></div>
 </section>
 
-<section class="page" id="profile">
- <div class="panel" style="text-align:center;padding:24px"><div style="font-size:54px">🦠</div><h2 style="margin:5px">Microbe Player</h2><span class="pill">Участник сообщества</span><div class="row" style="margin-top:20px"><div class="stat"><b id="profilePoints">2 450</b><span>Очки</span></div><div class="stat"><b>7</b><span>Дней подряд</span></div><div class="stat"><b>4</b><span>Предмета</span></div></div></div>
- <div class="section-head"><h2>Аккаунт</h2></div>
- <div class="panel"><div class="row"><span>🆔 ID игрока</span><b>#104829</b></div><div class="row"><span>⭐ Баланс очков</span><b id="profileBalance">2 450</b></div><div class="row"><span>🏅 Уровень</span><b>Новичок</b></div><button class="btn ghost full" style="margin-top:14px" onclick="go('history')">История активности →</button></div>
- <p class="notice">Демонстрационный профиль. Данные сохраняются только в текущем браузере.</p>
+<!-- ===== ИНВЕНТАРЬ ===== -->
+<section id="page-inventory" class="page">
+  <h2>🎒 ИНВЕНТАРЬ <span class="gold-tag">0 предметов</span></h2>
+  <div class="grid2" id="invGrid"></div>
+  <div class="empty">🎒 Инвентарь пуст<br><span>Открой кейс или выиграй в рулетке</span></div>
 </section>
 
-<section class="page" id="history">
- <div class="section-head"><h2>📜 История</h2></div>
- <div class="tabs"><button class="tab active">Все</button><button class="tab">Достижения</button><button class="tab">Задания</button></div>
- <div class="panel" id="historyList"><div class="list-card"><span class="emoji">🎁</span><div class="grow"><b>Ежедневный бонус</b><small>Сегодня · Получено</small></div><b style="color:var(--mint)">+50 ⭐</b></div><div class="list-card"><span class="emoji">🎮</span><div class="grow"><b>Посещение игры</b><small>Сегодня · Активность</small></div><b style="color:var(--mint)">+10 ⭐</b></div></div>
+<!-- ===== КОНКУРСЫ ===== -->
+<section id="page-contests" class="page">
+  <h2>🎉 КОНКУРСЫ</h2>
+  <div class="card contest"><h3>40 GIFTS</h3><span class="status">ЗАВЕРШЕНО</span><p>Участников: 0 • Подарков: 0 • Наград: 0</p><div class="mini-gifts">🎁 🎁 🎁 🎁 🎁</div><button class="cta gold" onclick="toast('Конкурс завершён')">ПОСМОТРЕТЬ РЕЗУЛЬТАТЫ</button></div>
+  <div class="card contest"><h3>10 GIFTS — НЕДЕЛЬНЫЙ</h3><span class="status">АКТИВЕН</span><p>Участников: 0 • Подарков: 0</p><button class="cta" onclick="toast('Ты в списке участников: 0')">УЧАСТВОВАТЬ</button></div>
 </section>
 
-<section class="page" id="game">
- <button class="pill" onclick="go('games')">← Назад к играм</button>
- <div class="panel" style="text-align:center;padding:20px">
-  <div id="gameEmoji" style="font-size:65px">🎮</div><div class="eyebrow">ДЕМО-РЕЖИМ</div><h2 id="gameTitle">Игра</h2><p class="muted">Играй в безопасном демонстрационном режиме. Здесь нет ставок и денежных выплат.</p>
-  <div class="big-number" id="gameResult">Готов?</div>
-  <button class="btn gold full" onclick="playDemo()">ИГРАТЬ</button>
-  <p class="tiny muted" id="gameMessage">Нажми кнопку, чтобы начать раунд.</p>
- </div>
+<!-- ===== ЛИДЕРЫ ===== -->
+<section id="page-leaders" class="page">
+  <h2 class="center">🏆 ТАБЛИЦА ЛИДЕРОВ</h2>
+  <div class="podium"><div><div class="pod p2">🥈<br>2 место<br><b>0</b></div></div><div><div class="pod p1">🥇<br>1 место<br><b>0</b></div></div><div><div class="pod p3">🥉<br>3 место<br><b>0</b></div></div></div>
+  <div class="empty">Пока нет участников<br><span>Стань первым!</span></div>
+  <div class="card"><p>Твоё место: <b>—</b> • Очки: <b>0</b> • Победы: <b>0</b> • Уровень: <b>0</b></p></div>
 </section>
 
-<section class="page" id="shop">
- <div class="section-head"><h2>🎁 Магазин</h2><span class="pill">Витрина</span></div>
- <div class="grid">
-  <button class="tile pink" onclick="toast('Предмет добавлен в список желаний')"><span class="emoji">🍭</span><strong>Леденец</strong><small>Коллекционный предмет</small></button>
-  <button class="tile orange" onclick="toast('Предмет добавлен в список желаний')"><span class="emoji">🍑</span><strong>Персик</strong><small>Коллекционный предмет</small></button>
-  <button class="tile blue" onclick="toast('Предмет добавлен в список желаний')"><span class="emoji">🪖</span><strong>Шлем героя</strong><small>Коллекционный предмет</small></button>
-  <button class="tile green" onclick="toast('Предмет добавлен в список желаний')"><span class="emoji">🐱</span><strong>Испуганный кот</strong><small>Коллекционный предмет</small></button>
- </div><p class="notice">Витрина демонстрационная: покупки за реальные деньги отключены.</p>
+<!-- ===== СИМУЛЯТОР ===== -->
+<section id="page-simulator" class="page">
+  <h2 class="center">✈️ СИМУЛЯТОР TELEGRAM</h2>
+  <div class="sim-card"><div class="sim-circle">✈️</div><h3>Твой Telegram-канал</h3><p>Подписчиков: <b>0</b> • Постов: <b>0</b> • Очков: <b>0</b></p><button class="cta" onclick="simAction('post')">📝 Опубликовать пост</button><button class="cta green" onclick="simAction('sub')">👥 Пригласить подписчика</button></div>
 </section>
+
+<!-- ===== CASES ===== -->
+<section id="page-cases" class="page">
+  <h2>CASES <button class="icon-btn" onclick="showPage('inventory')">🎒 0</button></h2>
+  <div class="filters"><button class="filter active" onclick="setFilter(this,'cases')">Все</button><button class="filter" onclick="setFilter(this,'cases')">Бесплатные</button><button class="filter" onclick="setFilter(this,'cases')">50/50</button><button class="filter" onclick="setFilter(this,'cases')">CS2</button><button class="filter" onclick="setFilter(this,'cases')">Особые</button></div>
+  <div class="card free-case"><b>🎁 БЕСПЛАТНЫЙ КЕЙС</b><p>Следующий бесплатный: <b id="freeTimer">23:59:59</b></p><button class="cta gold" onclick="openCase('Бесплатный')">ОТКРЫТЬ БЕСПЛАТНО</button></div>
+  <div class="grid2" id="casesGrid"></div>
+  <p class="center small">Открыто кейсов: 0 • Получено подарков: 0</p>
+</section>
+
+<!-- ===== ЗОМБИ ===== -->
+<section id="page-zombie" class="page">
+  <h2 class="center">🧟 ЗОМБИ-ТИП</h2>
+  <div class="card center"><div style="font-size:80px">🧟</div><h3>Очки: <span id="zombieScore">0</span></h3><p>Тапай зомби, пока он не убежал</p><button class="cta green" onclick="zombieTap()">🧟 ТЫКНУТЬ ЗОМБИ</button></div>
+</section>
+
+<!-- ===== ПРОФИЛЬ ===== -->
+<section id="page-profile" class="page">
+  <div class="card center"><div style="font-size:70px">🦠</div><h2 id="profileName">Гость</h2><p>ID: <b>0</b> • Уровень: <b>0</b> • Опыт: <b>0</b></p></div>
+  <div class="grid2">
+    <div class="card center"><b>💎 Баланс</b><h3>0</h3></div><div class="card center"><b>⭐ Звёзды</b><h3>0</h3></div>
+    <div class="card center"><b>🎁 Подарки</b><h3>0</h3></div><div class="card center"><b>🏆 Победы</b><h3>0</h3></div>
+    <div class="card center"><b>👥 Друзья</b><h3>0</h3></div><div class="card center"><b>🎯 Очки</b><h3>0</h3></div>
+  </div>
+  <div class="card"><h3>🔗 Рефералка</h3><p>Приглашено: 0 • Бонус: 0</p><button class="cta" onclick="copyRef()">Скопировать ссылку</button></div>
+</section>
+
 </main>
 
-<nav class="bottom">
- <button class="nav active" data-page="home" onclick="go('home',this)"><span>🏠</span>Главная</button>
- <button class="nav" data-page="games" onclick="go('games',this)"><span>🎮</span>Игры</button>
- <button class="nav" data-page="tasks" onclick="go('tasks',this)"><span>📋</span>Задания</button>
- <button class="nav" data-page="inventory" onclick="go('inventory',this)"><span>🎒</span>Инвентарь</button>
- <button class="nav" data-page="profile" onclick="go('profile',this)"><span>👤</span>Профиль</button>
+<!-- НИЖНЯЯ НАВИГАЦИЯ -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" onclick="showPage('home',this)"><i>⏳</i><span>Главная</span></button>
+  <button class="nav-btn" onclick="showPage('tasks',this)"><i>🦠</i><span>Задания</span><em class="new">NEW</em></button>
+  <button class="nav-btn" onclick="showPage('roulette',this)"><i>🎡</i><span>Рулетка</span></button>
+  <button class="nav-btn" onclick="showPage('shop',this)"><i>🛒</i><span>Магазин</span></button>
+  <button class="nav-btn" onclick="showPage('history',this)"><i>📜</i><span>История</span></button>
 </nav>
-</div>
-<div id="toast" style="position:fixed;left:50%;bottom:90px;transform:translate(-50%,15px);opacity:0;pointer-events:none;background:#fff1c8;color:#281900;padding:11px 17px;border-radius:14px;font-weight:900;font-size:12px;z-index:20;transition:.2s;max-width:90%;text-align:center"></div>
-<script>
-const games=[
- ['Хватайка','🧸','pink'],['Мины','💣','dark'],['Плинко','🔴','orange'],['Шахта онлайн','⛏️','green'],
- ['Выживание','🏝️','green'],['CS2 рулетка','🎯','blue'],['Улучшения','⚙️','dark'],['Пандемия','🦠','green'],
- ['Cases','📦','orange'],['Рулетка','🎡','pink'],['Чёрная рулетка','⚫','dark'],['Симулятор Telegram','✈️','blue'],
- ['Каскад','🪂','blue'],['Crash','🚀','pink'],['Арена','⚔️','orange'],['Шахта 2.0','🪓','green'],
- ['Русская рулетка 50/50','🎲','dark'],['Космический забег','🛸','blue']
-];
-const items=[['Resistance Dog','🐶','collect'],['Precious Peach','🍑','gift'],['Scared Cat','🐱','collect'],['Heroic Helmet','🪖','gift']];
-let points=2450, currentGame='Игра', currentEmoji='🎮';
-function go(id,el){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.page===id));if(el&&el.classList.contains('nav'))el.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.opacity=1;t.style.transform='translate(-50%,0)';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>{t.style.opacity=0;t.style.transform='translate(-50%,15px)'},2200)}
-function updatePoints(){const s=points.toLocaleString('ru-RU');document.getElementById('balance').textContent='⭐ '+s;document.getElementById('profilePoints').textContent=s;document.getElementById('profileBalance').textContent=s;}
-function addPoints(n,reason){points+=n;updatePoints();const row=document.createElement('div');row.className='list-card';row.innerHTML=`<span class="emoji">✨</span><div class="grow"><b>${reason}</b><small>Только что · Демо-начисление</small></div><b style="color:var(--mint)">+${n} ⭐</b>`;document.getElementById('historyList').prepend(row);toast('Начислено '+n+' Microbe Points');}
-function claimDaily(){if(localStorage.getItem('microbeDaily')===new Date().toDateString()){toast('Ежедневный бонус уже получен');return}localStorage.setItem('microbeDaily',new Date().toDateString());addPoints(50,'Ежедневный бонус')}
-function completeTask(btn,n){if(btn.dataset.done){toast('Задание уже выполнено');return}btn.dataset.done='1';btn.textContent='Готово';btn.classList.remove('green');btn.classList.add('ghost');addPoints(n,'Выполнено задание')}
-function openGame(name,emoji){currentGame=name;currentEmoji=emoji;document.getElementById('gameTitle').textContent=name;document.getElementById('gameEmoji').textContent=emoji;document.getElementById('gameResult').textContent='Готов?';document.getElementById('gameMessage').textContent='Нажми кнопку, чтобы начать раунд.';go('game')}
-function playDemo(){const results=['Отлично!','Новый раунд!','Попробуй ещё!','Уровень пройден!'];document.getElementById('gameResult').textContent=results[Math.floor(Math.random()*results.length)];document.getElementById('gameMessage').textContent='Демо-раунд завершён. Очки за игру не списываются.';addPoints(5,'Демо-активность: '+currentGame)}
-function filterInventory(type,btn){document.querySelectorAll('#inventory .tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');renderInventory(type)}
-function renderInventory(type='all'){document.getElementById('inventoryGrid').innerHTML=items.filter(x=>type==='all'||x[2]===type).map(x=>`<div class="tile ${x[2]==='gift'?'orange':'blue'}"><span class="emoji">${x[1]}</span><strong>${x[0]}</strong><small>Коллекционный предмет</small></div>`).join('')}
-document.getElementById('gameGrid').innerHTML=games.map(g=>`<button class="tile ${g[2]}" onclick="openGame('${g[0].replaceAll("'","\\'")}','${g[1]}')"><span class="emoji">${g[1]}</span><strong>${g[0]}</strong><small>Открыть режим →</small></button>`).join('');
-renderInventory();updatePoints();
-</script>
-</body></html>
+
+<script src="js/data.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/app.js"></script>
+</body> 
+</html>
